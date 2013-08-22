@@ -1,0 +1,233 @@
+<!doctype html>
+	<style>
+		.errorlist, .error {
+			color: red;
+		}
+	</style>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Keyrequest Form</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <!--<link rel="stylesheet" href="/jquery-ui-1.9.2.custom/css/redstuff/jquery-ui-1.9.2.custom.css" />-->
+    <!--<link rel="stylesheet" href="/jquery-ui-1.9.2.custom/css/redstuff/jquery-ui-1.9.2.custom.min.css" />-->
+    <script>
+    $(function() {
+        $( "#accordion" ).accordion({
+            heightStyle: "content",
+            collapsible: true,
+            active: false,
+        });
+    });
+    function validateissued_to(){
+        var id = document.getElementById('id_issued_to');
+        var val = id.value;
+        var patt = new RegExp('^[a-zA-Z]+[a-zA-Z\\-\\s]*$');
+        return patt.test(val);
+    }
+    function validateissued_to1(){
+        var id = document.getElementById('id_issued_to1');
+        var val = id.value;
+        var patt = new RegExp('^[a-zA-Z]+[a-zA-Z\\-\\s]*$');
+        return patt.test(val);
+    }
+    function validateissued_to2(){
+        var id = document.getElementById('id_issued_to2');
+        var val = id.value;
+        var patt = new RegExp('^[a-zA-Z]+[a-zA-Z\\-\\s]*$');
+        return patt.test(val);
+    }
+    function validateissued_to3(){
+        var id = document.getElementById('id_issued_to3');
+        var val = id.value;
+        var patt = new RegExp('^[a-zA-Z]+[a-zA-Z\\-\\s]*$');
+        return patt.test(val);
+    }
+    function validateissued_to4(){
+        var id = document.getElementById('id_issued_to4');
+        var val = id.value;
+        var patt = new RegExp('.');
+        return patt.test(val);
+    }
+    function validateContact_Number(){
+		    var id = document.getElementById('id_contact_number');
+		    var val = id.value;
+		    var patt = new RegExp('^1?-?\(?\d{3}\)?-?\d{3}-?\d{4}$');
+		    return patt.test(val);
+        }
+    function validateName(){
+		    var id = document.getElementById('id_name');
+		    var val = id.value;
+		    var patt = new RegExp('^[a-zA-Z]+[a-zA-Z\\-\\s]*$');
+		    return patt.test(val);
+        }
+    </script>
+</head>
+<body>
+{% block content %}
+<h1>Business Office Key Request Form</h1>
+<div id="accordion">
+    <h3>Key Information{% if form.building.errors or form.room_number.errors or key_code_if_known or issued_to %}<text class="error">  *</text> {% endif %}</h3>
+	<div>
+		<p>Only the first row of fields are required. The rest are optional.</p>
+		<form action="" method="post"> {% csrf_token %}	
+			{{form.building.errors}}
+			{{form.room_number.errors}}
+			{{form.key_code_if_known.errors}}
+			{{form.issued_to.errors}}
+			<table>
+			<tr>
+				<td>{{form.building.label}}</td>
+				<td>{{form.room_number.label}}</td>
+				<td>{{form.key_code_if_known.label}}</td>
+				<td>{{form.issued_to.label}}</td>
+			</tr>
+			<tr>
+				<td>{{form.building}}</td>
+				<td>{{form.room_number}}</td>
+				<td>{{form.key_code_if_known}}</td>
+				<td>{{form.issued_to}}</td>				
+			</tr>
+			<tr>
+				<td>{{form.building1}}</td>
+				<td>{{form.room_number1}}</td>
+				<td>{{form.key_code_if_known1}}</td>
+				<td>{{form.issued_to1}}</td>
+			</tr>
+				<td>{{form.building2}}</td>
+				<td>{{form.room_number2}}</td>
+				<td>{{form.key_code_if_known2}}</td>
+				<td>{{form.issued_to2}}</td>
+			</tr>
+			<tr>
+				<td>{{form.building3}}</td>
+				<td>{{form.room_number3}}</td>
+				<td>{{form.key_code_if_known3}}</td>
+				<td>{{form.issued_to3}}</td>
+			</tr>
+			<tr>
+				<td>{{form.building4}}</td>
+				<td>{{form.room_number4}}</td>
+				<td>{{form.key_code_if_known4}}</td>
+				<td>{{form.issued_to4}}</td>
+			</tr>
+			</table>
+			{{form.signature}}
+			{{form.signature1}}
+			{{form.signature2}}
+			{{form.signature3}}
+			{{form.signature4}}
+	</div>
+	<h3>Reason for request{% if form.reason.errors or form.other.errors %}<text class="error">  *</text> {% endif %}</h3>
+	<div>
+		{{form.reason.errors}}
+		{{form.reason.label}}
+		{{form.reason}}
+		{{form.other.errors}}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.other}}
+	</div>
+	<h3>Personal Info {% if form.name.errors or form.contact_number.errors or form.account.errors %}<text class="error">  *</text> {% endif %}</h3>
+	<div>		
+		{{form.name.errors}}
+		{{form.name.label}}
+		{{form.name}}<br><br>
+		{{form.contact_number.errors}}
+		{{form.contact_number.label}}
+		{{form.contact_number}}<br><br>
+		{{form.account.errors}}
+		{{form.account.label}}
+		{{form.account}}<br><br>
+		{{form.date_completed}}
+		{{form.chair_sig}}
+		{{form.dean_sig}}
+	</div>
+	<h3>Submit!</h3>
+	<div>
+		<input type="submit" name="submit" value="Submit Form">
+	</div>
+</div>
+</form>
+<script>
+var element = document.getElementById('id_contact_number');
+    element.onblur = function() {
+        var n=document.getElementById('contact_number_no');
+        var y=document.getElementById('contact_number_yes');
+        if(!validateContact_Number()){ 
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+var element = document.getElementById('id_issued_to');
+    element.onblur = function() {
+        var n=document.getElementById('issued_to_no');
+        var y=document.getElementById('issued_to_yes');
+        if(!validateIssued_to()){ 
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+var element = document.getElementById('id_issued_to1');
+    element.onblur = function() {
+        var n=document.getElementById('issued_to1_no');
+        var y=document.getElementById('issued_to1_yes');
+        if(!validateIssued_to()){ 
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+var element = document.getElementById('id_issued_to2');
+    element.onblur = function() {
+        var n=document.getElementById('issued_to2_no');
+        var y=document.getElementById('issued_to2_yes');
+        if(!validateIssued_to()){ 
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+var element = document.getElementById('id_issued_to3');
+    element.onblur = function() {
+        var n=document.getElementById('issued_to3_no');
+        var y=document.getElementById('issued_to3_yes');
+        if(!validateIssued_to()){ 
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+var element = document.getElementById('id_issued_to4');
+    element.onblur = function() {
+        var n=document.getElementById('issued_to4_no');
+        var y=document.getElementById('issued_to4_yes');
+        if(!validateIssued_to()){ 
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+var element = document.getElementById('id_name');
+    element.onblur = function() {
+        var n=document.getElementById('name_no');
+        var y=document.getElementById('name_yes');
+        if(!validateApplicantName()){ 
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+</script>
+</body>
+</html>
+{% endblock %}

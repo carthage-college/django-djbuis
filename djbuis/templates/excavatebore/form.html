@@ -1,0 +1,211 @@
+<!doctype html>
+{% load staticfiles %}
+	<style>
+		.errorlist {
+			color: red;
+		}
+		.error {
+			color: red;
+		}
+	</style>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Excavate / Bore Form</title>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<link rel="stylesheet" href="/resources/demos/style.css" />
+	<script>
+		$(document).ready(function() {  
+			$( "#accordion" ).accordion({
+				heightStyle: "content",
+				collapsible: true,
+				active: false,
+			});
+		});
+        function validateApplicantName(){
+		    var id = document.getElementById('id_applicant_name');
+		    var val = id.value;
+		    var patt = new RegExp('^.+$');
+		    return patt.test(val);
+        }
+        function validateCompany(){
+            var id = document.getElementById('id_company');
+            var val = id.value;
+            var patt = new RegExp('^.+$');
+            return patt.test(val);
+        }
+        function validateReasonForExcavationOrBoring(){
+            var id = document.getElementById('id_reason_for_excavation_or_boring');
+            var val = id.value;
+            var patt = new RegExp('^.+$');
+            return patt.test(val);
+        }
+        function validateLocationOfExcavationIncludingTerminationPoints(){
+            var id = document.getElementById('id_location_of_excavation_including_termination_points');
+            var val = id.value;
+            var patt = new RegExp('^.+$');
+            return patt.test(val);
+        }
+	</script>
+</head>
+<body>
+	<form action="" method="post">{% csrf_token %}
+		{{ form.non_field_errors }}
+		<h1>Excavate / Bore Form</h1>
+		<div id="accordion">
+			<h3><b>1. Permit Type {% if form.excavate.errors or form.bore.errors %}<text class="error">*Error</text> {% endif %}</b></h3>
+			<div>
+				<p>
+					{% for e in form.excavate.errors %}<text class='error'>{{ e }}<br></text>{% endfor %}	
+					{{ form.excavate.label }}
+					{{ form.excavate }}<br>
+					{{ form.bore.label }}
+					{{ form.bore }}
+				</p>
+			</div>
+			<h3><b>2. Applicant Information {% if form.applicant_name.errors or form.company.errors %}<text class="error">*Error</text> {% endif %}</b></h3>
+			<div>
+				<p>
+				    {% for e in form.applicant_name.errors %}<text class='error'>{{ e }}<br></text>{% endfor %}	
+					{{ form.applicant_name.label }}
+					{{ form.applicant_name }}
+                    <text id='applicant_name_no' style='display:none;color:red;'>Invalid</text>
+                    <text id='applicant_name_yes' style='display:none;color:green;'>Valid</text><br>
+					{% for e in form.company.errors %}<text class='error'>{{ e }}<br></text>{% endfor %}
+					{{ form.company.label }}
+					{{ form.company }}
+                    <text id='company_no' style='display:none;color:red'>Invalid</text>
+                    <text id='company_yes' style='display:none;color:green;'>Valid</text>
+				</p>
+			</div>
+			<h3><b>3. Project Information {% if form.reason_for_excavation_or_boring.errors or form.location_of_excavation_including_termination_points.errors or form.start_date_for_excavation.errors or form.projected_end_date_for_excavation.errors %}<text class="error">*Error</text> {% endif %}</b></h3>
+			<div>
+				<p>
+					{% for e in form.reason_for_excavation_or_boring.errors %}<text class='error'>{{ e }}<br></text>{% endfor %}
+					{{ form.reason_for_excavation_or_boring.label }}
+					{{ form.reason_for_excavation_or_boring }}
+                    <text id='reason_for_excavation_or_boring_no' style='display:none;color:red'>Invalid</text>
+                    <text id='reason_for_excavation_or_boring_yes' style='display:none;color:green'>Valid</text><br>
+					{% for e in form.location_of_excavation_including_termination_points.errors %}<text class='error'>{{ e }}<br></text>{% endfor %}
+					{{ form.location_of_excavation_including_termination_points.label }}
+					{{ form.location_of_excavation_including_termination_points }}
+                    <text id='location_of_excavation_including_termination_points_no' style='display:none;color:red;'>Invalid</text>
+                    <text id='location_of_excavation_including_termination_points_yes' style='display:none;color:green;'>Valid</text><br>
+					{% for e in form.start_date_for_excavation.errors %}<text class='error'>{{ e }}<br></text>{% endfor %}
+					{{ form.start_date_for_excavation.label }}
+					{{ form.start_date_for_excavation }}<br>
+					{% for e in form.projected_end_date_for_excavation.errors %}<text class='error'>{{ e }}<br></text>{% endfor %}
+					{{ form.projected_end_date_for_excavation.label }}
+					{{ form.projected_end_date_for_excavation }}				
+				</p>
+			</div>
+			<h3><b>4. General Provisions</b></h3>
+			<div>
+				<p>
+					<ul>
+						<li>The permitting process is designing to help prevent damage during excavation /
+						boring operations on the Carthage Campus. It is also to insure that all contractors
+						adhere to appropriate landscape / tree preservation and protection practices. It is
+						not intended to modify a project's drawings or specifications</li>
+						<li>The applicant will review, in detail, the proposed area of excavation with an
+						authorized member of the facilities department of Carthage. A formal meeting with
+						other campus departments may also be required. No excavation or boring
+						may proceed without written authorization as provided by this permit signed by
+						the Associate Vice President for Business</li>
+						<li>Boring procedures will include line and grade control by a licensed surveryor or
+						professional engineer. The procedures will include verification and summary of the work
+						performed by the licensed surveyor or engineer and shall be submitted to the campus facilities
+						staff upon completion of boring</li>
+						<li>Upon completion of the excavation / boring project, as-built drawings of work
+						performed will be provided to campus facilities staff. These drawings will include
+						positional data including elevations for all items that were installed as part of the excavation project</li>
+						<li>The applicant will clearly mark the boundary of the proposed excavation / boring site. ALl locates,
+						public and private, shall be the responsiblity of the applicant. Campus facilities services will cooperate
+						with information sharing but the final responsibility for locating and protecting campus utilities and infrastructure
+						is the sole responsibility of the applicant</li>
+						<li>The applicant will provide, with this completed application, an insurance certificate showing the following coverage:</li>
+						<ul>
+						<li>General Liability - $1,000,000</li>
+						<li>Automobile Liability - $1,000,000</li>
+						<li>Workers Compensation - $1,000,000</li>
+						<li>Employer Liability - $1,000,000</li>
+						</ul>
+						<li>The successful issuance of an excavation permit <b>DOES NOT</b> grant the applicant
+						permission to deactivate, energize or de-energize, lockout tag out, change any
+						utilities, feeds, or value settings without the express consent of the Carthage
+						facilities department. If any utility or service disruptions are expected as part of this project,
+						they must be disclosed as part of this application process</li>
+						<li>Applicant is responsible for tree protection including a temporary fence at all tree
+						drip line is required by the College. Applicant is responsible for the proper removal and off
+						campus disposal of all spoils. Disturbed turf must be restored within five days of
+						the end of excavation / boring</li>
+						<li>The applicant agrees that if any part of these requirements is not fulfilled, Carthage
+						will make remedies at the applicant's sole expense.</li>
+					</ul>			
+				</p>
+			</div>
+			<h3><b>5. Submit Request</b></h3>
+			<div>
+				<p>
+					<text class="error">
+						{% if form.errors %}
+							*Please fix the errors before submitting<br><br>
+						{% endif %}
+					</text>
+					I acknowledge as an applicant of an excavation / boring permit I have reviewed the permit procedures
+					and agree to comply with the above terms and conditions<br>
+					<input type="Submit" id="submit" value="I agree"></submit>
+				</p>
+			</div>
+		</div>
+	</form>
+</body>
+    <script type="text/javascript">
+        var element = document.getElementById('id_applicant_name');
+        element.oninput = function() {
+            var n=document.getElementById('applicant_name_no');
+            var y=document.getElementById('applicant_name_yes');
+            if(!validateApplicantName()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_company');
+        element.oninput = function() {
+            var n=document.getElementById('company_no');
+            var y=document.getElementById('company_yes');
+            if(!validateCompany()){
+                n.style.display='inline'; y.style.display='none';
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_reason_for_excavation_or_boring');
+        element.oninput = function(){
+            var n=document.getElementById('reason_for_excavation_or_boring_no');
+            var y=document.getElementById('reason_for_excavation_or_boring_yes');
+            if(!validateReasonForExcavationOrBoring()){
+                n.style.display='inline'; y.style.display='none';
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+		};
+		element = document.getElementById('id_location_of_excavation_including_termination_points');
+		element.oninput = function(){
+		    var n=document.getElementById('location_of_excavation_including_termination_points_no');
+		    var y=document.getElementById('location_of_excavation_including_termination_points_yes');
+		    if(!validateLocationOfExcavationIncludingTerminationPoints()){
+		        n.style.display='inline'; y.style.display='none'; 
+		    }
+		    else{
+		        n.style.display='none'; y.style.display='inline';
+		    }
+		};
+    </script>
+</html>

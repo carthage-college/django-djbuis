@@ -1,0 +1,176 @@
+<!doctype html>
+	<style>
+		.errorlist, .error {
+			color: red;
+		}
+	</style>
+<html lang='en'>	
+<head>
+	<meta charset="utf-8" />
+	<title>CLIS Telephone Mac Order Form</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<link rel="stylesheet" href="themes/dot-luv/jquery.ui.all.css" />
+	<script type="text/javascript">
+		function validate_name(){
+		    var id = document.getElementById('id_name');
+		    var val = id.value;
+		    var patt = new RegExp('^.+$');
+		    return patt.test(val);
+        }
+        function validate_department(){
+        	var id = document.getElementById('id_department');
+        	var val = id.value;
+        	var patt = new RegExp('^.+$');
+        	return patt.test(val);
+        }
+        function validate_user_number(){
+        	var id = document.getElementById('id_user_number');
+        	var val = id.value;
+        	var patt = new RegExp('^1?\\-?\\(?\\d{3}\\)?\\-?\\d{3}\\-?\\d{4}$|NEW');
+        	return patt.test(val);
+        }
+        function validate_from_location(){
+        	var id = document.getElementById('id_from_location');
+        	var val = id.value;
+        	var patt = new RegExp('^.+$');
+        	return patt.test(val);
+        }
+        function validate_to_location(){
+        	var id = document.getElementById('id_to_location');
+        	var val = id.value;
+        	var patt = new RegExp('^.+$');
+        	return patt.test(val);
+        }
+        function validate_caller_id(){
+        	var id = document.getElementById('id_caller_id');
+        	var val = id.value;
+        	var patt = new RegExp('^.+$');
+        	return patt.test(val);
+        }
+	</script>
+</head>
+<body>
+	{% block content %}
+	<h1>CLIS TELEPHONE MAC ORDER FORM</h1>
+	<h3>To request a telephone move, add or change, please fill out the information below.  If you have any questions, please call Ryan Ade at ext. 2146</h3>
+	<div>
+		<form action="" method="post"> {% csrf_token %}	
+			{{form.name.errors}}
+			{{form.name.label}}
+			{{form.name}}
+			<text id='name_yes' style='display:none;color:green;'>Y</text>
+			<text id='name_no' style='display:none;color:red'>N</text><br><br>
+			{{form.department.errors}}
+			{{form.department.label}}
+			{{form.department}}
+			<text id='department_yes' style='display:none;color:green;'>Y</text>
+			<text id='department_no' style='display:none;color:red'>N</text><br><br>
+			{{form.user_number.errors}}
+			{{form.user_number.label}}
+			<p>If user is NEW and needs a number type "NEW"</p>
+			{{form.user_number}}
+			<text id='user_number_yes' style='display:none;color:green;'>Y</text>
+			<text id='user_number_no' style='display:none;color:red'>N</text><br><br>
+			{{form.request.errors}}
+			{{form.request.label}}
+			<p>Select appropriate option below</p>
+			{{form.request}}<br><br>
+			{{form.from_location.errors}}
+			{{form.from_location.label}}
+			<p>Where is the user moving from? If NEW USER type NEW. Include Building Name and Room Number</p>
+			{{form.from_location}}
+			<text id='from_location_yes' style='display:none;color:green;'>Y</text>
+			<text id='from_location_no' style='display:none;color:red'>N</text><br><br>
+			{{form.to_location.errors}}
+			{{form.to_location.label}}
+			<p>Where is the user moving to? If NEW USER type NEW. Include Building Name and Room Number</p>
+			{{form.to_location}}
+			<text id='to_location_yes' style='display:none;color:green;'>Y</text>
+			<text id='to_location_no' style='display:none;color:red'>N</text><br><br>
+			{{form.caller_id.errors}}
+			{{form.caller_id.label}}
+			<p>Enter the name as it would appear on the caller ID below</p>
+			{{form.caller_id}}
+			<text id='caller_id_yes' style='display:none;color:green;'>Y</text>
+			<text id='caller_id_no' style='display:none;color:red'>N</text><br><br>
+			{{form.date_of_change.errors}}
+			{{form.date_of_change.label}}
+			{{form.date_of_change}}<br><br>
+			{{form.email.errors}}
+			{{form.email.label}}
+			{{form.email}}<br><br>
+		<input type="submit" name="submit" value="Submit Form">
+		</form>
+	</div>
+</body>
+	<script type='text/javascript'>
+		var element = document.getElementById('id_name');
+        element.oninput = function() {
+            var n=document.getElementById('name_no');
+            var y=document.getElementById('name_yes');
+            if(!validate_name()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_department');
+        element.oninput = function(){
+        	var n=document.getElementById('department_no');
+        	var y=document.getElementById('department_yes');
+        	if(!validate_department()){
+        		n.style.display='inline'; y.style.display='none';
+        	}
+        	else {
+        		n.style.display='none'; y.style.display='inline';
+        	}
+        };
+        element = document.getElementById('id_user_number');
+        element.oninput = function(){
+        	var n=document.getElementById('user_number_no');
+        	var y=document.getElementById('user_number_yes');
+        	if(!validate_user_number()){
+        		n.style.display='inline'; y.style.display='none';
+        	}
+        	else {
+        		n.style.display='none'; y.style.display='inline';
+        	}
+        };
+        element = document.getElementById('id_from_location');
+        element.oninput = function(){
+        	var n=document.getElementById('from_location_no');
+        	var y=document.getElementById('from_location_yes');
+        	if(!validate_from_location()){
+        		n.style.display='inline'; y.style.display='none';
+        	}
+        	else {
+        		n.style.display='none'; y.style.display='inline';
+        	}
+        };
+        element = document.getElementById('id_to_location');
+        element.oninput = function(){
+        	var n=document.getElementById('to_location_no');
+        	var y=document.getElementById('to_location_yes');
+        	if(!validate_to_location()){
+        		n.style.display='inline'; y.style.display='none';
+        	}
+        	else {
+        		n.style.display='none'; y.style.display='inline';
+        	}
+        };
+        element = document.getElementById('id_caller_id');
+        element.oninput = function(){
+        	var n=document.getElementById('caller_id_no');
+        	var y=document.getElementById('caller_id_yes');
+        	if(!validate_caller_id()){
+        		n.style.display='inline'; y.style.display='none';
+        	}
+        	else {
+        		n.style.display='none'; y.style.display='inline';
+        	}
+        };        
+	</script>
+</html>
+{% endblock %}

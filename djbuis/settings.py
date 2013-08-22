@@ -64,6 +64,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'djbuis',
+    'eventparking',
+    'excavatebore',
+    'keyrequest',
+    'maintenance',
+    'phonemove',
 )
 
 MIDDLEWARE_CLASSES = (

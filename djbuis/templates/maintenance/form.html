@@ -1,0 +1,268 @@
+<!doctype html>
+	<style>
+	.line{
+		width:100%;
+	}
+	div{
+		float:left;
+	}
+	fieldset{
+		float:left;
+	}
+	.error{
+		color:red;
+	}
+	</style>
+<html lang='en'>
+<head>
+	<meta charset='utf-8' />
+	<script type='text/javascript'>
+	function validate_building(){
+		var id = document.getElementById('id_building');
+		var val = id.value;
+		var patt = new RegExp('^.+$');
+		return patt.test(val);
+	}
+	function validate_floor(){
+		var id = document.getElementById('id_floor');
+		var val = id.value;
+		var patt = new RegExp('^[a-zA-Z0-9]+$');
+		return patt.test(val);
+	}
+	function validate_room(){
+		var id = document.getElementById('id_room');
+		var val = id.value;
+		var patt = new RegExp('^[0-9]+$');
+		return patt.test(val);
+	}
+	function validate_other_location_information(){
+		var id = document.getElementById('id_other_location_information');
+		var val = id.value;
+		var patt = new RegExp('^.+$');
+		return patt.test(val);
+	}
+	function validate_description_of_service(){
+		var id = document.getElementById('id_description_of_service');
+		var val = id.value;
+		var patt = new RegExp('^.+$');
+		return patt.test(val);
+	}
+	function validate_name(){
+		var id = document.getElementById('id_name');
+		var val = id.value;
+		var patt = new RegExp('^.+$');
+		return patt.test(val);
+	}
+	/*function validate_campus_telephone(){
+		var id = document.getElementById('id_campus_telephone');
+		var val = id.value;
+		var patt = new RegExp('^[a-zA-Z\\s\\-]+$');
+		return patt.test(val);
+	}*/
+	function validate_office(){
+		var id = document.getElementById('id_office');
+		var val = id.value;
+		var patt = new RegExp('^.+$');
+		return patt.test(val);
+	}	
+	</script>
+</head>
+<body>
+	<h2>Maintenance / Environmental Service Request<br>Please file request with the Business Office LH 432</h2>
+	<form action='' method='post'>{% csrf_token %}
+	<div class='line'>
+		<fieldset>
+			<legend>Location of requested service</legend>
+			<div class='line'>
+				<div>
+					{{ form.building.label }}
+					{{ form.building }}
+					<text id='building_no' style='display:none;color:red;'>N</text>
+					<text id='building_yes' style='display:none;color:green;'>Y</text>
+					<br>
+					{% for error in form.building.errors %}
+						<text class='error'>*{{ error }}</text>
+					{% endfor %}
+				</div>
+				<div>
+					{{ form.floor.label }}
+					{{ form.floor }}
+					<text id='floor_no' style='display:none;color:red;'>N</text>
+					<text id='floor_yes' style='display:none;color:green;'>Y</text>
+					<br>
+					{% for error in form.floor.errors %}
+						<text class='error'>*{{ error }}</text>
+					{% endfor %}
+				</div>
+				<div>
+					{{ form.room.label }}
+					{{ form.room }}
+					<text id='room_no' style='display:none;color:red;'>N</text>
+					<text id='room_yes' style='display:none;color:green;'>Y</text>
+					<br>
+					{% for error in form.room.errors %}
+						<text class='error'>*{{ error }}</text>
+					{% endfor %}
+				</div>
+			</div>
+			<br>
+			<div class='line'>
+				{{ form.other_location_information.label }}
+				{{ form.other_location_information }}
+				<text id='other_location_information_no' style='display:none;color:red;'>N</text>
+				<text id='other_location_information_yes' style='display:none;color:green;'>Y</text>
+				<br>
+				{% for error in form.other_location_information.errors %}
+					<text class='error'>*{{ error }}</text>
+				{% endfor %}
+			</div>
+		</fieldset>
+	</div>
+	<div class='line'>
+		<fieldset>
+			<legend style="display:None;"></legend>
+			<div class='line'>
+				{{ form.description_of_service.label }}
+				<text id='description_of_service_no' style='display:none;color:red;'>N</text>
+				<text id='description_of_service_yes' style='display:none;color:green;'>Y</text>
+				{% for error in form.description_of_service.errors %}
+					<text class='error'>*{{ error }}</text>
+				{% endfor %}
+				<div style="float:right;position:relative;margin-left:-150px;">
+				{{ form.description_of_service }}
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<div class='line'>
+		<fieldset>
+			<legend>Contact information</legend>
+			<div class='line'>
+				<div>
+					{{ form.name.label }}
+					{{ form.name }}
+					<text id='name_no' style='display:none;color:red;'>N</text>
+					<text id='name_yes' style='display:none;color:green;'>Y</text>
+					<br>
+					{% for error in form.name.errors %}
+						<text class='error'>*{{ error }}</text>
+					{% endfor %}
+				</div>
+				<div>
+					{{ form.campus_telephone.label }}
+					{{ form.campus_telephone }}
+					<!--<text id='name_no' style='display:none;color:red;'>N</text>-->
+					<!--<text id='name_yes' style='display:none;color:green;'>Y</text>-->
+					<br>
+					{% for error in form.campus_telephone.errors %}
+						<text class='error'>*{{ error }}</text>
+					{% endfor %}
+				</div>
+			</div>
+			<br>
+			<div class='line'>
+				{{ form.office.label }}
+				{{ form.office }}
+				<text id='office_no' style='display:none;color:red;'>N</text>
+				<text id='office_yes' style='display:none;color:green;'>Y</text>
+				<br>
+				{% for error in form.office.errors %}
+					<text class='error'>*{{ error }}</text>
+				{% endfor %}
+			</div>
+		</fieldset>
+	</div>
+	<input type='submit' value='Submit'>
+	</form>
+</body>
+	<script type='text/javascript'>
+        var element = document.getElementById('id_building');
+        element.oninput = function() {
+            var n=document.getElementById('building_no');
+            var y=document.getElementById('building_yes');
+            if(!validate_building()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_floor');
+        element.oninput = function() {
+            var n=document.getElementById('floor_no');
+            var y=document.getElementById('floor_yes');
+            if(!validate_floor()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_room');
+        element.oninput = function() {
+            var n=document.getElementById('room_no');
+            var y=document.getElementById('room_yes');
+            if(!validate_room()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_other_location_information');
+        element.oninput = function() {
+            var n=document.getElementById('other_location_information_no');
+            var y=document.getElementById('other_location_information_yes');
+            if(!validate_other_location_information()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_description_of_service');
+        element.oninput = function() {
+            var n=document.getElementById('description_of_service_no');
+            var y=document.getElementById('description_of_service_yes');
+            if(!validate_description_of_service()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_name');
+        element.oninput = function() {
+            var n=document.getElementById('name_no');
+            var y=document.getElementById('name_yes');
+            if(!validate_name()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        /*element = document.getElementById('id_campus_telephone');
+        element.oninput = function() {
+            var n=document.getElementById('campus_telephone_no');
+            var y=document.getElementById('campus_telephone_yes');
+            if(!validate_campus_telephone()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };*/
+        element = document.getElementById('id_office');
+        element.oninput = function() {
+            var n=document.getElementById('office_no');
+            var y=document.getElementById('office_yes');
+            if(!validate_office()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };        
+	</script>
+</html>
