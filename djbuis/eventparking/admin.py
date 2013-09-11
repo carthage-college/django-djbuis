@@ -9,9 +9,9 @@ from djbuis.eventparking.models import Parking, ProxyParking
 
 #This is an 'action' a user can perform to a 'eventparking' object
 def push_to_production(modeladmin, request, queryset):
-	push_to_production.short_description = 'Push to production server' #What the user sees
-	
-	# This is the bulk of moving data from the development to production databases
+    push_to_production.short_description = 'Push to production server' #What the user sees
+    
+    # This is the bulk of moving data from the development to production databases
     #
     # *Understand this first - The data that exists in the form will be moved to separate
     # tables in the production server. Some fields might be moved to table 'A', others to table
@@ -65,9 +65,35 @@ def push_to_production(modeladmin, request, queryset):
     #           messages.error(request, 'Object did not have an address')
     #       obj.save()
     #       messages.success(request, 'Object was moved to production!')
+    
+    
+    #SQL Alchemy
+    engine = create_engine(INFORMIX_EARL_TEST)
+    connection = engine.connect()
+    
+    for each in queryset:
+
+        sql = """INSERT INTO TABLE_NAME (column1, column2, column3) 
+                VALUES (%r, %r, %r)
+                ON DUPLICATE KEY UPDATE primary_key_column_in_database=%r;""" % (each.value1, each.value2, each.value3, each.primary_key)
+        command = connection.execute(sql)
+        
 
 class FormAdmin(admin.ModelAdmin):
-	readonly_files = ('date_recieved') #You will not be able to change these fields when editing an 'eventparking' object
-	actions = [push_to_production] #Includes the action we defined earlier in this page
-	
+    search_fields = ['event_name','event_date'] #We can search by event name
+    list_display = ('event_name', 'event_date','event_location') #We will only see the following fields as columns in the admin page
+    readonly_files = ('date_recieved') #You will not be able to change these fields when editing an 'eventparking' object
+    fieldsets = (
+        ('Permit type', {
+            'fields': ('event_name','event_location','event_date','event_time','crowd_estimate')        
+        }),
+        ('Contact information', {
+            'fields': ('contact_person','phone_number')
+        }),
+        ('Admin fields', {
+            'fields': ('parking_arrangements_required','date_completed')
+        })
+    )
+    actions = [push_to_production] #Includes the action we defined earlier in this page
+    
 admin.site.register(ProxyParking, FormAdmin)

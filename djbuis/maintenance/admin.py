@@ -6,9 +6,9 @@ from djbuis.maintenance.models import Maintenance, ProxyMaintenance
 
 #This is an 'action' a user can perform to a 'maintenance' object
 def push_to_production(modeladmin, request, queryset):
-	push_to_production.short_description = 'Push to production server' #What the user sees
-	
-	# This is the bulk of moving data from the development to production databases
+    push_to_production.short_description = 'Push to production server' #What the user sees
+    
+    # This is the bulk of moving data from the development to production databases
     #
     # *Understand this first - The data that exists in the form will be moved to separate
     # tables in the production server. Some fields might be moved to table 'A', others to table
@@ -62,8 +62,8 @@ def push_to_production(modeladmin, request, queryset):
     #           messages.error(request, 'Object did not have an address')
     #       obj.save()
     #       messages.success(request, 'Object was moved to production!')
-	
+    
 class MaintenanceAdmin(admin.ModelAdmin):
-	readonly_fields = ('date_recieved',) #We won't be able to edit these fields in the admin page
-	
+    readonly_fields = ('date_recieved',) #We won't be able to edit these fields in the admin page
+    
 admin.site.register(ProxyMaintenance, MaintenanceAdmin) #If we register the proxy, we don't register the model associated with the proxy

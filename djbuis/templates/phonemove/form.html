@@ -1,112 +1,206 @@
 <!doctype html>
-	<style>
-		.errorlist, .error {
-			color: red;
-		}
-	</style>
-<html lang='en'>	
+<html lang='en'>
+<style>
+    fieldset.inlineLabels li {list-style:none}
+</style>
 <head>
-	<meta charset="utf-8" />
-	<title>CLIS Telephone Mac Order Form</title>
-	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<link rel="stylesheet" href="themes/dot-luv/jquery.ui.all.css" />
-	<script type="text/javascript">
-		function validate_name(){
-		    var id = document.getElementById('id_name');
-		    var val = id.value;
-		    var patt = new RegExp('^.+$');
-		    return patt.test(val);
+<meta charset="utf-8" />
+    <title>CLIS Telephone Mac Order Form</title>
+    <link rel='stylesheet' type='text/css' href='{{static_url}}djbuis/css/base_css.css'/>
+    <script type="text/javascript">
+        function validate_name(){
+            var id = document.getElementById('id_name');
+            var val = id.value;
+            var patt = new RegExp('^[a-zA-Z\']+[a-zA-Z\\-\\s\']+$');
+            return patt.test(val);
         }
         function validate_department(){
-        	var id = document.getElementById('id_department');
-        	var val = id.value;
-        	var patt = new RegExp('^.+$');
-        	return patt.test(val);
+            var id = document.getElementById('id_department');
+            var val = id.value;
+            var patt = new RegExp('^.+$');
+            return patt.test(val);
         }
         function validate_user_number(){
-        	var id = document.getElementById('id_user_number');
-        	var val = id.value;
-        	var patt = new RegExp('^1?\\-?\\(?\\d{3}\\)?\\-?\\d{3}\\-?\\d{4}$|NEW');
-        	return patt.test(val);
+            var id = document.getElementById('id_user_number');
+            var val = id.value;
+            var patt = new RegExp('^(\\d{4}|\\d{3}[\\s\\-\\.]?\\d{4}|1?[\\s\\-\\.]?\\(?\\d{3}\\)?[\\s\\-\\.]?\\d{3}[\\s\\-\\.]?\\d{4}|NEW)$');
+            return patt.test(val);
         }
         function validate_from_location(){
-        	var id = document.getElementById('id_from_location');
-        	var val = id.value;
-        	var patt = new RegExp('^.+$');
-        	return patt.test(val);
+            var id = document.getElementById('id_from_location');
+            var val = id.value;
+            var patt = new RegExp('^.+$');
+            return patt.test(val);
         }
         function validate_to_location(){
-        	var id = document.getElementById('id_to_location');
-        	var val = id.value;
-        	var patt = new RegExp('^.+$');
-        	return patt.test(val);
+            var id = document.getElementById('id_to_location');
+            var val = id.value;
+            var patt = new RegExp('^.+$');
+            return patt.test(val);
         }
         function validate_caller_id(){
-        	var id = document.getElementById('id_caller_id');
-        	var val = id.value;
-        	var patt = new RegExp('^.+$');
-        	return patt.test(val);
+            var id = document.getElementById('id_caller_id');
+            var val = id.value;
+            var patt = new RegExp('^.+$');
+            return patt.test(val);
         }
-	</script>
+        function validate_date_of_change(){
+            var id = document.getElementById('id_date_of_change');
+            var val = id.value;
+            var newdate = new Date();
+            var value = val.split("-");
+            var inputdate = new Date(value[0],value[1]-1,value[2]);
+            if (inputdate.getTime() < newdate.getTime()){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    </script>
 </head>
 <body>
-	{% block content %}
-	<h1>CLIS TELEPHONE MAC ORDER FORM</h1>
-	<h3>To request a telephone move, add or change, please fill out the information below.  If you have any questions, please call Ryan Ade at ext. 2146</h3>
-	<div>
-		<form action="" method="post"> {% csrf_token %}	
-			{{form.name.errors}}
-			{{form.name.label}}
-			{{form.name}}
-			<text id='name_yes' style='display:none;color:green;'>Y</text>
-			<text id='name_no' style='display:none;color:red'>N</text><br><br>
-			{{form.department.errors}}
-			{{form.department.label}}
-			{{form.department}}
-			<text id='department_yes' style='display:none;color:green;'>Y</text>
-			<text id='department_no' style='display:none;color:red'>N</text><br><br>
-			{{form.user_number.errors}}
-			{{form.user_number.label}}
-			<p>If user is NEW and needs a number type "NEW"</p>
-			{{form.user_number}}
-			<text id='user_number_yes' style='display:none;color:green;'>Y</text>
-			<text id='user_number_no' style='display:none;color:red'>N</text><br><br>
-			{{form.request.errors}}
-			{{form.request.label}}
-			<p>Select appropriate option below</p>
-			{{form.request}}<br><br>
-			{{form.from_location.errors}}
-			{{form.from_location.label}}
-			<p>Where is the user moving from? If NEW USER type NEW. Include Building Name and Room Number</p>
-			{{form.from_location}}
-			<text id='from_location_yes' style='display:none;color:green;'>Y</text>
-			<text id='from_location_no' style='display:none;color:red'>N</text><br><br>
-			{{form.to_location.errors}}
-			{{form.to_location.label}}
-			<p>Where is the user moving to? If NEW USER type NEW. Include Building Name and Room Number</p>
-			{{form.to_location}}
-			<text id='to_location_yes' style='display:none;color:green;'>Y</text>
-			<text id='to_location_no' style='display:none;color:red'>N</text><br><br>
-			{{form.caller_id.errors}}
-			{{form.caller_id.label}}
-			<p>Enter the name as it would appear on the caller ID below</p>
-			{{form.caller_id}}
-			<text id='caller_id_yes' style='display:none;color:green;'>Y</text>
-			<text id='caller_id_no' style='display:none;color:red'>N</text><br><br>
-			{{form.date_of_change.errors}}
-			{{form.date_of_change.label}}
-			{{form.date_of_change}}<br><br>
-			{{form.email.errors}}
-			{{form.email.label}}
-			{{form.email}}<br><br>
-		<input type="submit" name="submit" value="Submit Form">
-		</form>
-	</div>
+<div>
+{% if submitted %}
+        <h2>Your form has been submitted, thank you</h2>
+{% endif %}
+</div>
+    <div>
+        <div class='sidebar'>
+            <img src='http://imageshack.us/a/img651/7008/carthage1.png'></img>
+        </div>
+        <div class='mainbar'>
+            <div class='header'>
+                <text class='headertext'>CLIS Telephone MAC Order Form</text>
+            </div><br>
+            {{ form.non_field_errors }}
+            <form action='' method='post'>{% csrf_token %}
+                <text class='separator'>Personal Information</text><hr>
+                <table>
+                    <tr>
+                        <td><text class='fieldlabel'>{{ form.name.label }}</text></td>
+                        <td>{{ form.name }}</td>
+                        <td>
+                            <img class='hidden' id='name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                            <img class='hidden' id='name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                            {% for e in form.name.errors %}
+                                <text class='error'>*{{ e }}</text>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><text class='fieldlabel'>{{ form.department.label }}</text></td>
+                        <td>{{ form.department }}</td>
+                        <td>
+                            <img class='hidden' id='department_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                            <img class='hidden' id='department_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                            {% for e in form.department.errors %}
+                                <text class='error'>*{{ e }}</text>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </table><br>
+                <text class='separator'>Phone number information</text><hr>
+                <text>If user is new and needs a number, type "NEW" for phone number</text>
+                <table>
+                    <tr>
+                        <td><text class='fieldlabel'>{{ form.user_number.label }}</text></td>
+                        <td>{{ form.user_number }}</td>
+                        <td>
+                            <img class='hidden' id='user_number_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                            <img class='hidden' id='user_number_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                            {% for e in form.user_number.errors %}
+                                <text class='error'>*{{ e }}</text>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><text class='fieldlabel'>{{ form.caller_id.label }}</td>
+                        <td>{{ form.caller_id }}</td>
+                        <td>
+                            <img class='hidden' id='caller_id_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                            <img class='hidden' id='caller_id_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                            {% for e in form.caller_id.errors %}
+                                <text class='error'>*{{ e }}</text>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><text class='fieldlabel'>{{ form.request.label }}</td>
+                        
+                        <td>
+                        {% for thing in form.request %}
+                               {{ thing }}
+                               <br>
+                        {% endfor %}        
+                        </td>
+                        <td>
+                            {% for e in form.request.errors %}
+                                <text class='error'>*{{ e }}</text>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </table><br>
+                <text class='separator'>Location information</text><hr>
+                <text>
+                    Where is the user moving from / to..? Include Building Name and Room Number.
+                    If a new user, type "NEW" for both fields.
+                </text>
+                <table>
+                    <tr>
+                        <td><text class='fieldlabel'>{{ form.from_location.label }}</text></td>
+                        <td>{{ form.from_location }}</td>
+                        <td>
+                            <img class='hidden' id='from_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                            <img class='hidden' id='from_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                            {% for e in form.from_location.errors %}
+                                <text class='error'>*{{ e }}</text>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><text class='fieldlabel'>{{ form.to_location.label }}</text></td>
+                        <td>{{ form.to_location }}</td>
+                        <td>
+                            <img class='hidden' id='to_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                            <img class='hidden' id='to_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                            {% for e in form.to_location.errors %}
+                                <text class='error'>*{{ e }}</text>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </table><br>
+                <text class='separator'>Service details</text><hr>
+                <table>
+                    <tr>
+                        <td><text class='fieldlabel'>{{ form.date_of_change.label }}</text></td>
+                        <td>{{ form.date_of_change }}</td>
+                        <td>
+                            <img class='hidden' id='date_of_change_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                            <img class='hidden' id='date_of_change_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                            {% for e in form.date_of_change.errors %}
+                                <text class='error'>*{{ e }}</text>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><text class='fieldlabel'>{{ form.email.label }}</text></td>
+                        <td>{{ form.email }}</td>
+                        <td>
+                            {% for e in form.email.errors %}
+                                <text class='error'>*{{ e }}</text>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </table><br><br>
+                <input type="submit" name="submit" value="Submit form">
+            </form>
+        </div>
+    </div>
 </body>
-	<script type='text/javascript'>
-		var element = document.getElementById('id_name');
-        element.oninput = function() {
+    <script type='text/javascript'>
+        var element = document.getElementById('id_name');
+        element.onblur = function() {
             var n=document.getElementById('name_no');
             var y=document.getElementById('name_yes');
             if(!validate_name()){ 
@@ -117,60 +211,70 @@
             }
         };
         element = document.getElementById('id_department');
-        element.oninput = function(){
-        	var n=document.getElementById('department_no');
-        	var y=document.getElementById('department_yes');
-        	if(!validate_department()){
-        		n.style.display='inline'; y.style.display='none';
-        	}
-        	else {
-        		n.style.display='none'; y.style.display='inline';
-        	}
+        element.onblur = function(){
+            var n=document.getElementById('department_no');
+            var y=document.getElementById('department_yes');
+            if(!validate_department()){
+                n.style.display='inline'; y.style.display='none';
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
         };
         element = document.getElementById('id_user_number');
-        element.oninput = function(){
-        	var n=document.getElementById('user_number_no');
-        	var y=document.getElementById('user_number_yes');
-        	if(!validate_user_number()){
-        		n.style.display='inline'; y.style.display='none';
-        	}
-        	else {
-        		n.style.display='none'; y.style.display='inline';
-        	}
+        element.onblur = function(){
+            var n=document.getElementById('user_number_no');
+            var y=document.getElementById('user_number_yes');
+            if(!validate_user_number()){
+                n.style.display='inline'; y.style.display='none';
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
         };
         element = document.getElementById('id_from_location');
-        element.oninput = function(){
-        	var n=document.getElementById('from_location_no');
-        	var y=document.getElementById('from_location_yes');
-        	if(!validate_from_location()){
-        		n.style.display='inline'; y.style.display='none';
-        	}
-        	else {
-        		n.style.display='none'; y.style.display='inline';
-        	}
+        element.onblur = function(){
+            var n=document.getElementById('from_location_no');
+            var y=document.getElementById('from_location_yes');
+            if(!validate_from_location()){
+                n.style.display='inline'; y.style.display='none';
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
         };
         element = document.getElementById('id_to_location');
-        element.oninput = function(){
-        	var n=document.getElementById('to_location_no');
-        	var y=document.getElementById('to_location_yes');
-        	if(!validate_to_location()){
-        		n.style.display='inline'; y.style.display='none';
-        	}
-        	else {
-        		n.style.display='none'; y.style.display='inline';
-        	}
+        element.onblur = function(){
+            var n=document.getElementById('to_location_no');
+            var y=document.getElementById('to_location_yes');
+            if(!validate_to_location()){
+                n.style.display='inline'; y.style.display='none';
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
         };
         element = document.getElementById('id_caller_id');
-        element.oninput = function(){
-        	var n=document.getElementById('caller_id_no');
-        	var y=document.getElementById('caller_id_yes');
-        	if(!validate_caller_id()){
-        		n.style.display='inline'; y.style.display='none';
-        	}
-        	else {
-        		n.style.display='none'; y.style.display='inline';
-        	}
+        element.onblur = function(){
+            var n=document.getElementById('caller_id_no');
+            var y=document.getElementById('caller_id_yes');
+            if(!validate_caller_id()){
+                n.style.display='inline'; y.style.display='none';
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_date_of_change')
+        element.onblur = function() {                               
+            var n=document.getElementById('date_of_change_no');
+            var y=document.getElementById('date_of_change_yes');
+            if(!validate_date_of_change()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
         };        
-	</script>
+    </script>
 </html>
-{% endblock %}

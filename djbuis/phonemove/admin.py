@@ -9,9 +9,9 @@ from djbuis.phonemove.models import PhoneModel
 
 #This is an 'action' a user can perform to a 'excavatebore' object
 def push_to_production(modeladmin, request, queryset):
-	push_to_production.short_description = 'Push to production server' #What the user sees
-	
-	# This is the bulk of moving data from the development to production databases
+    push_to_production.short_description = 'Push to production server' #What the user sees
+    
+    # This is the bulk of moving data from the development to production databases
     #
     # *Understand this first - The data that exists in the form will be moved to separate
     # tables in the production server. Some fields might be moved to table 'A', others to table
@@ -68,12 +68,12 @@ def push_to_production(modeladmin, request, queryset):
     #
 
 
-	#for each in queryset:
-	#	FinprivRec.objects.using('productiondefault').get_or_create(, code_name=each.name)
-		
+    #for each in queryset:
+    #    FinprivRec.objects.using('productiondefault').get_or_create(, code_name=each.name)
+        
 
 class PhoneAdmin(admin.ModelAdmin):
-	list_display = ('name', 'date_of_change') #We will only see the following fields as columns in the admin page
-	actions = [push_to_production] #Includes the action we defined earlier in this page	
-	
+    list_display = ('name', 'date_of_change') #We will only see the following fields as columns in the admin page
+    actions = [push_to_production] #Includes the action we defined earlier in this page    
+    
 admin.site.register(PhoneModel, PhoneAdmin) #Always be sure to add the model before adding the admin class
