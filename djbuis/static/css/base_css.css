@@ -1,0 +1,50 @@
+div{
+    float:left;
+}
+
+html{
+    background-color:rgb(229,220,193); /*lighter color*/
+}
+
+table{
+    background-color:rgb(192,157,106); /*darker color*/
+}
+
+/*Error message*/
+.error{
+    color:red;
+}
+/*For hidden images*/
+.hidden{
+    display:none;
+}
+/*For side bar*/
+.sidebar{
+    float:left;
+    background-color:black;
+}
+/*Main content*/
+.mainbar{
+    float:left;
+    width:80%;
+    padding-left:0px;
+}
+/*Header*/
+.header{
+    width:100%;
+    background-color:black;
+    color:white;
+}
+/*Text for header*/
+.headertext{
+    font-size:140%;
+}
+/*Text for separator labels*/
+.separator{
+    font-size:120%;
+    font-weight:bold;
+}
+/*Form field labels*/
+.fieldlabel{
+    font-weight:bold;
+}

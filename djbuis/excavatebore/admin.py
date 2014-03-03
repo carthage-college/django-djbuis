@@ -110,6 +110,6 @@ class ExcavateAdmin(admin.ModelAdmin):
     readonly_fields = ('excavate','bore','server') #You will not be able to change these fields when editing an 'excavatebore' object
     actions = [push_to_production] #Includes the action we defined earlier in this page
 
-admin.site.register(ExcavateProxy)    #If making a proxy, you only have to register the proxy, not the model nor the admin
-#admin.site.register(ExcavateModel, ExcavateAdmin) #Always be sure to add the model before adding the admin class
+#admin.site.register(ExcavateProxy)    #If making a proxy, you only have to register the proxy, not the model nor the admin
+admin.site.register(ExcavateModel, ExcavateAdmin) #Always be sure to add the model before adding the admin class
 

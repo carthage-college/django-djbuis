@@ -34,8 +34,8 @@ class ExcavateModel(models.Model):
     
     #Here I set global options for this model
     class Meta:
-        verbose_name = 'Excavate / Bore' #I want to call it 'Excavate / Bore' in the django admin page
-        verbose_name_plural = 'Excavate / Bore' #Plural version
+        verbose_name = 'Excavate - Bore application' #I want to call it 'Excavate / Bore' in the django admin page
+        verbose_name_plural = 'Excavate - Bore applications' #Plural version
         #db_table = 'excavate_app_excavatemodel'
     
 #I make a proxy here because I want to (eventually) put this form, along with others, under a common header
