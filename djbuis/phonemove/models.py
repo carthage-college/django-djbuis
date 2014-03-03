@@ -21,3 +21,7 @@ class PhoneModel(models.Model):
     caller_id = models.CharField(max_length=500)
     date_of_change = models.DateField()
     email = models.BooleanField() #This is a checkbox field
+    
+    class Meta:
+        verbose_name = 'Phone move application'
+        verbose_name_plural = 'Phone move applications'

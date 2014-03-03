@@ -19,6 +19,10 @@ class Parking(models.Model):
     #Defines how the model will represent itself in the admin page
     def __unicode__(self):
         return self.event_name
+        
+    class Meta:
+        verbose_name = 'Event parking application'
+        verbose_name_plural = 'Event parking applications'
 
 #A proxy class so we can have this model under a different header in the database
 class ProxyParking(Parking):
