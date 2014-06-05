@@ -31,10 +31,10 @@ class Keys(models.Model):
         ("OTH", 'Other (please explain)'),
         )
 
-    building = models.CharField(choices=BUILDINGS, verbose_name="Building")
+    building = models.CharField(choices=BUILDINGS, max_length=50, verbose_name="Building")
     room_number = models.PositiveIntegerField(max_length=5, verbose_name="Room Number")
     key_code_if_known = models.CharField(max_length=100, verbose_name="Key Code")
-    issued_to = models.CharField(max_length="100", verbose_name="Issued to")
+    issued_to = models.CharField(max_length=100, verbose_name="Issued to")
     signature = models.CharField(max_length=100, blank=True)
     building1 = models.CharField(choices=BUILDINGS, max_length=200, blank=True)
     room_number1 = models.IntegerField(max_length=20000, blank=True, null=True)
@@ -56,7 +56,7 @@ class Keys(models.Model):
     key_code_if_known4 = models.CharField(max_length=100, blank=True)
     issued_to4 = models.CharField(max_length=100, blank=True)
     signature4 = models.CharField(max_length=100, blank=True)
-    reason = models.CharField(choices=REASONS, default = "NEWE", verbose_name="Reason:")
+    reason = models.CharField(choices=REASONS, default = "NEWE", max_length=50,  verbose_name="Reason:")
     other = models.CharField(max_length = 500, blank=True)
     date_completed = models.DateField(blank=True)
     chair_sig = models.CharField(max_length=100, blank=True)
