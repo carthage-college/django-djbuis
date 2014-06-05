@@ -11,18 +11,32 @@ class ExcavateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ExcavateForm, self).__init__(*args,**kwargs)
         
-        #I am adding error messages if neither field has any value in it or if it is invalid
-        #self.fields['start_date_for_excavation'].error_messages = {'required': 'Use this format:mm/dd/yyyy','invalid': 'Try this format:mm/dd/yyyy'}
-        #self.fields['projected_end_date_for_excavation'].error_messages = {'required': 'Use this format:mm/dd/yyyy','invalid': 'Try this format:mm/dd/yyyy'}
+    #error messages are found below    
+    def clean_name(self):    
+        name = self.cleaned_data['applicant_name']
+        if not re.match(r'([a-zA-Z]+\s?){3}', name):
+            raise forms.ValidationError('Enter a name with no special characters or extra spaces')
+        return data
         
-        #self.fields['applicant_name'].validators = [validators.RegexValidator(regex='^[a-zA-Z\']+[a-zA-Z\-\s\']+$', message='Not a valid name', code='a')]
-        #self.fields['company'].validators = [validators.RegexValidator(regex='^.+$', message='Not a valid company', code='a')]
-        #self.fields['reason_for_excavation_or_boring'].validators = [validators.RegexValidator(regex='^.+$', message='Please remove invalid characters', code='a')]
-        #self.fields['location_of_excavation_including_termination_points'].validators = [validators.RegexValidator(regex='^.+$', message='Please remove invalid characters', code='a')]
-        
-    #Another option to include validation
+    def clean_company(self):
+        comp = self.cleaned_data['company']
+        if not re.match("\w+", comp):
+            raise forms.ValidationError('Please do not enter any special characters in your company name.')
+        return data
+    
+    def clean_reason(self):    
+        reason = self.cleaned_data['reason_for_excavation_or_boring']
+        if not re.match ("\w+", reason):
+            raise forms.ValidationError('Please do not enter any special characters in your reason.')
+        return data
+    def clean_location(self):
+        location = self.cleaned_data['location_of_excavation_or_boring']
+        if not("\w+", location):
+            raise forms.ValidationError('Please do not enter any special characters in your location.')
+        return data
+    
     def clean(self):
-        cleaned_data = self.cleaned_data #Grabs the clean data
+        cleaned_data = self.cleaned_data #Grabs the clean data        
         excavate = cleaned_data.get("excavate")
         bore = cleaned_data.get("bore")
         
@@ -54,7 +68,9 @@ class ExcavateForm(forms.ModelForm):
             if date2 < datetime.date.today():
                 msg2 = u"The date cannot be in the past!"
                 self._errors["start_date_for_excavation"] = self.error_class([msg2]) #Adds the error message to the field
-                del cleaned_data["start_date_for_excavation"]        
+                del cleaned_data["start_date_for_excavation"]
+                
+        
             
         return cleaned_data 
         #Return the data back to the form

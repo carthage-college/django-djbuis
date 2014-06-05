@@ -12,7 +12,7 @@ class ModelForm(forms.ModelForm):
     def clean_contact_number(self):
         data = self.cleaned_data['contact_number']
         if not re.match(r'^1?-?\(?\d{3}\)?-?\d{3}-?\d{4}$', data):
-            raise forms.ValidationError('enter a valid phone number')
+            raise forms.ValidationError('Enter a valid phone number')
         return data
     
     def clean(self):
