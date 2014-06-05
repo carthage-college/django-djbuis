@@ -2,13 +2,20 @@ from django import forms
 from models import Keys
 from django.core.exceptions import ValidationError
 from django.core import validators
+import re
 
 # Create your forms here.
 class ModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args, **kwargs)
-        self.fields['contact_number'].validators = [validators.RegexValidator(regex='^1?-?\(?\d{3}\)?-?\d{3}-?\d{4}$', message='enter a valid phone number', code='bad_phone')]
+        #self.fields['contact_number'].validators = [validators.RegexValidator(regex='^1?-?\(?\d{3}\)?-?\d{3}-?\d{4}$', message='enter a valid phone number', code='bad_phone')]
 
+    def clean_contact_number(self):
+        data = self.cleaned_data['contact_number']
+        if not re.match(r'^1?-?\(?\d{3}\)?-?\d{3}-?\d{4}$', data):
+            raise forms.ValidationError('enter a valid phone number')
+        return data
+    
     def clean(self):
         cleaned_data = super(ModelForm, self).clean()
 
