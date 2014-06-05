@@ -172,53 +172,53 @@
         </div>
     </div>
 </body>
-    <script type='text/javascript'>
-    var element = document.getElementById('id_contact_number');
-    element.onblur = function() {
-        var n=document.getElementById('contact_number_no');
-        var y=document.getElementById('contact_number_yes');
-        if(!validateContact_Number()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    var element = document.getElementById('id_name');
-    element.onblur = function() {
-        var n=document.getElementById('name_no');
-        var y=document.getElementById('name_yes');
-        if(!validateName()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    var element = document.getElementsByName('reason');
-    for (var i = 0; i < element.length; i++)
-       {
-            element[i].onclick = function() {
-            var value = this.value;
-            var othervar = document.getElementById('othertable'); 
-            if (value != "OTH"){
-                othervar.style.display = 'none';
-                }
-            else{
-                othervar.style.display = 'table-row';
-                }
-            };
-        }
-    var element = document.getElementById('id_account');
-    element.onblur = function() {
-        var n=document.getElementById('account_no');
-        var y=document.getElementById('account_yes');
-        if(!validateAccount()){
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    </script>
+<script type='text/javascript'>
+var element = document.getElementById('id_contact_number');
+element.onblur = function() {
+    var n=document.getElementById('contact_number_no');
+    var y=document.getElementById('contact_number_yes');
+    if(!validateContact_Number()){ 
+        n.style.display='inline'; y.style.display='none'; 
+    }
+    else {
+        n.style.display='none'; y.style.display='inline';
+    }
+};
+var element = document.getElementById('id_name');
+element.onblur = function() {
+    var n=document.getElementById('name_no');
+    var y=document.getElementById('name_yes');
+    if(!validateName()){ 
+        n.style.display='inline'; y.style.display='none'; 
+    }
+    else {
+        n.style.display='none'; y.style.display='inline';
+    }
+};
+var element = document.getElementsByName('reason');
+for (var i = 0; i < element.length; i++)
+   {
+        element[i].onclick = function() {
+        var value = this.value;
+        var othervar = document.getElementById('othertable'); 
+        if (value != "OTH"){
+            othervar.style.display = 'none';
+            }
+        else{
+            othervar.style.display = 'table-row';
+            }
+        };
+    }
+var element = document.getElementById('id_account');
+element.onblur = function() {
+    var n=document.getElementById('account_no');
+    var y=document.getElementById('account_yes');
+    if(!validateAccount()){
+        n.style.display='inline'; y.style.display='none'; 
+    }
+    else {
+        n.style.display='none'; y.style.display='inline';
+    }
+};
+</script>
 </html>

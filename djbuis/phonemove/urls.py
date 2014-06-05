@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from phonemove import views
+import views
 
 urlpatterns = patterns('',
 	url(r'^$', views.create, name="create"),

@@ -56,14 +56,14 @@ class LogEntryAdmin(admin.ModelAdmin):
     object_link.short_description = u'object'
 
 def push_to_database(modeladmin, request, queryset):
-	for item in queryset:
-		FinprivRec.objects.using('productiondefault').get_or_create(id=item.Carthage_ID_Number, code_name=item.name)
-		
+    for item in queryset:
+        FinprivRec.objects.using('productiondefault').get_or_create(id=item.Carthage_ID_Number, code_name=item.name)
+        
 push_to_database.short_description = "Approve for moving to another database"
 
 class Admin(admin.ModelAdmin):
-	list_display = ('issued_to', 'building')
-	actions = [push_to_database]
-	
+    list_display = ('issued_to', 'building')
+    actions = [push_to_database]
+    
 admin.site.register(Keys, Admin)
 admin.site.register(LogEntry, LogEntryAdmin)

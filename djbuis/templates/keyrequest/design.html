@@ -7,6 +7,7 @@
 	</style>
  
 <html lang="en">
+<title>Request a Key</title>
 <head>
   <meta charset="utf-8" />
   <title>jQuery UI Accordion - Default functionality</title>
@@ -28,7 +29,7 @@
 {% block content %}
 <h1>Business Office Key Request Form</h1>
 <div id="accordion">
-	<h3>Key Information{% if form.building.errors or form.room_number.errors or key_code_if_known or issued_to %}<text class="error">  *</text> {% endif %}</h3>
+	<h3>Key Information{% if form.building.errors or form.room_number.errors or form.key_code_if_known.errors or form.issued_to.errors %}<text class="error">  *</text> {% endif %}</h3>
 	<div>
 		<p>Only the first row of fields are required. The rest are optional.</p>
 		<form action="" method="post"> {% csrf_token %}	
@@ -102,11 +103,11 @@
 		{{form.chair_sig}}
 		{{form.dean_sig}}
 	</div>
-	<h3>Submit!</h3>
-	<div>
-		<input type="submit" name="submit" value="Submit Form">
-	</div>
 </div>
+<div>
+    <input type="submit" name="submit" value="Submit Form">
+</div>
+
 </form>
 
 {% endblock %}
