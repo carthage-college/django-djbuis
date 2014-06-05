@@ -8,11 +8,7 @@ class ModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args, **kwargs)
         self.fields['contact_number'].validators = [validators.RegexValidator(regex='^1?-?\(?\d{3}\)?-?\d{3}-?\d{4}$', message='enter a valid phone number', code='bad_phone')]
-        self.fields['account'].label = "Account to Charge"
-        self.fields['building'].error_messages = {'required': 'You did not fill in the first field of the building column.'}
-        self.fields['room_number'].error_messages = {'required': 'You did not fill in the first field of the room number column.'}
-        self.fields['key_code_if_known'].error_messages = {'required': 'You did not fill in the first field of the key code if known column.'}
-        self.fields['issued_to'].error_messages = {'required': 'You did not fill in the first field of the issued to column.'}
+
     def clean(self):
         cleaned_data = super(ModelForm, self).clean()
 

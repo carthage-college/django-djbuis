@@ -31,9 +31,9 @@ class Keys(models.Model):
         ("OTH", 'Other (please explain)'),
         )
 
-    building = models.CharField(choices=BUILDINGS, max_length=200)
-    room_number = models.PositiveIntegerField(max_length=20000)
-    key_code_if_known = models.CharField(max_length=100)
+    building = models.CharField(choices=BUILDINGS, verbose_name="Building")
+    room_number = models.PositiveIntegerField(verbose_name="Building")
+    key_code_if_known = models.CharField(verbose_name="Key Code")
     issued_to = models.CharField(max_length=100)
     signature = models.CharField(max_length=100, blank=True)
     building1 = models.CharField(choices=BUILDINGS, max_length=200, blank=True)
