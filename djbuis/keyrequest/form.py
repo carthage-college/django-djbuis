@@ -8,7 +8,6 @@ import re
 class ModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args, **kwargs)
-        #self.fields['contact_number'].validators = [validators.RegexValidator(regex='^1?-?\(?\d{3}\)?-?\d{3}-?\d{4}$', message='enter a valid phone number', code='bad_phone')]
 
     def clean_contact_number(self):
         data = self.cleaned_data['contact_number']
