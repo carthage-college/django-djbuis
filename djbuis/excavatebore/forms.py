@@ -2,8 +2,10 @@
 import datetime
 from django import forms
 from django.core import validators
+from django.core.exceptions import ValidationError
 from djbuis.excavatebore.models import ExcavateModel #Include the model that goes with this form
 from django.contrib.admin import widgets #Import this if you want to change the layout of certain fields
+import re
 
 class ExcavateForm(forms.ModelForm):
 
@@ -14,7 +16,7 @@ class ExcavateForm(forms.ModelForm):
     #error messages are found below    
     def clean_name(self):    
         name = self.cleaned_data['applicant_name']
-        if not re.match(r'([a-zA-Z]+\s?){3}', name):
+        if not re.match(r'([a-zA-Z]+\s?){1,3}', name):
             raise forms.ValidationError('Enter a name with no special characters or extra spaces')
         return data
         
@@ -41,10 +43,7 @@ class ExcavateForm(forms.ModelForm):
         bore = cleaned_data.get("bore")
         
         if not excavate and not bore:
-            msg = u"Please select either 'Excavate' or 'Bore'"
-            self._errors["excavate"] = self.error_class([msg]) #Adds the error message to the field
-            self._errors["bore"] = self.error_class([msg]) #Adds the error message to the field
-            
+            self._errors['excavate'] = self.error_class(['Please select either excavate or bore'])
             del cleaned_data["excavate"] #Django told me to do this?
             del cleaned_data["bore"]
             
