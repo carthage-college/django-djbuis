@@ -12,13 +12,13 @@ class ExcavateForm(forms.ModelForm):
         super(ExcavateForm, self).__init__(*args,**kwargs)
         
         #I am adding error messages if neither field has any value in it or if it is invalid
-        self.fields['start_date_for_excavation'].error_messages = {'required': 'Use this format:mm/dd/yyyy','invalid': 'Try this format:mm/dd/yyyy'}
-        self.fields['projected_end_date_for_excavation'].error_messages = {'required': 'Use this format:mm/dd/yyyy','invalid': 'Try this format:mm/dd/yyyy'}
+        #self.fields['start_date_for_excavation'].error_messages = {'required': 'Use this format:mm/dd/yyyy','invalid': 'Try this format:mm/dd/yyyy'}
+        #self.fields['projected_end_date_for_excavation'].error_messages = {'required': 'Use this format:mm/dd/yyyy','invalid': 'Try this format:mm/dd/yyyy'}
         
-        self.fields['applicant_name'].validators = [validators.RegexValidator(regex='^[a-zA-Z\']+[a-zA-Z\-\s\']+$', message='Not a valid name', code='a')]
-        self.fields['company'].validators = [validators.RegexValidator(regex='^.+$', message='Not a valid company', code='a')]
-        self.fields['reason_for_excavation_or_boring'].validators = [validators.RegexValidator(regex='^.+$', message='Please remove invalid characters', code='a')]
-        self.fields['location_of_excavation_including_termination_points'].validators = [validators.RegexValidator(regex='^.+$', message='Please remove invalid characters', code='a')]
+        #self.fields['applicant_name'].validators = [validators.RegexValidator(regex='^[a-zA-Z\']+[a-zA-Z\-\s\']+$', message='Not a valid name', code='a')]
+        #self.fields['company'].validators = [validators.RegexValidator(regex='^.+$', message='Not a valid company', code='a')]
+        #self.fields['reason_for_excavation_or_boring'].validators = [validators.RegexValidator(regex='^.+$', message='Please remove invalid characters', code='a')]
+        #self.fields['location_of_excavation_including_termination_points'].validators = [validators.RegexValidator(regex='^.+$', message='Please remove invalid characters', code='a')]
         
     #Another option to include validation
     def clean(self):
@@ -26,7 +26,7 @@ class ExcavateForm(forms.ModelForm):
         excavate = cleaned_data.get("excavate")
         bore = cleaned_data.get("bore")
         
-        if excavate == False and bore == False:
+        if not excavate and not bore:
             msg = u"Please select either 'Excavate' or 'Bore'"
             self._errors["excavate"] = self.error_class([msg]) #Adds the error message to the field
             self._errors["bore"] = self.error_class([msg]) #Adds the error message to the field
@@ -38,7 +38,7 @@ class ExcavateForm(forms.ModelForm):
         date2 = cleaned_data.get('projected_end_date_for_excavation')
         
         
-        if date1 == None or date1 == "":
+        if not date1:
             msg = u"Invalid or past date"
             self._errors['start_date_for_excavation'] = self.error_class([msg])
         else:  
@@ -47,7 +47,7 @@ class ExcavateForm(forms.ModelForm):
                 self._errors["start_date_for_excavation"] = self.error_class([msg2]) #Adds the error message to the field
                 del cleaned_data["start_date_for_excavation"]
                 
-        if date2 == None or date2 == "":
+        if not date2:
             msg = u"Invalid or past date"
             self._errors['projected_end_date_for_excavation'] = self.error_class([msg])
         else:  

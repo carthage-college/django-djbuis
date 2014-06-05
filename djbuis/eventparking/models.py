@@ -6,8 +6,8 @@ class Parking(models.Model):
     #All of my fields for the form
     event_date = models.DateField() #Is a date field
     event_time = models.TimeField() #Is a time field
-    #crowd_estimate = models.PositiveIntegerField() #Only allows for positive numbers
-    crowd_estimate = models.CharField(max_length=10)
+    crowd_estimate = models.PositiveIntegerField() #Only allows for positive numbers
+    #crowd_estimate = models.CharField(max_length=10)
     event_name = models.CharField(max_length=200) #'max_length' is a required field for (most) all forms
     event_location = models.CharField(max_length=200)
     contact_person = models.CharField(max_length=50)
