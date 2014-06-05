@@ -1,0 +1,61 @@
+<!doctype html>
+
+	<style>
+		.errorlist, .error {
+			color: red;
+		}
+	</style>
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery UI Accordion - Default functionality</title>
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link rel="stylesheet" href="themes/dot-luv/jquery.ui.all.css" />
+</head>
+<html lang="en">
+{% block content %}
+<h1>CLIS TELEPHONE MAC ORDER FORM</h1>
+<h3>To request a telephone move, add or change, please fill out the information below.  If you have any questions, please call Ryan Ade at ext. 2146</h3>
+	<div>
+		<form action="" method="post"> {% csrf_token %}	
+			{{form.name.errors}}
+			{{form.name.label}}
+			{{form.name}}<br><br>
+			{{form.department.errors}}
+			{{form.department.label}}
+			{{form.department}}<br><br>
+			{{form.user_number.errors}}
+			{{form.user_number.label}}
+			<p>If user is NEW and needs a number type "NEW"</p>
+			{{form.user_number}}<br><br>
+			{{form.request.errors}}
+			{{form.request.label}}
+			<p>Select appropriate option below</p>
+			{{form.request}}<br><br>
+			{{form.from_location.errors}}
+			{{form.from_location.label}}
+			<p>Where is the user moving from? If NEW USER type NEW. Include Building Name and Room Number</p>
+			{{form.from_location}}<br><br>
+			{{form.to_location.errors}}
+			{{form.to_location.label}}
+			<p>Where is the user moving to? If NEW USER type NEW. Include Building Name and Room Number</p>
+			{{form.to_location}}<br><br>
+			{{form.caller_id.errors}}
+			{{form.caller_id.label}}
+			<p>Enter the name as it would appear on the caller ID below</p>
+			{{form.caller_id}}<br><br>
+			{{form.date_of_change.errors}}
+			{{form.date_of_change.label}}
+			{{form.date_of_change}}<br><br>
+			{{form.email.errors}}
+			{{form.email.label}}
+			{{form.email}}<br><br>
+			
+			
+	<div>
+		<input type="submit" name="submit" value="Submit Form">
+	</div>
+	</div>
+</form>
+
+{% endblock %}

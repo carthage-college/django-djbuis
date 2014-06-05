@@ -1,60 +1,60 @@
-#Include django.forms
 from django import forms
-from django.core.exceptions import ValidationError #This is so we can make error messages
-from django.core import validators #This is so we can use regex
-from django.forms.formsets import BaseFormSet
-
-from djbuis.keyrequest.models import KeyModel, OtherModel #Don't forget to import your models!
+from models import Keys
+from django.core.exceptions import ValidationError
+from django.core import validators
 
 # Create your forms here.
-class KeyForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(KeyForm, self).__init__(*args, **kwargs)
-        
-        self.fields['building'].error_messages['required'] = 'Required'
-        self.fields['room_number'].error_messages = {'required': 'Required', 'invalid': 'Use a whole number'}
-        self.fields['key_code_if_known'].error_messages['required'] = 'Required'
-        self.fields['issued_to'].error_messages['required'] = 'Required'
-        
-    class Meta:
-        model = KeyModel
-        exclude = ('key')
-    
-class OtherForm(forms.ModelForm):    
-    #This is needed if you want to add error messages, labels or additional validation for fields
-    def __init__(self, *args, **kwargs):
-        super(OtherForm, self).__init__(*args, **kwargs)
-        
-        self.fields['name'].validators = [validators.RegexValidator(regex='^[a-zA-Z\']+[a-zA-Z\-\s\']+$', message='Invalid characters in name', code='bad_name')]
-        self.fields['contact_number'].validators = [validators.RegexValidator(regex='^(\d{4}|\d{3}[\s\-\.]?\d{4}|1?[\s\-\.]?\(?\d{3}\)?[\s\-\.]?\d{3}[\s\-\.]?\d{4})$', message='Enter a valid phone number', code='bad_phone')]
-        self.fields['account'].label = "Account to Charge"
+class ModelForm(forms.ModelForm):	
+	def __init__(self, *args, **kwargs):
+		super(ModelForm, self).__init__(*args, **kwargs)
+		self.fields['contact_number'].validators = [validators.RegexValidator(regex='^1?-?\(?\d{3}\)?-?\d{3}-?\d{4}$', message='enter a valid phone number', code='bad_phone')]
+		self.fields['account'].label = "Account to Charge"
+		self.fields['building'].error_messages = {'required': 'You did not fill in the first field of the building column.'}
+		self.fields['room_number'].error_messages = {'required': 'You did not fill in the first field of the room number column.'}
+		self.fields['key_code_if_known'].error_messages = {'required': 'You did not fill in the first field of the key code if known column.'}
+		self.fields['issued_to'].error_messages = {'required': 'You did not fill in the first field of the issued to column.'}
+	def clean(self):
+		cleaned_data = super(ModelForm, self).clean()
 
-    #Another way to include custom validation
-    def clean(self):                                                                                                                                      
-        cleaned_data = super(OtherForm, self).clean() #Grabs the clean data
+		reason = cleaned_data.get("reason")
+		other = cleaned_data.get("other")
+		
+		building = cleaned_data.get("building")
+		room_number = cleaned_data.get("room_number")
+		key_code_if_known = cleaned_data.get("key_code_if_known")
+		issued_to = cleaned_data.get("issued_to")
+		
+		if reason == "OTH" and other == "":
+			msg = u"Please give a reason for picking \"other\""
+			self._errors["other"] = self.error_class([msg])
 
-        reason = cleaned_data.get("reason")
-        other = cleaned_data.get("other")
-        
-        if reason == "OTH" and other == "":
-            msg = u"Please give a reason for picking \"other\"" #Adds the error message to the field
-            self._errors["other"] = self.error_class([msg])
-
-            del cleaned_data["reason"] #Django told me to do this?
-            del cleaned_data["other"]
-        
-        return cleaned_data #Return the data back to the form
-        
-    #Global settings for the model    
-    class Meta:
-        model = OtherModel #All fields come from the model 'OtherModel'
-        widgets = {
-            'reason': forms.RadioSelect() #Turns the select drop down into a radio button select
-            }
-        exclude = ('dean_sig', 'date_completed',) #These fields are not seen in the form (in the html page)
-        
-class RequiredFormSet(BaseFormSet):
-    def __init__(self, *args, **kwargs):
-        super(RequiredFormSet, self).__init__(*args, **kwargs)
-        
-        self.forms[0].empty_permitted = False
+			del cleaned_data["reason"]
+			del cleaned_data["other"]
+		
+		if building == "":
+			msg = u"You did not fill in the first field of this column."
+			self._errors["building"] = self.error_class([msg])
+			del cleaned_data["building"]
+			
+		if room_number == "":
+			msg = u"You did not fill in the first field of this column."
+			self._errors["room_number"] = self.error_class([msg])
+			del cleaned_data["room_number"]
+			
+		if key_code_if_known == "":
+			msg = u"You did not fill in the first field of this column."
+			self._errors["key_code_if_known"] = self.error_class([msg])
+			del cleaned_data["key_code_if_known"]
+			
+		if issued_to == "":
+			msg = u"You did not fill in the first field of this column."
+			self._errors["issued_to"] = self.error_class([msg])
+			del cleaned_data["issued_to"]
+		
+		return cleaned_data
+	class Meta:
+		model = Keys
+		widgets = {
+			'reason': forms.RadioSelect()
+			}
+		exclude = ('signature', 'signature1', 'signature2', 'signature3', 'signature4', 'chair_sig', 'dean_sig',  'date_completed',)
