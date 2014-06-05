@@ -4,6 +4,7 @@ from django import forms
 from django.db import models
 from django.core import validators
 from django.contrib.admin import widgets
+import re
 
 #Make sure to include the model
 from djbuis.eventparking.models import Parking
@@ -16,17 +17,23 @@ class ParkingForm(forms.ModelForm):
         super(ParkingForm, self).__init__(*args, **kwargs)
         
         #Validation for fields
-        self.fields['phone_number'].validators = [validators.RegexValidator(regex='^1?[\s\-\.]?\(?\d{3}\)?[\s\-\.]?\d{3}[\s\-\.]?\d{4}$', message='Enter a valid phone number', code='a')]
-        self.fields['event_name'].validators = [validators.RegexValidator(regex='^.{5,200}$', message='Must be at 5+ characters long', code='bad_name')]
-        self.fields['event_location'].validators = [validators.RegexValidator(regex='^.{5,200}$', message='Must be at 5+ characters long', code='bad_location')]
-        self.fields['contact_person'].validators = [validators.RegexValidator(regex='^[a-zA-Z\']+[a-zA-Z\-\s\']+$', message='Invalid contact person', code='bad_person')]
-        self.fields['crowd_estimate'].validators = [validators.RegexValidator(regex='^(\d{1,10})$|^([\d]+(\,[\d]{3}){1,2}?)$', message='Invalid number', code='bad_number')]
+        #self.fields['phone_number'].validators = [validators.RegexValidator(regex='^1?[\s\-\.]?\(?\d{3}\)?[\s\-\.]?\d{3}[\s\-\.]?\d{4}$', message='Enter a valid phone number', code='a')]
+        #self.fields['event_name'].validators = [validators.RegexValidator(regex='^.{5,200}$', message='Must be at 5+ characters long', code='bad_name')]
+        #self.fields['event_location'].validators = [validators.RegexValidator(regex='^.{5,200}$', message='Must be at 5+ characters long', code='bad_location')]
+        #self.fields['contact_person'].validators = [validators.RegexValidator(regex='^[a-zA-Z\']+[a-zA-Z\-\s\']+$', message='Invalid contact person', code='bad_person')]
+        #self.fields['crowd_estimate'].validators = [validators.RegexValidator(regex='^(\d{1,10})$|^([\d]+(\,[\d]{3}){1,2}?)$', message='Invalid number', code='bad_number')]
+    
+    def clean_phone_number(self):
+        data = self.cleaned_data['phone_number']
+        if not re.match(r'^1?[\s\-\.]?\(?\d{3}\)?[\s\-\.]?\d{3}[\s\-\.]?\d{4}$', data):
+            raise forms.ValidationError('Enter a valid phone number')
+        return data
     
     def clean(self):
         cleaned_data = self.cleaned_data
         test = cleaned_data.get('event_date')
         
-        if test == None or test == "":
+        if not test:
             msg = u"Invalid or past date"
             self._errors['event_date'] = self.error_class([msg])
         else:
