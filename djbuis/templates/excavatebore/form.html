@@ -15,25 +15,25 @@
         function validateApplicantName(){
             var id = document.getElementById('id_applicant_name');
             var val = id.value;
-            var patt = new RegExp('^[a-zA-Z\']+[a-zA-Z\\-\\s\']+$');
+            var patt = new RegExp('^((?:[a-zA-Z]+\\s?){1,2}[a-zA-Z]+)$');
             return patt.test(val);
         }
         function validateCompany(){
             var id = document.getElementById('id_company');
             var val = id.value;
-            var patt = new RegExp('^.+$');
+            var patt = new RegExp('.+');
             return patt.test(val);
         }
         function validateReasonForExcavationOrBoring(){
             var id = document.getElementById('id_reason_for_excavation_or_boring');
             var val = id.value;
-            var patt = new RegExp('^.+$');
+            var patt = new RegExp('.+');
             return patt.test(val);
         }
         function validateLocationOfExcavationIncludingTerminationPoints(){
             var id = document.getElementById('id_location_of_excavation_including_termination_points');
             var val = id.value;
-            var patt = new RegExp('^.+$');
+            var patt = new RegExp('.+');
             return patt.test(val);
         }
         function validate_start_date_for_excavation(){
@@ -168,7 +168,7 @@
                             <img style='display:none;' id='projected_end_date_for_excavation_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                             <img style='display:none;' id='projected_end_date_for_excavation_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                             {% for e in form.projected_end_date_for_excavation.errors %}
-                                <text class='error'>{{ e }}</text>
+                                <text class='error'>*{{ e }}</text>
                             {% endfor %}
                         </td>
                     </tr>

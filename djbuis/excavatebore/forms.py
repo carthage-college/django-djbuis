@@ -14,28 +14,11 @@ class ExcavateForm(forms.ModelForm):
         super(ExcavateForm, self).__init__(*args,**kwargs)
         
     #error messages are found below    
-    def clean_name(self):    
+    def clean_applicant_name(self):    
         name = self.cleaned_data['applicant_name']
-        if not re.match(r'([a-zA-Z]+\s?){1,3}', name):
+        if not re.match(r'^((?:[a-zA-Z]+\s?){1,2}[a-zA-Z]+)$', name):
             raise forms.ValidationError('Enter a name with no special characters or extra spaces')
-        return data
-        
-    def clean_company(self):
-        comp = self.cleaned_data['company']
-        if not re.match("\w+", comp):
-            raise forms.ValidationError('Please do not enter any special characters in your company name.')
-        return data
-    
-    def clean_reason(self):    
-        reason = self.cleaned_data['reason_for_excavation_or_boring']
-        if not re.match ("\w+", reason):
-            raise forms.ValidationError('Please do not enter any special characters in your reason.')
-        return data
-    def clean_location(self):
-        location = self.cleaned_data['location_of_excavation_or_boring']
-        if not("\w+", location):
-            raise forms.ValidationError('Please do not enter any special characters in your location.')
-        return data
+        return name
     
     def clean(self):
         cleaned_data = self.cleaned_data #Grabs the clean data        
@@ -61,7 +44,7 @@ class ExcavateForm(forms.ModelForm):
                 del cleaned_data["start_date_for_excavation"]
                 
         if not date2:
-            msg = u"Invalid or past date"
+            msg = u"Invalid date"
             self._errors['projected_end_date_for_excavation'] = self.error_class([msg])
         else:  
             if date2 < datetime.date.today():
