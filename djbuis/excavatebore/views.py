@@ -17,13 +17,13 @@ def index(request):
             form.save() #Save the form data to the datbase table
             form = ExcavateForm()
             submitted = True
-            return render(request, 'excavatebore/form.html', {
+            return render(request, 'excavatebore/design.html', {
                             'form': form,
                             'submitted': submitted
             })
     else:
         form = ExcavateForm()
         
-    return render(request, 'excavatebore/form.html', {
+    return render(request, 'excavatebore/design.html', {
         'form': form,
     })

@@ -1,3 +1,4 @@
+{% extends "djkorra/base.html" %}
 <!doctype html>
 
 	<style>
@@ -16,93 +17,83 @@
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <link rel="stylesheet" href="/jquery-ui-1.9.2.custom/css/redstuff/jquery-ui-1.9.2.custom.css" />
   <link rel="stylesheet" href="/jquery-ui-1.9.2.custom/css/redstuff/jquery-ui-1.9.2.custom.min.css" />
-  <script>
-  $(function() {
-    $( "#accordion" ).accordion({
-		heightStyle: "content",
-		collapsible: true,
-		active: false,
-	});
-  });
-  </script>
+
 </head>
 {% block content %}
 <h1>Business Office Key Request Form</h1>
-<div id="accordion">
-	<h3>Key Information{% if form.building.errors or form.room_number.errors or form.key_code_if_known.errors or form.issued_to.errors %}<text class="error">  *</text> {% endif %}</h3>
-	<div>
-		<p>Only the first row of fields are required. The rest are optional.</p>
-		<form action="" method="post"> {% csrf_token %}	
-			{{form.building.errors}}
-			{{form.room_number.errors}}
-			{{form.key_code_if_known.errors}}
-			{{form.issued_to.errors}}
-			<table>
-			<tr>
-				<td>{{form.building.label}}</td>
-				<td>{{form.room_number.label}}</td>
-				<td>{{form.key_code_if_known.label}}</td>
-				<td>{{form.issued_to.label}}</td>
-			</tr>
-			<tr>
-				<td>{{form.building}}</td>
-				<td>{{form.room_number}}</td>
-				<td>{{form.key_code_if_known}}</td>
-				<td>{{form.issued_to}}</td>				
-			</tr>
-			<tr>
-				<td>{{form.building1}}</td>
-				<td>{{form.room_number1}}</td>
-				<td>{{form.key_code_if_known1}}</td>
-				<td>{{form.issued_to1}}</td>
-			</tr>
-				<td>{{form.building2}}</td>
-				<td>{{form.room_number2}}</td>
-				<td>{{form.key_code_if_known2}}</td>
-				<td>{{form.issued_to2}}</td>
-			</tr>
-			<tr>
-				<td>{{form.building3}}</td>
-				<td>{{form.room_number3}}</td>
-				<td>{{form.key_code_if_known3}}</td>
-				<td>{{form.issued_to3}}</td>
-			</tr>
-			<tr>
-				<td>{{form.building4}}</td>
-				<td>{{form.room_number4}}</td>
-				<td>{{form.key_code_if_known4}}</td>
-				<td>{{form.issued_to4}}</td>
-			</tr>
-			</table>
-			{{form.signature}}
-			{{form.signature1}}
-			{{form.signature2}}
-			{{form.signature3}}
-			{{form.signature4}}
-	</div>
-	<h3>Reason for request{% if form.reason.errors or form.other.errors %}<text class="error">  *</text> {% endif %}</h3>
-	<div>
-		{{form.reason.errors}}
-		{{form.reason.label}}
-		{{form.reason}}
-		{{form.other.errors}}
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.other}}
-	</div>
-	<h3>Personal Info {% if form.name.errors or form.contact_number.errors or form.account.errors %}<text class="error">  *</text> {% endif %}</h3>
-	<div>		
-		{{form.name.errors}}
-		{{form.name.label}}
-		{{form.name}}<br><br>
-		{{form.contact_number.errors}}
-		{{form.contact_number.label}}
-		{{form.contact_number}}<br><br>
-		{{form.account.errors}}
-		{{form.account.label}}
-		{{form.account}}<br><br>
-		{{form.date_completed}}
-		{{form.chair_sig}}
-		{{form.dean_sig}}
-	</div>
+<h3>Key Information{% if form.building.errors or form.room_number.errors or form.key_code_if_known.errors or form.issued_to.errors %}<text class="error">  *</text> {% endif %}</h3>
+<div>
+    <p>Only the first row of fields are required. The rest are optional.</p>
+    <form action="" method="post"> {% csrf_token %}	
+        {{form.building.errors}}
+        {{form.room_number.errors}}
+        {{form.key_code_if_known.errors}}
+        {{form.issued_to.errors}}
+        <table>
+        <tr>
+            <td>{{form.building.label}}</td>
+            <td>{{form.room_number.label}}</td>
+            <td>{{form.key_code_if_known.label}}</td>
+            <td>{{form.issued_to.label}}</td>
+        </tr>
+        <tr>
+            <td>{{form.building}}</td>
+            <td>{{form.room_number}}</td>
+            <td>{{form.key_code_if_known}}</td>
+            <td>{{form.issued_to}}</td>				
+        </tr>
+        <tr>
+            <td>{{form.building1}}</td>
+            <td>{{form.room_number1}}</td>
+            <td>{{form.key_code_if_known1}}</td>
+            <td>{{form.issued_to1}}</td>
+        </tr>
+            <td>{{form.building2}}</td>
+            <td>{{form.room_number2}}</td>
+            <td>{{form.key_code_if_known2}}</td>
+            <td>{{form.issued_to2}}</td>
+        </tr>
+        <tr>
+            <td>{{form.building3}}</td>
+            <td>{{form.room_number3}}</td>
+            <td>{{form.key_code_if_known3}}</td>
+            <td>{{form.issued_to3}}</td>
+        </tr>
+        <tr>
+            <td>{{form.building4}}</td>
+            <td>{{form.room_number4}}</td>
+            <td>{{form.key_code_if_known4}}</td>
+            <td>{{form.issued_to4}}</td>
+        </tr>
+        </table>
+        {{form.signature}}
+        {{form.signature1}}
+        {{form.signature2}}
+        {{form.signature3}}
+        {{form.signature4}}
+</div>
+<h3>Reason for request{% if form.reason.errors or form.other.errors %}<text class="error">  *</text> {% endif %}</h3>
+<div>
+    {{form.reason.errors}}
+    {{form.reason.label}}
+    {{form.reason}}
+    {{form.other.errors}}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.other}}
+</div>
+<h3>Personal Info {% if form.name.errors or form.contact_number.errors or form.account.errors %}<text class="error">  *</text> {% endif %}</h3>
+<div>		
+    {{form.name.errors}}
+    {{form.name.label}}
+    {{form.name}}<br><br>
+    {{form.contact_number.errors}}
+    {{form.contact_number.label}}
+    {{form.contact_number}}<br><br>
+    {{form.account.errors}}
+    {{form.account.label}}
+    {{form.account}}<br><br>
+    {{form.date_completed}}
+    {{form.chair_sig}}
+    {{form.dean_sig}}
 </div>
 <div>
     <input type="submit" name="submit" value="Submit Form">

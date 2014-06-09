@@ -15,7 +15,7 @@ def index(request):
             form.save() #Save the form data to the datbase table
             form = ParkingForm()
             submitted = True
-            return render(request, 'eventparking/form.html',{
+            return render(request, 'eventparking/design.html',{
                             'form': form,
                             'submitted': submitted
             })
@@ -23,6 +23,6 @@ def index(request):
         
     else:
         form = ParkingForm()
-    return render(request, 'eventparking/form.html', {
+    return render(request, 'eventparking/design.html', {
         'form': form
     })
