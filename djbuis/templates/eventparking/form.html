@@ -1,4 +1,3 @@
-{% extends "djkorra/base.html" %}
 <!doctype html>
 <html lang='en' style='background-color:rgb(229,220,193);'>
 <head>
@@ -8,31 +7,31 @@
         function validate_name(){
             var id = document.getElementById('id_contact_person');
             var val = id.value;
-            var patt = new RegExp('^[a-zA-Z\']+[a-zA-Z\\-\\s\']+$');
+            var patt = new RegExp('^((?:[a-zA-Z]+\\s?){1,2}[a-zA-Z]+)$');
             return patt.test(val);        
         }
         function validate_phone(){
             var number = document.getElementById('id_phone_number')
             var val = number.value;
-            var patt = new RegExp('^1?[\\s\\-\\.]?\\(?\\d{3}\\)?[\\s\\-\\.]?\\d{3}[\\s\\-\\.]?\\d{4}$');
+            var patt = new RegExp('1?[\\s-]?\\(?(\\d{3})\\)?[\\s-]?\\d{3}[\\s-]?\\d{4}');
             return patt.test(val);
         }
         function validate_event_name(){
             var id = document.getElementById('id_event_name');
             var val = id.value;
-            var patt = new RegExp('^.{5,200}$');
+            var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
             return patt.test(val);
         }
         function validate_event_location(){
             var id = document.getElementById('id_event_location');
             var val = id.value;
-            var patt = new RegExp('^.{5,200}$');
+            var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
             return patt.test(val);
         }
         function validate_crowd_estimate(){
             var id = document.getElementById('id_crowd_estimate');
             var val = id.value;
-            var patt = new RegExp('^(\\d{1,10})$|^([\\d]+(\,[\\d]{3}){1,2}?)$');
+            var patt = new RegExp('^(\d{1,7})$');
             return patt.test(val);
         }
         function validate_event_date(){
@@ -42,6 +41,9 @@
             var value = val.split("-");
             var inputdate = new Date(value[0],value[1]-1,value[2]);
             if (inputdate.getTime() < newdate.getTime()){
+                return false;
+            }
+            else if (val == ""){
                 return false;
             }
             else{
