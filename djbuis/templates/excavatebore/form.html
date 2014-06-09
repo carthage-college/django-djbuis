@@ -1,6 +1,8 @@
+{% extends "djkorra/base.html" %}
 <!doctype html>
 <html lang="en">
 <head>
+    <style>.error {color: red}</style>
     <meta charset="utf-8" />
     <title>Excavate / Bore Form</title>
     <link rel='stylesheet' type='text/css' href='{{static_url}}djbuis/css/base_css.css'/>
@@ -81,15 +83,13 @@
             {{ form.non_field_errors }}
             <form action='' method='post'>{% csrf_token %}
                 <text class='separator'>Permit Type</text><hr>
+                {% for e in form.excavate.errors %}
+                    <text class='error'>{{ e }}</text>
+                {% endfor %}
                 <table>
                     <tr>
                         <td><text class='fieldlabel'>{{ form.excavate.label }}</text></td>
                         <td>{{ form.excavate }}</td>
-                        <td>
-                            {% for e in form.excavate.errors %}
-                                <text class='error'>*{{ e }}</text>
-                            {% endfor %}
-                        </td>
                     </tr>
                     <tr>
                         <td><text class='fieldlabel'>{{ form.bore.label }}</text></td>
