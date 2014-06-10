@@ -1,17 +1,34 @@
 {% extends "djkorra/base.html" %}
 <!doctype html>
 
-    <style>
-        .errorlist, .error {
-            color: red;
-        }
-    </style>
+    
 <head>
   <meta charset="utf-8" />
   <title>jQuery UI Accordion - Default functionality</title>
+  {% block extra_style %}
+  <style>
+        .errorlist, .error {
+            color: red;
+        }
+        input[type=checkbox]
+        {
+          -webkit-appearance:checkbox;
+        }
+        input[type=radio]
+        {
+          -webkit-appearance:radio;
+        }
+    </style>
+  <link rel="stylesheet" href="themes/dot-luv/jquery.ui.all.css" />
+  <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
+    <link href="//www.carthage.edu/static/vendor/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//www.carthage.edu/themes/shared/css/forms.css" rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/themes/shared/css/tables.css" rel="stylesheet" type="text/css" />
+  {% endblock %}
+  {% block javascript %}
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <link rel="stylesheet" href="themes/dot-luv/jquery.ui.all.css" />
+  {% endblock %}
 </head>
 <html lang="en">
 {% block content %}
