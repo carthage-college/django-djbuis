@@ -55,6 +55,10 @@
     </script>
     {% endblock %}
     <link rel='stylesheet' type='text/css' href='{{ static_url }}djbuis/css/base_css.css'>
+    <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
+    <link href="//www.carthage.edu/static/vendor/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//www.carthage.edu/themes/shared/css/forms.css" rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/themes/shared/css/tables.css" rel="stylesheet" type="text/css" />
 </head>
 {% block content %}
 <body>
@@ -79,83 +83,83 @@
             <li>Depending on scheduling Event sponsors may be required to arrange parking at an off campus site with guests and event participants shuttled to campus from this off campus location.</li>
         </ul>
         <form action='' method='post'>{% csrf_token %}
-            <text style='font-size:120%;font-weight:bold;'>Event information</text><hr>
+            <span style='font-size:120%;font-weight:bold;'>Event information</span><hr>
                 <table style='background-color:rgb(192,157,106);'>
                     <tr>
-                        <td><text style='font-weight:bold;'>{{ form.event_name.label }}</text></td>
+                        <td><span style='font-weight:bold;'>{{ form.event_name.label }}</span></td>
                         <td>{{ form.event_name }}</td>
                         <td>
                             <img style='display:none;' id='event_name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                             <img style='display:none;' id='event_name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                             {% for error in form.event_name.errors %}
-                                <text class='error'>*{{ error }}</text>
+                                <span class='error'>*{{ error }}</span>
                             {% endfor %}
                         </td>
                     </tr>
                     <tr>
-                        <td><text style='font-weight:bold;'>{{ form.event_location.label }}</text></td>
+                        <td><span style='font-weight:bold;'>{{ form.event_location.label }}</span></td>
                         <td>{{ form.event_location }}</td>
                         <td>
                             <img style='display:none;' id='event_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                             <img style='display:none;' id='event_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                             {% for error in form.event_location.errors %}
-                                <text class='error'>*{{ error }}</text>
+                                <span class='error'>*{{ error }}</span>
                             {% endfor %}
                         </td>
                     </tr>            
                     <tr>
-                        <td><text style='font-weight:bold;'>{{ form.event_date.label }}</text></td>
+                        <td><span style='font-weight:bold;'>{{ form.event_date.label }}</span></td>
                         <td>{{ form.event_date }}</td>
                         <td>
                             <img style='display:none;' id='event_date_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                             <img style='display:none;' id='event_date_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                             {% for error in form.event_date.errors %}
-                                <text class='error'>*{{ error }}</text>
+                                <span class='error'>*{{ error }}</span>
                             {% endfor %}
                         </td>
                     </tr>
                     <tr>
-                        <td><text style='font-weight:bold;'>{{ form.event_time.label }}</text></td>
+                        <td><span style='font-weight:bold;'>{{ form.event_time.label }}</span></td>
                         <td>{{ form.event_time }}</td>
                         <td>
                             {% for error in form.event_time.errors %}
-                                <text class='error'>*{{ error }}</text>
+                                <span class='error'>*{{ error }}</span>
                             {% endfor %}
                         </td>
                     </tr>
                     <tr>
-                        <td><text style='font-weight:bold;'>{{ form.crowd_estimate.label }}</text></td>
+                        <td><span style='font-weight:bold;'>{{ form.crowd_estimate.label }}</span></td>
                         <td>{{ form.crowd_estimate }}</td>
                         <td>
                             <img style='display:none;' id='crowd_estimate_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                             <img style='display:none;' id='crowd_estimate_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                             {% for error in form.crowd_estimate.errors %}
-                                <text class='error'>*{{ error }}</text>
+                                <span class='error'>*{{ error }}</span>
                             {% endfor %}
                         </td>
                     </tr>
                 </table><br>
-                <text style='font-size:120%;font-weight:bold;'>Contact information</text><hr>
+                <span style='font-size:120%;font-weight:bold;'>Contact information</span><hr>
                 <table style='background-color:rgb(192,157,106);'>
                     <tr>
-                        <td><text style='font-weight:bold;'>{{ form.contact_person.label }}</text></td>
+                        <td><span style='font-weight:bold;'>{{ form.contact_person.label }}</span></td>
                         <td>{{ form.contact_person }}</td>
                         <td>
                             <img style='display:none;' id='contact_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                             <img style='display:none;' id='contact_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                             {% for error in form.contact_person.errors %}
-                                <text class='error'>*{{ error }}</text>
+                                <span class='error'>*{{ error }}</span>
                             {% endfor %}
                         </td>
                     </tr>
                     <tr>
-                        <td><text style='font-weight:bold;'>{{ form.phone_number.label }}</text></td>
+                        <td><span style='font-weight:bold;'>{{ form.phone_number.label }}</span></td>
                         <td>{{ form.phone_number }}</td>
                         <td>
                             <img style='display:none;' id='phone_number_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                             <img style='display:none;' id='phone_number_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                             {% for error in form.phone_number.errors %}
-                                <text class='error'>*{{ error }}</text>
+                                <span class='error'>*{{ error }}</span>
                             {% endfor %}
                         </td>
                     </tr>
@@ -165,6 +169,18 @@
     </div>
 </body>
 <script>
+    document.getElementById('contact_no').style.display='none';
+    document.getElementById('contact_yes').style.display='none';
+    document.getElementById('phone_number_no').style.display='none';
+    document.getElementById('phone_number_yes').style.display='none';
+    document.getElementById('event_name_no').style.display='none';
+    document.getElementById('event_name_yes').style.display='none';
+    document.getElementById('event_location_no').style.display='none';
+    document.getElementById('event_location_yes').style.display='none';
+    document.getElementById('crowd_estimate_no').style.display='none';
+    document.getElementById('crowd_estimate_yes').style.display='none';
+    document.getElementById('event_date_no').style.display='none';
+    document.getElementById('event_date_yes').style.display='none';
     var element = document.getElementById('id_contact_person');
     element.onblur = function(){
         var n=document.getElementById('contact_no');

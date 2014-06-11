@@ -5,7 +5,23 @@
     <style>.error {color: red}</style>
     <meta charset="utf-8" />
     <title>Excavate / Bore Form</title>
+    {% block extra_style %}
+    <style>
+        input[type=checkbox]
+        {
+          -webkit-appearance:checkbox;
+        }
+        input[type=radio]
+        {
+          -webkit-appearance:radio;
+        }
+    </style>
     <link rel='stylesheet' type='text/css' href='{{static_url}}djbuis/css/base_css.css'/>
+    <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
+    <link href="//www.carthage.edu/static/vendor/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//www.carthage.edu/themes/shared/css/forms.css" rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/themes/shared/css/tables.css" rel="stylesheet" type="text/css" />
+    {% endblock %}
     {% block javascript %}
     <script>
         function validateApplicantName(){
@@ -77,98 +93,98 @@
     <div>
         {{ form.non_field_errors }}
         <form action='' method='post'>{% csrf_token %}
-            <text class='separator'>Permit Type</text><hr>
+            <span class='separator'>Permit Type</span><hr>
             {% for e in form.excavate.errors %}
-                <text class='error'>{{ e }}</text>
+                <span class='error'>{{ e }}</span>
             {% endfor %}
             <table>
                 <tr>
-                    <td><text class='fieldlabel'>{{ form.excavate.label }}</text></td>
+                    <td><span class='fieldlabel'>{{ form.excavate.label }}</span></td>
                     <td>{{ form.excavate }}</td>
                 </tr>
                 <tr>
-                    <td><text class='fieldlabel'>{{ form.bore.label }}</text></td>
+                    <td><span class='fieldlabel'>{{ form.bore.label }}</span></td>
                     <td>{{ form.bore }}</td>
                     <td>
                         {% for e in form.bore.errors %}
-                            <text class='error'>*{{ e }}</text>
+                            <span class='error'>*{{ e }}</span>
                         {% endfor %}
                     </td>
                 </tr>
             </table><br>
-            <text class='separator'>Applicant Information</text><hr>
+            <span class='separator'>Applicant Information</span><hr>
             <table>
                 <tr>
-                    <td><text class='fieldlabel'>{{ form.applicant_name.label }}</text></td>
+                    <td><span class='fieldlabel'>{{ form.applicant_name.label }}</span></td>
                     <td>{{ form.applicant_name }}</td>
                     <td>
                         <img class='hidden' id='applicant_name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img class='hidden' id='applicant_name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                         {% for e in form.applicant_name.errors %}
-                            <text class='error'>*{{ e }}</text>
+                            <span class='error'>*{{ e }}</span>
                         {% endfor %}
                     </td>
                 </tr>
                 <tr>
-                    <td><text class='fieldlabel'>{{ form.company.label }}</text></td>
+                    <td><span class='fieldlabel'>{{ form.company.label }}</span></td>
                     <td>{{ form.company }}</td>
                     <td>
                         <img class='hidden' id='company_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img class='hidden' id='company_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                         {% for e in form.company.errors %}
-                            <text class='error'>*{{ e }}</text>
+                            <span class='error'>*{{ e }}</span>
                         {% endfor %}
                     </td>
                 </tr>
             </table><br>
-            <text class='separator'>Project information</text><hr>
+            <span class='separator'>Project information</span><hr>
             <table>
                 <tr>
-                    <td><text class='fieldlabel'>{{ form.reason_for_excavation_or_boring.label }}</text></td>
+                    <td><span class='fieldlabel'>{{ form.reason_for_excavation_or_boring.label }}</span></td>
                     <td>{{ form.reason_for_excavation_or_boring }}</td>
                     <td>
                         <img class='hidden' id='reason_for_excavation_or_boring_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img class='hidden' id='reason_for_excavation_or_boring_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                         {% for e in form.reason_for_excavation_or_boring.errors %}
-                            <text class='error'>*{{ e }}</text>
+                            <span class='error'>*{{ e }}</span>
                         {% endfor %}
                     </td>
                 </tr>
                 <tr>
-                    <td><text class='fieldlabel'>{{ form.location_of_excavation_including_termination_points.label }}</text></td>
+                    <td><span class='fieldlabel'>{{ form.location_of_excavation_including_termination_points.label }}</span></td>
                     <td>{{ form.location_of_excavation_including_termination_points }}</td>
                     <td>
                         <img class='hidden' id='location_of_excavation_including_termination_points_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img class='hidden' id='location_of_excavation_including_termination_points_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                         {% for e in form.location_of_excavation_including_termination_points.errors %}
-                            <text class='error'>*{{ e }}</text>
+                            <span class='error'>*{{ e }}</span>
                         {% endfor %}
                     </td>
                 </tr>
                 <tr>
-                    <td><text class='fieldlabel'>{{ form.start_date_for_excavation.label }}</td>
+                    <td><span class='fieldlabel'>{{ form.start_date_for_excavation.label }}</span></td>
                     <td>{{ form.start_date_for_excavation }}</td>
                     <td>
                         <img style='display:none;' id='start_date_for_excavation_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img style='display:none;' id='start_date_for_excavation_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                         {% for e in form.start_date_for_excavation.errors %}
-                            <text class='error'>*{{ e }}</text>
+                            <span class='error'>*{{ e }}</span>
                         {% endfor %}
                     </td>
                 </tr>
                 <tr>
-                    <td><text class='fieldlabel'>{{ form.projected_end_date_for_excavation.label }}</text></td>
+                    <td><span class='fieldlabel'>{{ form.projected_end_date_for_excavation.label }}</span></td>
                     <td>{{ form.projected_end_date_for_excavation }}</td>
                     <td>
                         <img style='display:none;' id='projected_end_date_for_excavation_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img style='display:none;' id='projected_end_date_for_excavation_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                         {% for e in form.projected_end_date_for_excavation.errors %}
-                            <text class='error'>*{{ e }}</text>
+                            <span class='error'>*{{ e }}</span>
                         {% endfor %}
                     </td>
                 </tr>
             </table><br>
-            <text class='separator'>General Provisions</text><hr>
+            <span class='separator'>General Provisions</span><hr>
             <ul>
                 <li>The permitting process is designing to help prevent damage during excavation /
                 boring operations on the Carthage Campus. It is also to insure that all contractors
@@ -209,9 +225,9 @@
                 <li>The applicant agrees that if any part of these requirements is not fulfilled, Carthage
                 will make remedies at the applicant's sole expense.</li>
             </ul><br>
-            <text>
+            <span>
                 I acknowledge as an applicant of an excavation / boring permit I have reviewed the permit procedures and agree to comply with the above terms and conditions
-            </text><br><br>
+            </span><br><br>
             <input type="Submit" id="submit" value="Submit form"></submit>
         </form>
     </div>
