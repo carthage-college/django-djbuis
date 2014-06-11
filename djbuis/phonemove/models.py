@@ -11,15 +11,15 @@ class Phone(models.Model):
         ("CHNG", 'Change of Service'),
     )
 
-    name = models.CharField(max_length=100)
-    department = models.CharField(max_length=200)
-    user_number = models.CharField(max_length=16)
-    request = models.CharField(choices=REASONS, max_length=100, default="MOVE") #This renders as a select box
-    from_location = models.CharField(max_length=500)
-    to_location = models.CharField(max_length=500)
-    caller_id = models.CharField(max_length=500)
-    date_of_change = models.DateField()
-    email = models.BooleanField() #This is a checkbox field
+    name = models.CharField(max_length=100, verbose_name="Name of User")
+    department = models.CharField(max_length=200, verbose_name="Department")
+    user_number = models.CharField(max_length=16, verbose_name="User\'s Phone Number or Extension")
+    request = models.CharField(choices=REASONS, max_length=100, default="MOVE", verbose_name="What are you requesting?")
+    from_location = models.CharField(max_length=500, verbose_name="From Location")
+    to_location = models.CharField(max_length=500, verbose_name="To Location")
+    caller_id = models.CharField(max_length=500, verbose_name="Caller ID Name Change or Add")
+    date_of_change = models.DateField(verbose_name="Date of move, add, change")
+    email = models.BooleanField(verbose_name="Check this box if you would like the form to be emailed to you upon completion.") #This is a checkbox field
 
     class Meta:
         verbose_name = 'Phone move application'

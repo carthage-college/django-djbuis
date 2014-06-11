@@ -5,7 +5,7 @@
   <title>jQuery UI Accordion - Default functionality</title>
   {% block extra_style %}
   <style>
-        .errorlist, .error {
+        .errorlist, .errors {
             color: red;
         }
         input[type=checkbox]
@@ -43,49 +43,25 @@
         function validateUserNumber(){
             var number = document.getElementById('id_user_number')
             var val = number.value;
-            var patt = new RegExp('1?[\\s-]?\\(?(\\d{3})\\)?[\\s-]?\\d{3}[\\s-]?\\d{4}');
-            if( patt.test(val)){
-                return true;
-            }
-            else if (val == "NEW" || val == "new") {
-                return true;
-            }
-            else{
-                return false;
-            }
+            var patt = new RegExp('^((?:1?[\\s-\\.\\/]?\\(?(?:\\d{3})\\)?)?[\\s-\\.\\/]?\\d{3}[\\s-\\.\\/]?\\d{4}(?:\\s?(?:x|ext|\\.)?\\s?\\d{4})?|NEW)$');
+            return patt.test(val);
         }
         function validateFromLocation(){
             var id = document.getElementById('id_from_location');
             var val = id.value;
-            var patt = new RegExp('^.+');
-            if( patt.test(val)){
-                return true;
-            }
-            else if (val == "NEW" || val == "new"){
-                return true;
-            }
-            else{
-                return false;
-            }
+            var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
+            return patt.test(val);
         }
         function validateToLocation(){
            var id = document.getElementById('id_to_location');
            var val = id.value;
-           var patt = new RegExp('^.+');
-           if( patt.test(val)){
-               return true;
-           }
-           else if (val == "NEW" || val == "new"){
-               return true;
-           }
-           else{
-               return false;
-           }
+           var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
+           return patt.test(val);
         }
         function validateCallerId(){
             var id = document.getElementById('id_caller_id');
             var val = id.value;
-            var patt = new RegExp('^([a-zA-Z\s?]+[a-zA-Z]+)$');
+            var patt = new RegExp('^((?:[a-zA-Z]+\\s?)+[a-zA-Z]+)$');
             return patt.test(val);
         }
         function validateDateOfChange(){
@@ -113,22 +89,22 @@
 <h1>CLIS TELEPHONE MAC ORDER FORM</h1>
 <h3>Please fill out the information below to request a telephone move, add, or change.  If you have any questions, please call Ryan Ade at ext. 2146</h3>
 	<div>
-		<form action="" method="post"> {% csrf_token %}	
-			{{form.name.errors}}
+		<form action="" method="post"> {% csrf_token %}				
 			{{form.name.label}}
-			{{form.name}}
+			{{form.name.errors}}
+            {{form.name}}
             <img class='hidden' id='name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
             <img class='hidden' id='name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-            <br><br>
-			{{form.department.errors}}
+            <br><br>			
 			{{form.department.label}}
+            {{form.department.errors}}
 			{{form.department}}
             <img class='hidden' id='department_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
             <img class='hidden' id='department_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
             <br><br>
-			{{form.user_number.errors}}
 			{{form.user_number.label}}
-			<p>If user is NEW and needs a number type "NEW"</p>
+			<p>If the user is NEW and needs a number type "NEW"</p>
+			{{form.user_number.errors}}
 			{{form.user_number}}
             <img class='hidden' id='user_number_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
             <img class='hidden' id='user_number_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
@@ -137,35 +113,35 @@
 			{{form.request.label}}
 			<p>Select appropriate option below</p>
 			{{form.request}}<br><br>
-			{{form.from_location.errors}}
 			{{form.from_location.label}}
 			<p>Where is the user moving from? If NEW USER type NEW. Include Building Name and Room Number</p>
+			{{form.from_location.errors}}
 			{{form.from_location}}
             <img class='hidden' id='from_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
             <img class='hidden' id='from_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
             <br><br>
-			{{form.to_location.errors}}
 			{{form.to_location.label}}
 			<p>Where is the user moving to? If NEW USER type NEW. Include Building Name and Room Number</p>
+			{{form.to_location.errors}}
 			{{form.to_location}}
             <img class='hidden' id='to_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
             <img class='hidden' id='to_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
             <br><br>
-			{{form.caller_id.errors}}
 			{{form.caller_id.label}}
 			<p>Enter the name as it would appear on the caller ID below</p>
+			{{form.caller_id.errors}}
 			{{form.caller_id}}
             <img class='hidden' id='caller_id_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
             <img class='hidden' id='caller_id_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
             <br><br>
-			{{form.date_of_change.errors}}
 			{{form.date_of_change.label}}
+			{{form.date_of_change.errors}}
 			{{form.date_of_change}}
             <img class='hidden' id='date_of_change_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
             <img class='hidden' id='date_of_change_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
             <br><br>
-			{{form.email.errors}}
 			{{form.email.label}}
+			{{form.email.errors}}
 			{{form.email}}<br><br>			
 	<div>
 		<input type="submit" name="submit" value="Submit Form">

@@ -1,40 +1,72 @@
+import datetime, re
 from django import forms
 from models import Phone
 from django.core.exceptions import ValidationError
 from django.core import validators
 
 # Create your forms here.
-class ModelForm(forms.ModelForm):	
-	def __init__(self, *args, **kwargs):
-		super(ModelForm, self).__init__(*args, **kwargs)
-		self.fields['name'].label = "Name of User"
-		self.fields['department'].label = "Department"
-		self.fields['user_number'].label = "User\'s Phone Number or Extension"
-		self.fields['request'].label = "What are you requesting?"
-		self.fields['from_location'].label = "From Location"
-		self.fields['to_location'].label = "To Location"
-		self.fields['caller_id'].label = "Caller ID Name Change or Add"
-		self.fields['date_of_change'].label = "Date of move, add, change"
-		self.fields['email'].label = "Check this box if you would like the form to be emailed to you upon completion."
-		self.fields['user_number'].validators = [validators.RegexValidator(regex='^1?-?\(?\d{3}\)?-?\d{3}-?\d{4}$|NEW', message='You entered invalid text. You can either enter a phone number or the word \"NEW\"', code='bad_phone')]
-		self.fields['name'].error_messages = {'required': 'Please fill in a name.'}
-		self.fields['department'].error_messages = {'required': 'Please fill in a department.'}
-		self.fields['user_number'].error_messages = {'required': 'Please fill in a user number.'}
-		self.fields['request'].error_messages = {'required': 'Please select one of the answers below.'}
-		self.fields['from_location'].error_messages = {'required': 'Please fill in a from location.'}
-		self.fields['to_location'].error_messages = {'required': 'Please fill in a to location.'}
-		self.fields['caller_id'].error_messages = {'required': 'Please fill in a caller id.'}
-		self.fields['date_of_change'].error_messages = {'required': 'Please fill in a date of change.'}
-	def to_mail(self):
-		if self.cleaned_data['email'] == True:
-			return "%s \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n "% [self.cleaned_data['name'], self.cleaned_data['department'], self.cleaned_data['user_number'], self.cleaned_data['request'], self.cleaned_data['from_location'], self.cleaned_data['to_location'], self.cleaned_data['caller_id'], self.cleaned_data['date_of_change']]
-	class Meta:
-		model = Phone
-		widgets = {
-			'from_location': forms.Textarea(),
-			'to_location': forms.Textarea(),
-			'caller_id': forms.Textarea(),
-			'email': forms.CheckboxInput(),
-			'request': forms.RadioSelect(),
-			'date_of_change': forms.DateInput(attrs={'type':'date'})
-			}
+class ModelForm(forms.ModelForm):    
+    def __init__(self, *args, **kwargs):
+        super(ModelForm, self).__init__(*args, **kwargs)
+    
+    def clean_name(self):
+        data = self.cleaned_data['name']
+        if not re.match(r'^((?:[a-zA-Z]+\s?){1,2}[a-zA-Z]+)$', data):
+            raise forms.ValidationError('This name is invalid. Check for special characters or extra spaces.')
+        return data
+    def clean_department(self):
+        data = self.cleaned_data['department']
+        if not re.match(r'^((?:[a-zA-Z]+\s?)+[a-zA-Z]+)$', data):
+            raise forms.ValidationError('This department name is invalid. Check for special characters or extra spaces.')
+        return data
+    def clean_user_number(self):
+        data = self.cleaned_data['user_number']
+        if not re.match(r'^((?:1?[\s\-\.\/]?\(?(?:\d{3})\)?)?[\s\-\.\/]?\d{3}[\s\-\.\/]?\d{4}(?:\s?(?:x|ext|\.)?\s?\d{4})?|NEW)$', data):
+            raise forms.ValidationError('You did not enter a valid phone number or the word "NEW"')
+    def clean_request(self):
+        data = self.cleaned_data['request']
+        if not re.match(r'^(MOVE|ADD|REPL|CHNG)$', data):
+            raise forms.ValidationError('You have not selected a valid value.')
+        return data
+    def clean_from_location(self):
+        data = self.cleaned_data['from_location']
+        if not re.match(r'^((?:[\w]+\s?)+[\w]+)$', data):
+            raise forms.ValidationError('Invalid location. Alphanumeric characters only.')
+        return data
+    def clean_to_location(self):
+        data = self.cleaned_data['to_location']
+        if not re.match(r'^((?:[\w]+\s?)+[\w]+)$', data):
+            raise forms.ValidationError('Invalid location. Alphanumeric characters only.')
+        return data
+    def clean_caller_id(self):
+        data = self.cleaned_data['caller_id']
+        if not re.match(r'^((?:[a-zA-Z]+\s?)+[a-zA-Z]+)$', data):
+            raise forms.ValidationError('Invalid caller id. No special characters or numbers.')
+        return data
+    def clean_date_of_change(self):
+        data = self.cleaned_data['date_of_change']
+        if data < datetime.date.today():
+            raise forms.ValidationError('The date cannot be in the past!')
+        return data
+    
+    def to_mail(self):
+        if self.cleaned_data['email'] == True:
+            return '''%(name)s
+            %(department)s
+            %(user_number)s
+            %(request)s
+            %(from_location)s
+            %(to_location)s
+            %(caller_id)s
+            %(date_of_change)s''' % self.cleaned_data
+            
+    class Meta:
+        model = Phone
+        widgets = {
+            'from_location': forms.Textarea(),
+            'to_location': forms.Textarea(),
+            'caller_id': forms.Textarea(),
+            'email': forms.CheckboxInput(),
+            'request': forms.RadioSelect(),
+            'date_of_change': forms.DateInput(attrs={'type':'date'})
+            }
