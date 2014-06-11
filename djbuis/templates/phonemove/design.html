@@ -1,6 +1,5 @@
 {% extends "djkorra/base.html" %}
 <!doctype html>
-
 	<style>
 		.errorlist, .error {
 			color: red;
@@ -12,23 +11,114 @@
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <link rel="stylesheet" href="themes/dot-luv/jquery.ui.all.css" />
+  
+  {% block javascript %}
+    <script type='text/javascript'>
+        function validateName(){
+            var id = document.getElementById('id_name');
+            var val = id.value;
+            var patt = new RegExp('^((?:[a-zA-Z]+\\s?){1,2}[a-zA-Z]+)$');
+            return patt.test(val);        
+        }        
+        function validateDepartment(){
+            var id = document.getElementById('id_department');
+            var val = id.value;
+            var patt = new RegExp('^([a-zA-Z\\s?]+[a-zA-Z]+)$');
+            return patt.test(val);
+        }
+        function validateUserNumber(){
+            var number = document.getElementById('id_user_number')
+            var val = number.value;
+            var patt = new RegExp('1?[\\s-]?\\(?(\\d{3})\\)?[\\s-]?\\d{3}[\\s-]?\\d{4}');
+            if( patt.test(val)){
+                return true;
+            }
+            else if (val == "NEW" || val == "new") {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        function validateFromLocation(){
+            var id = document.getElementById('id_from_location');
+            var val = id.value;
+            var patt = new RegExp('^.+');
+            if( patt.test(val)){
+                return true;
+            }
+            else if (val == "NEW" || val == "new"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        function validateToLocation(){
+           var id = document.getElementById('id_to_location');
+           var val = id.value;
+           var patt = new RegExp('^.+');
+           if( patt.test(val)){
+               return true;
+           }
+           else if (val == "NEW" || val == "new"){
+               return true;
+           }
+           else{
+               return false;
+           }
+        }
+        function validateCallerId(){
+            var id = document.getElementById('id_caller_id');
+            var val = id.value;
+            var patt = new RegExp('^([a-zA-Z\s?]+[a-zA-Z]+)$');
+            return patt.test(val);
+        }
+        function validateDateOfChange(){
+            var id = document.getElementById('id_date_of_change');
+            var val = id.value;
+            var newdate = new Date();
+            var value = val.split("-");
+            var inputdate = new Date(value[0],value[1]-1,value[2]);
+            if (inputdate.getTime() < newdate.getTime()){
+                return false;
+            }
+            else if (val == ""){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    </script>
+    {% endblock %}
 </head>
 <html lang="en">
 {% block content %}
+<body>
 <h1>CLIS TELEPHONE MAC ORDER FORM</h1>
-<h3>To request a telephone move, add or change, please fill out the information below.  If you have any questions, please call Ryan Ade at ext. 2146</h3>
+<h3>Please fill out the information below to request a telephone move, add, or change.  If you have any questions, please call Ryan Ade at ext. 2146</h3>
 	<div>
 		<form action="" method="post"> {% csrf_token %}	
 			{{form.name.errors}}
 			{{form.name.label}}
-			{{form.name}}<br><br>
+			{{form.name}}
+            <img class='hidden' id='name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+            <img class='hidden' id='name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+            <br><br>
 			{{form.department.errors}}
 			{{form.department.label}}
-			{{form.department}}<br><br>
+			{{form.department}}
+            <img class='hidden' id='department_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+            <img class='hidden' id='department_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+            <br><br>
 			{{form.user_number.errors}}
 			{{form.user_number.label}}
 			<p>If user is NEW and needs a number type "NEW"</p>
-			{{form.user_number}}<br><br>
+			{{form.user_number}}
+            <img class='hidden' id='user_number_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+            <img class='hidden' id='user_number_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+            <br><br>
 			{{form.request.errors}}
 			{{form.request.label}}
 			<p>Select appropriate option below</p>
@@ -36,18 +126,30 @@
 			{{form.from_location.errors}}
 			{{form.from_location.label}}
 			<p>Where is the user moving from? If NEW USER type NEW. Include Building Name and Room Number</p>
-			{{form.from_location}}<br><br>
+			{{form.from_location}}
+            <img class='hidden' id='from_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+            <img class='hidden' id='from_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+            <br><br>
 			{{form.to_location.errors}}
 			{{form.to_location.label}}
 			<p>Where is the user moving to? If NEW USER type NEW. Include Building Name and Room Number</p>
-			{{form.to_location}}<br><br>
+			{{form.to_location}}
+            <img class='hidden' id='to_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+            <img class='hidden' id='to_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+            <br><br>
 			{{form.caller_id.errors}}
 			{{form.caller_id.label}}
 			<p>Enter the name as it would appear on the caller ID below</p>
-			{{form.caller_id}}<br><br>
+			{{form.caller_id}}
+            <img class='hidden' id='caller_id_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+            <img class='hidden' id='caller_id_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+            <br><br>
 			{{form.date_of_change.errors}}
 			{{form.date_of_change.label}}
-			{{form.date_of_change}}<br><br>
+			{{form.date_of_change}}
+            <img class='hidden' id='date_of_change_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+            <img class='hidden' id='date_of_change_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+            <br><br>
 			{{form.email.errors}}
 			{{form.email.label}}
 			{{form.email}}<br><br>
@@ -58,5 +160,99 @@
 	</div>
 	</div>
 </form>
-
+</body>
+         <script type="text/javascript">
+        document.getElementById('name_no').style.display = 'none';
+        document.getElementById('name_yes').style.display = 'none';
+        document.getElementById('department_no').style.display = 'none';
+        document.getElementById('department_yes').style.display = 'none';
+        document.getElementById('user_number_no').style.display = 'none';
+        document.getElementById('user_number_yes').style.display = 'none';
+        document.getElementById('from_location_no').style.display = 'none';
+        document.getElementById('from_location_yes').style.display = 'none';
+        document.getElementById('to_location_no').style.display = 'none';
+        document.getElementById('to_location_yes').style.display = 'none';
+        document.getElementById('caller_id_no').style.display = 'none';
+        document.getElementById('caller_id_yes').style.display = 'none';
+        document.getElementById('date_of_change_no').style.display = 'none';
+        document.getElementById('date_of_change_yes').style.display = 'none';
+        var element = document.getElementById('id_name');
+        element.onblur = function() {
+            var n=document.getElementById('name_no');
+            var y=document.getElementById('name_yes');
+            if(!validateName()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_department');
+        element.onblur = function() {
+            var n=document.getElementById('department_no');
+            var y=document.getElementById('department_yes');
+            if(!validateDepartment()){
+                n.style.display='inline'; y.style.display='none';
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_user_number');
+        element.onblur = function() {
+            var n=document.getElementById('user_number_no');
+            var y=document.getElementById('user_number_yes');
+            if(!validateUserNumber()){
+                n.style.display='inline'; y.style.display='none';
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_from_location');
+        element.onblur = function(){
+            var n=document.getElementById('from_location_no');
+            var y=document.getElementById('from_location_yes');
+            if(!validateFromLocation()){
+                n.style.display='inline'; y.style.display='none';
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_to_location');
+        element.onblur = function(){
+            var n=document.getElementById('to_location_no');
+            var y=document.getElementById('to_location_yes');
+            if(!validateToLocation()){
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else{
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_caller_id')
+        element.onblur = function() {                               
+            var n=document.getElementById('caller_id_no');
+            var y=document.getElementById('caller_id_yes');
+            if(!validateCallerId()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+        element = document.getElementById('id_date_of_change')
+        element.onblur = function() {                               
+            var n=document.getElementById('date_of_change_no');
+            var y=document.getElementById('date_of_change_yes');
+            if(!validateDateOfChange()){ 
+                n.style.display='inline'; y.style.display='none'; 
+            }
+            else {
+                n.style.display='none'; y.style.display='inline';
+            }
+        };
+    </script>
+</html>
 {% endblock %}

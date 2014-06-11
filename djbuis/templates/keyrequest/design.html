@@ -71,6 +71,7 @@
         {{form.signature2}}
         {{form.signature3}}
         {{form.signature4}}
+        <br><br>
 </div>
 <h3>Reason for request{% if form.reason.errors or form.other.errors %}<text class="error">  *</text> {% endif %}</h3>
 <div>
@@ -79,6 +80,7 @@
     {{form.reason}}
     {{form.other.errors}}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.other}}
+    <br><br>
 </div>
 <h3>Personal Info {% if form.name.errors or form.contact_number.errors or form.account.errors %}<text class="error">  *</text> {% endif %}</h3>
 <div>		
