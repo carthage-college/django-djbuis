@@ -4,7 +4,6 @@ from django import forms
 from django.db import models
 from django.core import validators
 from django.contrib.admin import widgets
-import re
 
 #Make sure to include the model
 from djbuis.eventparking.models import Parking
@@ -18,7 +17,7 @@ class ParkingForm(forms.ModelForm):
            
     def clean_phone_number(self):
         data = self.cleaned_data['phone_number']
-        if not re.match(r'^1?[\s\-\.]?\(?\d{3}\)?[\s\-\.]?\d{3}[\s\-\.]?\d{4}$', data):
+        if not re.match(r'^((?:1?[\s\-\.\/]?\(?(?:\d{3})\)?)?[\s\-\.\/]?\d{3}[\s\-\.\/]?\d{4}(?:\s?(?:x|ext|\.)?\s?\d{4})?)$', data):
             raise forms.ValidationError('Enter a valid phone number')
         return data
     

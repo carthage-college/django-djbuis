@@ -17,7 +17,7 @@ class Phone(models.Model):
     request = models.CharField(choices=REASONS, max_length=100, default="MOVE", verbose_name="What are you requesting?")
     from_location = models.CharField(max_length=500, verbose_name="From Location")
     to_location = models.CharField(max_length=500, verbose_name="To Location")
-    caller_id = models.CharField(max_length=500, verbose_name="Caller ID Name Change or Add")
+    caller_id = models.CharField(max_length=20, verbose_name="Caller ID")
     date_of_change = models.DateField(verbose_name="Date of move, add, change")
     email = models.BooleanField(verbose_name="Check this box if you would like the form to be emailed to you upon completion.") #This is a checkbox field
 

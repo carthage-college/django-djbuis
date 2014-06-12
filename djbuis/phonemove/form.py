@@ -31,12 +31,12 @@ class ModelForm(forms.ModelForm):
     def clean_from_location(self):
         data = self.cleaned_data['from_location']
         if not re.match(r'^((?:[\w]+\s?)+[\w]+)$', data):
-            raise forms.ValidationError('Invalid location. Alphanumeric characters only.')
+            raise forms.ValidationError('Invalid location. Alphanumeric characters and spaces only.')
         return data
     def clean_to_location(self):
         data = self.cleaned_data['to_location']
         if not re.match(r'^((?:[\w]+\s?)+[\w]+)$', data):
-            raise forms.ValidationError('Invalid location. Alphanumeric characters only.')
+            raise forms.ValidationError('Invalid location. Alphanumeric characters and spaces only.')
         return data
     def clean_caller_id(self):
         data = self.cleaned_data['caller_id']
@@ -65,7 +65,6 @@ class ModelForm(forms.ModelForm):
         widgets = {
             'from_location': forms.Textarea(),
             'to_location': forms.Textarea(),
-            'caller_id': forms.Textarea(),
             'email': forms.CheckboxInput(),
             'request': forms.RadioSelect(),
             'date_of_change': forms.DateInput(attrs={'type':'date'})
