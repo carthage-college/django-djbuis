@@ -18,11 +18,8 @@ class ExcavateModel(models.Model):
     company = models.CharField(blank=False,max_length=64) #'blank=False' means the field is required
     reason_for_excavation_or_boring = models.CharField(blank=False,max_length=200)
     location_of_excavation_including_termination_points = models.CharField(blank=False,max_length=200)
-    start_date_for_excavation = models.DateField(blank=False,error_messages={'required': 'custom required message'}) #You can also put in error messages
-    projected_end_date_for_excavation = models.DateField(
-        error_messages={'required': 'custom required message','null':'custom required message',
-                        'blank':'custom required message', 'invalid':'custom required message',
-                        'invalid_choice':'custom required message'})
+    start_date_for_excavation = models.DateField(blank=False) #You can also put in error messages
+    projected_end_date_for_excavation = models.DateField()
     reviewed_by = models.CharField(null=True,max_length=64) #'null=True' means the field can be null in the database
     meeting_held_with_applicant = models.BooleanField(default=True, validators=[validate_boolean_must_be_true]) #I added the validation function to this field
     date_of_approval = models.DateField(null=True)
