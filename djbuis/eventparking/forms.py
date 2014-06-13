@@ -41,19 +41,13 @@ class ParkingForm(forms.ModelForm):
     def as_string(self):
         return '''Please check Django admin page for this new submission ->
         
-                Event name: %s\n
-                Event location: %s\n
-                Event time: %s\n
-                Event date: %s\n
-                Crowd estimate: %s\n
-                Contact person: %s\n
-                Phone number: %s\n''' % (self.cleaned_data['event_name'],
-                                            self.cleaned_data['event_location'],
-                                            self.cleaned_data['event_time'],
-                                            self.cleaned_data['event_date'],
-                                            self.cleaned_data['crowd_estimate'],
-                                            self.cleaned_data['contact_person'],
-                                            self.cleaned_data['phone_number'])
+                Event name: %(event_name)s\n
+                Event location: %(event_location)s\n
+                Event time: %(event_time)s\n
+                Event date: %(event_date)s\n
+                Crowd estimate: %(crowd_estimate)s\n
+                Contact person: %(contact_person)s\n
+                Phone number: %(phone_number)s\n''' % (self.cleaned_data)
 
     #Global options for the form class    
     class Meta:

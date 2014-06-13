@@ -13,7 +13,7 @@ class Parking(models.Model):
     contact_person = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=16)
     parking_arrangements_required = models.CharField(max_length=200, blank=True, null=True) #'blank=True' allows for this field to remain blank
-    date_recieved = models.DateField(auto_now_add=True) #Automatically adds the date to the current day as well as makes this field invisible
+    date_received = models.DateField(auto_now_add=True) #Automatically adds the date to the current day as well as makes this field invisible
     date_completed = models.DateField(blank=True, null=True) #'null=True' means the data member can be represented as null in the database table
     
     #Defines how the model will represent itself in the admin page
