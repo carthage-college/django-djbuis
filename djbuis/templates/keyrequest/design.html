@@ -1,13 +1,11 @@
 {% extends "djkorra/base.html" %}
-<!doctype html> 
- 
+<!doctype html>  
 <html lang="en">
 <title>Request a Key</title>
 <head>
-  <meta charset="utf-8" />
-  <title>jQuery UI Accordion - Default functionality</title>
-  {% block extra_style %}
-  <style>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    {% block extra_style %}
+    <style>
         .errorlist, .error {
             color: red;
         }
@@ -20,101 +18,125 @@
           -webkit-appearance:radio;
         }
     </style>
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-  <link rel="stylesheet" href="/jquery-ui-1.9.2.custom/css/redstuff/jquery-ui-1.9.2.custom.css" />
-  <link rel="stylesheet" href="/jquery-ui-1.9.2.custom/css/redstuff/jquery-ui-1.9.2.custom.min.css" />
-  <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
-    <link href="//www.carthage.edu/static/vendor/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
+    <link href="//www.carthage.edu/static/vendor/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="//www.carthage.edu/themes/shared/css/forms.css" rel="stylesheet" type="text/css" />
     <link href="//www.carthage.edu/themes/shared/css/tables.css" rel="stylesheet" type="text/css" />
     {% endblock %}
     {% block javascript %}
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  {% endblock %}
+    <script type="text/javascript">
+    $(document).ready(function () {
+        // Code adapted from http://djangosnippets.org/snippets/1389/  
+        function updateElementIndex(el, prefix, ndx) {
+            var id_regex = new RegExp('(' + prefix + '-\\d+-)');
+            var replacement = prefix + '-' + ndx + '-';
+            if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex,
+            replacement));
+            if (el.id) el.id = el.id.replace(id_regex, replacement);
+            if (el.name) el.name = el.name.replace(id_regex, replacement);
+        }
+    
+        function deleteForm(btn, prefix) {
+            var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+            if (formCount > 1) {
+                // Delete the item/form
+                $(btn).parents('.keystuff').remove();
+                var forms = $('.keystuff'); // Get all the forms  
+                // Update the total number of forms (1 less than before)
+                $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+                var i = 0;
+                // Go through the forms and set their indices, names and IDs
+                for (formCount = forms.length; i < formCount; i++) {
+                    $(forms.get(i)).children().children().each(function () {
+                        if ($(this).attr('type') == 'text') updateElementIndex(this, prefix, i);
+                    });
+                }
+            } // End if
+            else {
+                alert("You have to request at least one key!");
+            }
+            return false;
+        }
+    
+        function addForm(btn, prefix) {
+            var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+            if (formCount < 5) {
+                // Clone a form (without event handlers) from the first form
+                var row = $(".keystuff:first").clone(false).get(0);
+                // Insert it after the last form
+                $(row).removeAttr('id').hide().insertAfter(".keystuff:last").slideDown(300);
+    
+                // Remove the bits we don't want in the new row/form
+                // e.g. error messages
+                $(".errorlist", row).remove();
+                $(row).children().removeClass("error");
+    
+                // Relabel or rename all the relevant bits
+                $(row).children().children().each(function () {
+                    updateElementIndex(this, prefix, formCount);
+                    $(this).val("");
+                });
+    
+                // Add an event handler for the delete item/form link 
+                $(row).find(".delete").click(function () {
+                    return deleteForm(this, prefix);
+                });
+                // Update the total form count
+                $("#id_" + prefix + "-TOTAL_FORMS").val(formCount + 1);
+            } // End if
+            else {
+                alert("Sorry, you can only request a maximum of five keys.");
+            }
+            return false;
+        }
+        // Register the click event handlers
+        $("#add").click(function () {
+            return addForm(this, "key_stuff");
+        });
+    
+        $(".delete").click(function () {
+            return deleteForm(this, "key_stuff");
+        });
+    });
+    </script>
+    {% endblock %}
 </head>
 {% block content %}
-<h1>Business Office Key Request Form</h1>
-<h3>Key Information{% if form.building.errors or form.room_number.errors or form.key_code_if_known.errors or form.issued_to.errors %}<span class="error">  *</span> {% endif %}</h3>
-<div>
-    <p>Only the first row of fields are required. The rest are optional.</p>
-    <form action="" method="post"> {% csrf_token %}	
-        {{form.building.errors}}
-        {{form.room_number.errors}}
-        {{form.key_code_if_known.errors}}
-        {{form.issued_to.errors}}
-        <table>
-        <tr>
-            <td>{{form.building.label}}</td>
-            <td>{{form.room_number.label}}</td>
-            <td>{{form.key_code_if_known.label}}</td>
-            <td>{{form.issued_to.label}}</td>
-        </tr>
-        <tr>
-            <td>{{form.building}}</td>
-            <td>{{form.room_number}}</td>
-            <td>{{form.key_code_if_known}}</td>
-            <td>{{form.issued_to}}</td>             
-        </tr>
-        <tr>
-            <td>{{form.building1}}</td>
-            <td>{{form.room_number1}}</td>
-            <td>{{form.key_code_if_known1}}</td>
-            <td>{{form.issued_to1}}</td>
-        </tr>
-            <td>{{form.building2}}</td>
-            <td>{{form.room_number2}}</td>
-            <td>{{form.key_code_if_known2}}</td>
-            <td>{{form.issued_to2}}</td>
-        </tr>
-        <tr>
-            <td>{{form.building3}}</td>
-            <td>{{form.room_number3}}</td>
-            <td>{{form.key_code_if_known3}}</td>
-            <td>{{form.issued_to3}}</td>
-        </tr>
-        <tr>
-            <td>{{form.building4}}</td>
-            <td>{{form.room_number4}}</td>
-            <td>{{form.key_code_if_known4}}</td>
-            <td>{{form.issued_to4}}</td>
-        </tr>
-        </table>
-        {{form.signature}}
-        {{form.signature1}}
-        {{form.signature2}}
-        {{form.signature3}}
-        {{form.signature4}}
-        <br><br>
-</div>
-<h3>Reason for request{% if form.reason.errors or form.other.errors %}<span class="error">  *</span> {% endif %}</h3>
-<div>
-    {{form.reason.errors}}
-    {{form.reason.label}}
-    {{form.reason}}
-    {{form.other.errors}}
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.other}}
-    <br><br>
-</div>
-<h3>Personal Info {% if form.name.errors or form.contact_number.errors or form.account.errors %}<span class="error">  *</span> {% endif %}</h3>
-<div>       
-    {{form.name.errors}}
-    {{form.name.label}}
-    {{form.name}}<br><br>
-    {{form.contact_number.errors}}
-    {{form.contact_number.label}}
-    {{form.contact_number}}<br><br>
-    {{form.account.errors}}
-    {{form.account.label}}
-    {{form.account}}<br><br>
-    {{form.date_completed}}
-    {{form.chair_sig}}
-    {{form.dean_sig}}
-</div>
-<div>
-    <input type="submit" name="submit" value="Submit Form">
-</div>
-
-</form>
-
-{% endblock %}
+<body>
+    <h1>Business Office Key Request Form</h1>
+    <form action='' method='post'> {% csrf_token %}
+        <h3>Key Information</h3>
+        <span>Only the first row of fields are required. The rest are optional.</span>                
+            {{ key_formset.management_form }}
+            {% for form in key_formset.forms %}
+                <div class = keystuff>
+                    {{ form }}
+                    <p style=""><a class="delete" href="#">Delete</a></p>
+                </div>
+            <p><a id="add" href="#">Request another key</a>
+            {% endfor %}</p>
+        <h3>Reason for request</h3>
+            {{form.reason.errors}}
+            {{form.reason.label}}
+            {{form.reason}}
+            {{form.other.errors}}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.other}}
+            <br><br>
+        <h3>Personal Info</h3>    
+            {{form.name.errors}}
+            {{form.name.label}}
+            {{form.name}}<br><br>
+            {{form.contact_number.errors}}
+            {{form.contact_number.label}}
+            {{form.contact_number}}<br><br>
+            {{form.account.errors}}
+            {{form.account.label}}
+            {{form.account}}<br><br>
+            {{form.date_completed}}
+            {{form.chair_sig}}
+            {{form.dean_sig}}
+        <input type="submit" name="submit" value="Submit Form">
+    </form>
+    {% endblock %}
+</body>
+</html>

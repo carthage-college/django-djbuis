@@ -1,13 +1,13 @@
 from django import forms
-from models import Keys
+from djbuis.keyrequest.models import KeyInfo, Info
 from django.core.exceptions import ValidationError
 from django.core import validators
 import re
 
 # Create your forms here.
-class ModelForm(forms.ModelForm):
+class InfoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(ModelForm, self).__init__(*args, **kwargs)
+        super(InfoForm, self).__init__(*args, **kwargs)
 
     def clean_contact_number(self):
         data = self.cleaned_data['contact_number']
@@ -15,8 +15,20 @@ class ModelForm(forms.ModelForm):
             raise forms.ValidationError('Enter a valid phone number')
         return data
     
+    def clean_name(self):
+        data = self.cleaned_data['name']
+        if not re.match(r'^((?:[a-zA-Z]+\s?){1,2}[a-zA-Z]+)$', data):
+            raise forms.ValidationError('Enter a name with no special characters')
+        return data
+    
+    def clean_account(self):
+        data = self.cleaned_data['account']
+        if not re.match(r'^((?:[a-zA-Z\s?\.?]+)[a-zA-Z]+)$', data):
+            raise forms.ValidationError('Enter an account with no special characters.')
+        return data
+    
     def clean(self):
-        cleaned_data = super(ModelForm, self).clean()
+        cleaned_data = super(InfoForm, self).clean()
 
         reason = cleaned_data.get("reason")
         other = cleaned_data.get("other")
@@ -29,8 +41,31 @@ class ModelForm(forms.ModelForm):
             del cleaned_data["other"]
             return cleaned_data
     class Meta:
-        model = Keys
-        widgets = {
-            'reason': forms.RadioSelect()
-            }
+        model = Info
+        widgets = {'reason' : forms.RadioSelect}
         exclude = ('signature', 'signature1', 'signature2', 'signature3', 'signature4', 'chair_sig', 'dean_sig',  'date_completed',)
+
+class KeyForm(forms.Form):
+    BUILDINGS = (
+        ("LIB", 'Library'),
+        ("STRZ", 'Straz'),
+        ("LNTZ", 'Lentz'),
+        ("JART", 'Johnson Art Center'),
+        ("TARC", 'TARC'),
+        ("CHPL", 'Chapel'),
+        ("DNHT", 'Denhart Hall'),
+        ("TARB", 'Tarble Hall'),
+        ("MADR", 'Madrigrano Hall'),
+        ("JOHN", 'Johnson Hall'),
+        ("SWEN", 'Swenson Hall'),
+        ("OAKS1", 'Oaks 1'),
+        ("OAKS2", 'Oaks 2'),
+        ("OAKS3", 'Oaks 3'),
+        ("OAKS4", 'Oaks 4'),
+        ("OAKS5", 'Oaks 5'),
+        ("OAKS6", 'Oaks 6'),
+        )
+    building = forms.ChoiceField(widget = forms.Select, choices=BUILDINGS)
+    room_number = forms.IntegerField()
+    key_code_if_known = forms.CharField()
+    issued_to = forms.CharField()
