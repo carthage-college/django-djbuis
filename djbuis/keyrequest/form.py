@@ -40,6 +40,8 @@ class InfoForm(forms.ModelForm):
             del cleaned_data["reason"]
             del cleaned_data["other"]
             return cleaned_data
+        return self.cleaned_data
+    
     class Meta:
         model = Info
         widgets = {'reason' : forms.RadioSelect}

@@ -15,7 +15,7 @@ def create(request):
         def __init__(self, *args, **kwargs):
             super(RequiredFormSet, self).__init__(*args, **kwargs)
             for form in self.forms:
-                form.empty_permitted = False
+                self.forms[0].empty_permitted = False
     KeyFormSet = formset_factory(KeyForm, formset=RequiredFormSet)
     if request.POST:
         form = InfoForm(request.POST)
