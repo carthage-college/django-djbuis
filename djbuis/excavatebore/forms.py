@@ -22,17 +22,6 @@ class ExcavateForm(forms.ModelForm):
     
     def clean(self):
         cleaned_data = self.cleaned_data #Grabs the clean data        
-        excavate = cleaned_data.get("excavate")
-        bore = cleaned_data.get("bore")
-        
-        if not excavate and not bore:
-            self._errors['excavate'] = self.error_class(['Please select either excavate or bore'])
-            del cleaned_data["excavate"] #Django told me to do this?
-            del cleaned_data["bore"]
-            
-        date1 = cleaned_data.get('start_date_for_excavation')
-        date2 = cleaned_data.get('projected_end_date_for_excavation')
-        
         
         if not date1:
             msg = u"Invalid or past date"
@@ -64,27 +53,27 @@ class ExcavateForm(forms.ModelForm):
         
                 Applicant name: %s\n
                 Company: %s\n
-                Excavate: %s\n
+                Type of work: %s\n
                 Bore: %s\n
                 Reason: %s\n
                 Location: %s\n
                 Start date: %s\n
                 End date: %s\n
                 ''' % (self.cleaned_data['applicant_name'],
-                                            self.cleaned_data['company'],
-                                            self.cleaned_data['excavate'],
-                                            self.cleaned_data['bore'],
-                                            self.cleaned_data['reason_for_excavation_or_boring'],
-                                            self.cleaned_data['location_of_excavation_including_termination_points'],
-                                            self.cleaned_data['start_date_for_excavation'],
-                                            self.cleaned_data['projected_end_date_for_excavation'])        
+                       self.cleaned_data['company'],
+                       self.cleaned_data['excavate_bore'],
+                       self.cleaned_data['reason_for_excavation_or_boring'],
+                       self.cleaned_data['location_of_excavation_including_termination_points'],
+                       self.cleaned_data['start_date_for_excavation'],
+                       self.cleaned_data['projected_end_date_for_excavation'])        
         
     #Global settings for the model    
     class Meta:
         model = ExcavateModel #All fields come from the model 'ExcavateModel'
         exclude = ['reviewed_by','meeting_held_with_applicant','date_of_approval','server'] #These fields are not seen in the form (in the html page)
-        #Changing date fields to look like date fields
+
         widgets = {
+            'excavate_bore' : forms.RadioSelect,
             'start_date_for_excavation' : forms.DateInput(attrs={'type': 'date'}),
             'projected_end_date_for_excavation' : forms.DateInput(attrs={'type': 'date'}),
         }

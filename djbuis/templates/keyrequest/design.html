@@ -1,7 +1,9 @@
 {% extends "djkorra/base.html" %}
 <!doctype html>  
 <html lang="en">
-<title>Request a Key</title>
+  {% block content_head %}
+    <h1 id="page-title">Key Request Form</h1>
+  {% endblock %}
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     {% block extra_style %}
@@ -103,39 +105,58 @@
 </head>
 {% block content %}
 <body>
-    <h1>Business Office Key Request Form</h1>
-    <form action='' method='post'> {% csrf_token %}
-        <h3>Key Information</h3>
-        <span>Only the first row of fields are required. The rest are optional.</span>                
-            {{ key_formset.management_form }}
-            {% for form in key_formset.forms %}
-                <div class = keystuff>
-                    {{ form }}
-                    <p style=""><a class="delete" href="#">Delete</a></p>
-                </div>
-            <p><a id="add" href="#">Request another key</a>
-            {% endfor %}</p>
-        <h3>Reason for request</h3>
-            {{form.reason.errors}}
-            {{form.reason.label}}
-            {{form.reason}}
-            {{form.other.errors}}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.other}}
-            <br><br>
-        <h3>Personal Info</h3>    
-            {{form.name.errors}}
-            {{form.name.label}}
-            {{form.name}}<br><br>
-            {{form.contact_number.errors}}
-            {{form.contact_number.label}}
-            {{form.contact_number}}<br><br>
-            {{form.account.errors}}
-            {{form.account.label}}
-            {{form.account}}<br><br>
-            {{form.date_completed}}
-            {{form.chair_sig}}
-            {{form.dean_sig}}
-        <input type="submit" name="submit" value="Submit Form">
+    <form action='' method='post' class = 'form'> {% csrf_token %}
+        <fieldset class="blockLabels">
+            <legend>Key Info</legend>
+            <ol>
+                {{ key_formset.management_form }}
+                {% for form in key_formset.forms %}
+                    <div class = keystuff>
+                        <li class="ctrlHolder"><h3>{{form}}</h3></li>
+                        <p style=""><a class="delete" href="#">Delete</a></p>
+                    </div>
+                <p><a id="add" href="#">Request another key</a></p>
+                {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <legend>Reason</legend>
+            <ol>
+                <li class="ctrlHolder"><h3><label for="id_reason_0">Reason:</label></h3>
+                    <ul>
+                        <li><label for="id_reason_0"><input checked="checked" id="id_reason_0" name="reason" type="radio" value="NEWE" />New Employee</label></li>
+                        <li><label for="id_reason_1"><input id="id_reason_1" name="reason" type="radio" value="NEWO" />New Office or Facility Assignment</label></li>
+                        <li><label for="id_reason_2"><input id="id_reason_2" name="reason" type="radio" value="LOCK" />Lock Change</label></li>
+                        <li><label for="id_reason_3"><input id="id_reason_3" name="reason" type="radio" value="WORN" />Worn Key Returned</label></li>
+                        <li><label for="id_reason_4"><input id="id_reason_4" name="reason" type="radio" value="OTH" />Other (Please Explain)</label></li>
+                    </ul>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_other"></label></h3>
+                    <input id="id_other" maxlength="100" name="other" type="text" />
+                </li>     
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <legend>Contact Info</legend>
+            <ol>
+                <li class="ctrlHolder"><h3><label for="id_name">Name</label></h3>
+                    <div class="required"><input id="id_name" maxlength="100" name="name" type="text"/></div>
+                </li> 
+                <li class="ctrlHolder"><h3><label for="id_contact_number">Phone Number</label></h3>
+                    <div class="required"><input id="id_contact_number" maxlength="100" name="number" type="text"/></div>
+                </li> 
+                <li class="ctrlHolder"><h3><label for="id_account">Account to Charge</label></h3>
+                    <div class="required"><input id="id_account" maxlength="100" name="account" type="text"/></div>
+                </li>
+                <li class="btnHolder">
+                    <label for="submit">&nbsp;&nbsp;</label>
+                    <input type="Submit" name="submit" value="Submit" class="button"/>
+                </li>
+            </ol>
+        </fieldset>
+        <!--{{form.date_completed}}
+        {{form.chair_sig}}
+        {{form.dean_sig}}-->
     </form>
     {% endblock %}
 </body>

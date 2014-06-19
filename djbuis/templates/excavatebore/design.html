@@ -4,7 +4,9 @@
 <head>
     <style>.error {color: red}</style>
     <meta charset="utf-8" />
-    <title>Excavate / Bore Form</title>
+    {% block content_head %}
+        <h1 id="page-title">Excavate or Bore Form</h1>
+    {% endblock %}
     {% block extra_style %}
     <style>
         input[type=checkbox]
@@ -16,14 +18,13 @@
           -webkit-appearance:radio;
         }
     </style>
-    <link rel='stylesheet' type='text/css' href='{{static_url}}djbuis/css/base_css.css'/>
     <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
     <link href="//www.carthage.edu/static/vendor/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="//www.carthage.edu/themes/shared/css/forms.css" rel="stylesheet" type="text/css" />
     <link href="//www.carthage.edu/themes/shared/css/tables.css" rel="stylesheet" type="text/css" />
     {% endblock %}
     {% block javascript %}
-    <script>
+    <script type='text/javascript'>
         function validateApplicantName(){
             var id = document.getElementById('id_applicant_name');
             var val = id.value;
@@ -85,152 +86,125 @@
 </head>
 {% block content %}
 <body>
-    <div>
-        {% if submitted %}
-                <h2>Your form has been submitted, thank you</h2>
-        {% endif %}
-    </div>
-    <div>
-        {{ form.non_field_errors }}
-        <form action='' method='post'>{% csrf_token %}
-            <span class='separator'>Permit Type</span><hr>
-            {% for e in form.excavate.errors %}
-                <span class='error'>{{ e }}</span>
-            {% endfor %}
-            <table>
-                <tr>
-                    <td><span class='fieldlabel'>{{ form.excavate.label }}</span></td>
-                    <td>{{ form.excavate }}</td>
-                </tr>
-                <tr>
-                    <td><span class='fieldlabel'>{{ form.bore.label }}</span></td>
-                    <td>{{ form.bore }}</td>
-                    <td>
-                        {% for e in form.bore.errors %}
-                            <span class='error'>*{{ e }}</span>
-                        {% endfor %}
-                    </td>
-                </tr>
-            </table><br>
-            <span class='separator'>Applicant Information</span><hr>
-            <table>
-                <tr>
-                    <td><span class='fieldlabel'>{{ form.applicant_name.label }}</span></td>
-                    <td>{{ form.applicant_name }}</td>
-                    <td>
+    <form action='' method='post' class = "form">{% csrf_token %}
+        <fieldset class="blockLabels">
+            <legend>Type of Work</legend>
+            <ol>
+                <li class="ctrlHolder"><h3><label for="excavate_bore_0"></label></h3>
+                    <ul>
+                        <li><label for="excavate_bore_0"><input checked="checked" id="excavate_bore_0" name="excavatebore" type="radio" value="EXC" /> Excavate</label></li>
+                        <li><label for="excavate_bore_1"><input id="excavate_bore_1" name="excavatebore" type="radio" value="BORE" /> Bore</label></li>
+                    </ul>
+                </li>
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <legend>Applicant Info</legend>
+            <ol>
+                <li class="ctrlHolder"><h3><label for="id_applicant_name">{{ form.applicant_name.label }}</label></h3>
+                    <div class="required">
+                        <input id="id_applicant_name" maxlength="100" name="name" type="text" />
                         <img class='hidden' id='applicant_name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img class='hidden' id='applicant_name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                        {% for e in form.applicant_name.errors %}
-                            <span class='error'>*{{ e }}</span>
-                        {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class='fieldlabel'>{{ form.company.label }}</span></td>
-                    <td>{{ form.company }}</td>
-                    <td>
+                    </div>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_company">{{ form.company.label }}</label></h3>
+                    <div class="required">
+                        <input id="id_company" maxlength="100" name="company" type="text" />
                         <img class='hidden' id='company_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img class='hidden' id='company_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                        {% for e in form.company.errors %}
-                            <span class='error'>*{{ e }}</span>
-                        {% endfor %}
-                    </td>
-                </tr>
-            </table><br>
-            <span class='separator'>Project information</span><hr>
-            <table>
-                <tr>
-                    <td><span class='fieldlabel'>{{ form.reason_for_excavation_or_boring.label }}</span></td>
-                    <td>{{ form.reason_for_excavation_or_boring }}</td>
-                    <td>
+                    </div>
+                </li>
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <legend>Project Info</legend>
+            <ol>
+                <li class="ctrlHolder"><h3><label for="id_reason_for_excavation_or_boring">Reason for excavating or boring</label></h3>
+                    <div class="required">
+                        <input id="id_reason_for_excavation_or_boring" maxlength="100" name="reason" type="text" />
                         <img class='hidden' id='reason_for_excavation_or_boring_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img class='hidden' id='reason_for_excavation_or_boring_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                        {% for e in form.reason_for_excavation_or_boring.errors %}
-                            <span class='error'>*{{ e }}</span>
-                        {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class='fieldlabel'>{{ form.location_of_excavation_including_termination_points.label }}</span></td>
-                    <td>{{ form.location_of_excavation_including_termination_points }}</td>
-                    <td>
+                    </div>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_location_of_excavation_including_termination_points">Location of work including termination points</label></h3>
+                    <div class="required">
+                        <input id="id_location_of_excavation_including_termination_points" maxlength="100" name="location" type="text" />
                         <img class='hidden' id='location_of_excavation_including_termination_points_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img class='hidden' id='location_of_excavation_including_termination_points_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                        {% for e in form.location_of_excavation_including_termination_points.errors %}
-                            <span class='error'>*{{ e }}</span>
-                        {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class='fieldlabel'>{{ form.start_date_for_excavation.label }}</span></td>
-                    <td>{{ form.start_date_for_excavation }}</td>
-                    <td>
-                        <img style='display:none;' id='start_date_for_excavation_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                        <img style='display:none;' id='start_date_for_excavation_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                        {% for e in form.start_date_for_excavation.errors %}
-                            <span class='error'>*{{ e }}</span>
-                        {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class='fieldlabel'>{{ form.projected_end_date_for_excavation.label }}</span></td>
-                    <td>{{ form.projected_end_date_for_excavation }}</td>
-                    <td>
-                        <img style='display:none;' id='projected_end_date_for_excavation_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                        <img style='display:none;' id='projected_end_date_for_excavation_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                        {% for e in form.projected_end_date_for_excavation.errors %}
-                            <span class='error'>*{{ e }}</span>
-                        {% endfor %}
-                    </td>
-                </tr>
-            </table><br>
-            <span class='separator'>General Provisions</span><hr>
-            <ul>
-                <li>The permitting process is designing to help prevent damage during excavation /
-                boring operations on the Carthage Campus. It is also to insure that all contractors
-                adhere to appropriate landscape / tree preservation and protection practices. It is
-                not intended to modify a project's drawings or specifications</li>
-                <li>The applicant will review, in detail, the proposed area of excavation with an
-                authorized member of the facilities department of Carthage. A formal meeting with
-                other campus departments may also be required. No excavation or boring
-                may proceed without written authorization as provided by this permit signed by
-                the Associate Vice President for Business</li>
-                <li>Boring procedures will include line and grade control by a licensed surveryor or
-                professional engineer. The procedures will include verification and summary of the work
-                performed by the licensed surveyor or engineer and shall be submitted to the campus facilities
-                staff upon completion of boring</li>
-                <li>Upon completion of the excavation / boring project, as-built drawings of work
-                performed will be provided to campus facilities staff. These drawings will include
-                positional data including elevations for all items that were installed as part of the excavation project</li>
-                <li>The applicant will clearly mark the boundary of the proposed excavation / boring site. ALl locates,
-                public and private, shall be the responsiblity of the applicant. Campus facilities services will cooperate
-                with information sharing but the final responsibility for locating and protecting campus utilities and infrastructure
-                is the sole responsibility of the applicant</li>
-                <li>The applicant will provide, with this completed application, an insurance certificate showing the following coverage:</li>
-                <ul>
-                    <li>General Liability - $1,000,000</li>
-                    <li>Automobile Liability - $1,000,000</li>
-                    <li>Workers Compensation - $1,000,000</li>
-                    <li>Employer Liability - $1,000,000</li>
-                </ul>
-                <li>The successful issuance of an excavation permit <b>DOES NOT</b> grant the applicant
-                permission to deactivate, energize or de-energize, lockout tag out, change any
-                utilities, feeds, or value settings without the express consent of the Carthage
-                facilities department. If any utility or service disruptions are expected as part of this project,
-                they must be disclosed as part of this application process</li>
-                <li>Applicant is responsible for tree protection including a temporary fence at all tree
-                drip line is required by the College. Applicant is responsible for the proper removal and off
-                campus disposal of all spoils. Disturbed turf must be restored within five days of
-                the end of excavation / boring</li>
-                <li>The applicant agrees that if any part of these requirements is not fulfilled, Carthage
-                will make remedies at the applicant's sole expense.</li>
-            </ul><br>
-            <span>
-                I acknowledge as an applicant of an excavation / boring permit I have reviewed the permit procedures and agree to comply with the above terms and conditions
-            </span><br><br>
-            <input type="Submit" id="submit" value="Submit form"></submit>
-        </form>
-    </div>
+                    </div>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_start_date_for_excavation">Start date of work</label></h3>
+                    <div class="required">
+                        <input id="id_start_date_for_excavation" maxlength="100" name="start" type="date" />
+                        <img class='hidden' id='start_date_for_excavation_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                        <img class='hidden' id='start_date_for_excavation_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    </div>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_projected_end_date_for_excavation">Projected end date</label></h3>
+                    <div class="required">
+                        <input id="id_projected_end_date_for_excavation" maxlength="100" name="end" type="date" />
+                        <img class='hidden' id='projected_end_date_for_excavation_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                        <img class='hidden' id='projected_end_date_for_excavation_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    </div>
+                </li>
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <legend>Permit Info</legend>
+            <ol>
+                <li>The permitting process is designed to help prevent damage during excavation /
+                    boring operations on the Carthage Campus. It is also to insure that all contractors
+                    adhere to appropriate landscape / tree preservation and protection practices. It is
+                    not intended to modify a project's drawings or specifications.<br>
+                    The applicant will review, in detail, the proposed area of excavation with an
+                    authorized member of the facilities department of Carthage. A formal meeting with
+                    other campus departments may also be required. No excavation or boring
+                    may proceed without written authorization as provided by this permit signed by
+                    the Associate Vice President for Business.<br>
+                    Boring procedures will include line and grade control by a licensed surveryor or
+                    professional engineer. The procedures will include verification and summary of the work
+                    performed by the licensed surveyor or engineer and shall be submitted to the campus facilities
+                    staff upon completion of boring.<br>
+                    Upon completion of the excavation / boring project, as-built drawings of work
+                    performed will be provided to campus facilities staff. These drawings will include
+                    positional data including elevations for all items that were installed as part of the excavation project.<br>
+                    The applicant will clearly mark the boundary of the proposed excavation / boring site. All locates,
+                    public and private, shall be the responsiblity of the applicant. Campus facilities services will cooperate
+                    with information sharing but the final responsibility for locating and protecting campus utilities and infrastructure
+                    is the sole responsibility of the applicant.<br>
+                    The applicant will provide, with this completed application, an insurance certificate showing the following coverage:
+                    <ul class="bullets">
+                        <li>General Liability - $1,000,000</li>
+                        <li>Automobile Liability - $1,000,000</li>
+                        <li>Workers Compensation - $1,000,000</li>
+                        <li>Employer Liability - $1,000,000</li>
+                    </ul>
+                    The successful issuance of an excavation permit <b>DOES NOT</b> grant the applicant
+                    permission to deactivate, energize or de-energize, lockout tag out, change any
+                    utilities, feeds, or value settings without the express consent of the Carthage
+                    facilities department. If any utility or service disruptions are expected as part of this project,
+                    they must be disclosed as part of this application process.<br>
+                    Applicant is responsible for tree protection including a temporary fence at all tree
+                    drip line is required by the College. Applicant is responsible for the proper removal and off
+                    campus disposal of all spoils. Disturbed turf must be restored within five days of
+                    the end of excavation / boring.<br>
+                    The applicant agrees that if any part of these requirements is not fulfilled, Carthage
+                    will make remedies at the applicant's sole expense.<br>
+                </li>
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <legend>Accept and Submit</legend>
+            <ol>
+                <li>I acknowledge as an applicant of an excavation / boring permit I have reviewed the permit
+                    procedures and agree to comply with the above terms and conditions</li>
+                <li class="btnHolder">
+                    <input type="Submit" name="submit" value="Submit Form" class="button"/>
+                </li>
+            </ol>
+        </fieldset>
+    </form>
 </body>
     <script type="text/javascript">
         document.getElementById('applicant_name_no').style.display = 'none';

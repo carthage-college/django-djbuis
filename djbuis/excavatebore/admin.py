@@ -85,14 +85,14 @@ def push_to_production(modeladmin, request, queryset):
     #        queryset.update(server='prod')
     #        obj.save()
     #        messages.success(request, 'Request from %s : %s, has been copied to the production server' % (obj.applicant_name, obj.company))
-            
+
 
 class ExcavateAdmin(admin.ModelAdmin):
     search_fields = ['company'] #We can search by 'company'
-    list_display = ('applicant_name','company','excavate','bore','server') #We will only see the following fields as columns in the admin page
+    list_display = ('applicant_name','company','excavate_bore','server') #We will only see the following fields as columns in the admin page
     fieldsets = ( #How the 'excavatebore' object is displayed in the editor in the admin page
         ('Permit type', {
-            'fields': ('excavate','bore') 
+            'fields': ('excavate_bore',) 
         }),
         ('Application information', {
             'classes': ('collapse',), #Makes this header collapsible
@@ -106,8 +106,8 @@ class ExcavateAdmin(admin.ModelAdmin):
             'fields': ('reviewed_by','meeting_held_with_applicant','date_of_approval','server')
         })
     )
-    list_filter = ('server','excavate','bore','company') #A quick filter will have these fields available to search by
-    readonly_fields = ('excavate','bore','server') #You will not be able to change these fields when editing an 'excavatebore' object
+    list_filter = ('server','excavate_bore','company') #A quick filter will have these fields available to search by
+    readonly_fields = ('excavate_bore','server') #You will not be able to change these fields when editing an 'excavatebore' object
     actions = [push_to_production] #Includes the action we defined earlier in this page
 
 #admin.site.register(ExcavateProxy)    #If making a proxy, you only have to register the proxy, not the model nor the admin

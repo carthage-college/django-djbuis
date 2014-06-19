@@ -2,7 +2,9 @@
 <!doctype html>
 <head>
   <meta charset="utf-8" />
-  <title>jQuery UI Accordion - Default functionality</title>
+  {% block content_head %}
+    <h1 id="page-title">CLIS Telephone MAC Order Form</h1>
+  {% endblock %}
   {% block extra_style %}
   <style>
         .errorlist, .errors {
@@ -17,8 +19,7 @@
           -webkit-appearance:radio;
         }
     </style>
-  <link rel="stylesheet" href="themes/dot-luv/jquery.ui.all.css" />
-  <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
+    <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
     <link href="//www.carthage.edu/static/vendor/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="//www.carthage.edu/themes/shared/css/forms.css" rel="stylesheet" type="text/css" />
     <link href="//www.carthage.edu/themes/shared/css/tables.css" rel="stylesheet" type="text/css" />
@@ -49,13 +50,13 @@
         function validateFromLocation(){
             var id = document.getElementById('id_from_location');
             var val = id.value;
-            var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
+            var patt = new RegExp('^((?:[\\w]+[\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-]+)+[\\w\\.\\!\\?\\)]+)$');
             return patt.test(val);
         }
         function validateToLocation(){
            var id = document.getElementById('id_to_location');
            var val = id.value;
-           var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
+           var patt = new RegExp('^((?:[\\w]+[\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-]+)+[\\w\\.\\!\\?\\)]+)$');
            return patt.test(val);
         }
         function validateCallerId(){
@@ -86,67 +87,90 @@
 <html lang="en">
 {% block content %}
 <body>
-<h1>CLIS TELEPHONE MAC ORDER FORM</h1>
-<h3>Please fill out the information below to request a telephone move, add, or change.  If you have any questions, please call Ryan Ade at ext. 2146</h3>
-	<div>
-		<form action="" method="post"> {% csrf_token %}				
-			{{form.name.label}}
-			{{form.name.errors}}
-            {{form.name}}
-            <img class='hidden' id='name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-            <img class='hidden' id='name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-            <br><br>			
-			{{form.department.label}}
-            {{form.department.errors}}
-			{{form.department}}
-            <img class='hidden' id='department_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-            <img class='hidden' id='department_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-            <br><br>
-			{{form.user_number.label}}
-			<p>If the user is NEW and needs a number type "NEW"</p>
-			{{form.user_number.errors}}
-			{{form.user_number}}
-            <img class='hidden' id='user_number_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-            <img class='hidden' id='user_number_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-            <br><br>
-			{{form.request.errors}}
-			{{form.request.label}}
-			<p>Select appropriate option below</p>
-			{{form.request}}<br><br>
-			{{form.from_location.label}}
-			<p>Where is the user moving from? If NEW USER type NEW. Include Building Name and Room Number</p>
-			{{form.from_location.errors}}
-			{{form.from_location}}
-            <img class='hidden' id='from_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-            <img class='hidden' id='from_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-            <br><br>
-			{{form.to_location.label}}
-			<p>Where is the user moving to? If NEW USER type NEW. Include Building Name and Room Number</p>
-			{{form.to_location.errors}}
-			{{form.to_location}}
-            <img class='hidden' id='to_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-            <img class='hidden' id='to_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-            <br><br>
-			{{form.caller_id.label}}
-			<p>Enter the name as it would appear on the caller ID below</p>
-			{{form.caller_id.errors}}
-			{{form.caller_id}}
-            <img class='hidden' id='caller_id_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-            <img class='hidden' id='caller_id_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-            <br><br>
-			{{form.date_of_change.label}}
-			{{form.date_of_change.errors}}
-			{{form.date_of_change}}
-            <img class='hidden' id='date_of_change_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-            <img class='hidden' id='date_of_change_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-            <br><br>
-			{{form.email.label}}
-			{{form.email.errors}}
-			{{form.email}}<br><br>			
-	<div>
-		<input type="submit" name="submit" value="Submit Form">
-	</div>
-	</div>
+<h1></h1>
+<h3>Please fill out the information below to request a telephone move, add, or change.  If you have any questions,
+    please call Ryan Ade at ext. 2146</h3>
+	<form action="" method="post" class="form">
+        <fieldset class="blockLabels">
+            <legend>User Information</legend>
+            <ol>
+                <li class="ctrlHolder"><h3><label for="id_name">Name of User</label></h3>
+                    <div class="required">
+                        <input id="id_name" maxlength="100" name="name" type="text" />
+                        <img style='display:none;' id='name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                        <img style='display:none;' id='name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    </div>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_department">Department</label></h3>
+                    <div class="required">
+                        <input id="id_department" maxlength="100" name="department" type="text" />
+                        <img style='display:none;' id='department_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                        <img style='display:none;' id='department_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    </div>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_user_number">Current User Number. If the user is new and needs a number type "NEW"</label></h3>
+                    <div class="required">
+                        <input id="id_user_number" maxlength="100" name="number" type="text" />
+                        <img style='display:none;' id='user_number_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                        <img style='display:none;' id='user_number_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    </div>
+                </li>
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <legend>Request Information</legend>
+            <ol>
+                <li class="ctrlHolder"><h3><label for="id_request_0">What are you requesting?</label></h3>
+                    <ul>
+                        <li><label for="id_request_0"><input checked="checked" id="id_request_0" name="request" type="radio" value="MOVE" />Move</label></li>
+                        <li><label for="id_request_1"><input id="id_request_1" name="request" type="radio" value="ADD" /> Add</label></li>
+                        <li><label for="id_request_2"><input id="id_request_2" name="request" type="radio" value="REPL" /> Replacement</label></li>
+                        <li><label for="id_request_3"><input id="id_request_3" name="request" type="radio" value="CHNG" /> Change of Service
+                            <label></li>
+                    </ul>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_from_location">Where is the user moving from? If the user is new, type NEW. Include 
+                        Building Name and Room Number</label></h3>
+                    <div class="required">
+                        <textarea cols="40" id="id_from_location" name="from" rows="10"></textarea>                        
+                        <img style='display:none;' id='from_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                        <img style='display:none;' id='from_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    </div>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_to_location">Where is the user moving to?</label></h3>
+                    <div class="required">
+                        <textarea cols="40" id="id_to_location" name="to" rows="10"></textarea>
+                        <img style='display:none;' id='to_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                        <img style='display:none;' id='to_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    </div>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_caller_id">Desired Caller ID</label></h3>
+                    <div class="required">
+                        <input id="id_caller_id" maxlength="100" name="caller id" type="text" />
+                        <img style='display:none;' id='caller_id_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                        <img style='display:none;' id='caller_id_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    </div>
+                </li>
+                <li class="ctrlHolder"><h3><label for="id_date_of_change">Date of move, add, or change</label></h3>
+                <div class="required">
+                    <input id="id_date_of_change" maxlength="100" name="date" type="date" />
+                    <img style='display:none;' id='date_of_change_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img style='display:none;' id='date_of_change_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                </div>                
+            </li>
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <legend>Email and Submit</legend>
+            <ol>
+                <li class="ctrlHolder"><h3><label for="id_email">Check this box if you would like the form to be emailed to you upon completion.</label></h3>
+                    <input id="id_email" name="email" type="checkbox" />
+                </li>
+                <li class="btnHolder">
+                    <label for="submit">&nbsp;&nbsp;</label>
+                    <input type="Submit" name="submit" value="Submit" class="button"/>
+                </li>
+            </ol>
 </form>
 </body>
         <script type="text/javascript">
@@ -242,5 +266,5 @@
             }
         };
     </script>
-</html>
 {% endblock %}
+</html>

@@ -9,11 +9,12 @@ def validate_boolean_must_be_true(value):
 
 class ExcavateModel(models.Model):
     
-    #All of the fields in my form are below
+    EXCBORE = (
+        ("EXC", 'Excavate'),
+        ("BORE", 'Bore'),
+        )
     
-    excavate = models.BooleanField() #Renders as a checkbox
-    bore = models.BooleanField()
-    
+    excavate_bore = models.CharField(choices="EXCBORE", max_length=10)    
     applicant_name = models.CharField(blank=False,max_length=64) #'max_length' is the maximum number of characters allowed in this field
     company = models.CharField(blank=False,max_length=64) #'blank=False' means the field is required
     reason_for_excavation_or_boring = models.CharField(blank=False,max_length=200)

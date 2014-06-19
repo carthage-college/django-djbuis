@@ -47,23 +47,23 @@ class InfoForm(forms.ModelForm):
 
 class KeyForm(forms.Form):
     BUILDINGS = (
-        ("LIB", 'Library'),
-        ("STRZ", 'Straz'),
-        ("LNTZ", 'Lentz'),
-        ("JART", 'Johnson Art Center'),
-        ("TARC", 'TARC'),
         ("CHPL", 'Chapel'),
         ("DNHT", 'Denhart Hall'),
-        ("TARB", 'Tarble Hall'),
-        ("MADR", 'Madrigrano Hall'),
+        ("JART", 'Johnson Art Center'),
         ("JOHN", 'Johnson Hall'),
-        ("SWEN", 'Swenson Hall'),
+        ("LNTZ", 'Lentz'),
+        ("LIB", 'Library'),
+        ("MADR", 'Madrigrano Hall'),
         ("OAKS1", 'Oaks 1'),
         ("OAKS2", 'Oaks 2'),
         ("OAKS3", 'Oaks 3'),
         ("OAKS4", 'Oaks 4'),
         ("OAKS5", 'Oaks 5'),
         ("OAKS6", 'Oaks 6'),
+        ("STRZ", 'Straz'),
+        ("SWEN", 'Swenson Hall'),
+        ("TARB", 'Tarble Hall'),
+        ("TARC", 'TARC'),
         )
     building = forms.ChoiceField(widget = forms.Select, choices=BUILDINGS)
     room_number = forms.IntegerField()
