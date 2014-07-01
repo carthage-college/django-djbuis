@@ -131,7 +131,7 @@
                         <li><label for="id_reason_4"><input id="id_reason_4" name="reason" type="radio" value="OTH" />Other (Please Explain)</label></li>
                     </ul>
                 </li>
-                <li class="ctrlHolder"><h3><label for="id_other"></label></h3>
+                <li id="otherli" style="display:none;" class="ctrlHolder"><h3><label for="id_other">Other:</label></h3>
                     <input id="id_other" maxlength="100" name="other" type="text" />
                 </li>     
             </ol>
@@ -158,6 +158,28 @@
         {{form.chair_sig}}
         {{form.dean_sig}}-->
     </form>
-    {% endblock %}
 </body>
+<script type='text/javascript'>
+     element = document.getElementsByName('reason');
+     for (var i = 0; i < element.length; i++)
+     {
+         element[i].onclick = function() {
+            var value = this.value;
+            var othervar = document.getElementById('otherli'); 
+            if (value == "OTH"){
+                othervar.style.display = 'list-item';
+                }
+            else{
+                othervar.style.display = 'none';
+                }
+         };
+     }
+     if( document.getElementsByName('reason').value == 'OTH' ){
+         document.getElementById('otherli').style.display = 'list-item';
+     }
+     else {
+         document.getElementById('otherli').style.display = 'none';
+     }
+</script>
+    {% endblock %}
 </html>

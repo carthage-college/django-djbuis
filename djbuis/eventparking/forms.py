@@ -26,7 +26,7 @@ class ParkingForm(forms.ModelForm):
         test = cleaned_data.get('event_date')
         
         if not test:
-            msg = u"Invalid or past date"
+            msg = u"Invalid date"
             self._errors['event_date'] = self.error_class([msg])
         else:
             if test < datetime.date.today():
