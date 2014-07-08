@@ -1,69 +1,147 @@
 {% extends "djkorra/base.html" %}
-<!doctype html>
-<html lang='en'>
-<head>
-    <meta charset='utf-8' />
-    {% block content_head %}
-        <h1 id="page-title">Event Parking Form</h1>
-    {% endblock %}
-    {% block javascript %}
-    <script type='text/javascript'>
-        function validate_name(){
-            var id = document.getElementById('id_contact_person');
-            var val = id.value;
-            var patt = new RegExp('^((?:[a-zA-Z]+\\s?){1,2}[a-zA-Z]+)$');
-            return patt.test(val);        
+{% load livewhale_api %}
+{% block title %}
+    Event Parking Form
+{% endblock %}
+{% block content_head %}
+    <h1 id="page-title">Event Parking Form</h1>
+{% endblock %}
+{% block javascript %}
+<script type='text/javascript'>
+    document.getElementById('contact_person_no').style.display='none';
+    document.getElementById('contact_person_yes').style.display='none';
+    document.getElementById('phone_number_no').style.display='none';
+    document.getElementById('phone_number_yes').style.display='none';
+    document.getElementById('event_name_no').style.display='none';
+    document.getElementById('event_name_yes').style.display='none';
+    document.getElementById('event_location_no').style.display='none';
+    document.getElementById('event_location_yes').style.display='none';
+    document.getElementById('crowd_estimate_no').style.display='none';
+    document.getElementById('crowd_estimate_yes').style.display='none';
+    document.getElementById('event_date_no').style.display='none';
+    document.getElementById('event_date_yes').style.display='none';
+    var element = document.getElementById('id_contact_person');
+    element.onblur = function(){
+        var n=document.getElementById('contact_person_no');
+        var y=document.getElementById('contact_person_yes');
+        if(!validate_name()){ 
+                    n.style.display='inline'; y.style.display='none'; 
+                    }
+                else {
+                    n.style.display='none'; y.style.display='inline';
+                    }
+    };
+    element = document.getElementById('id_phone_number')
+    element.onblur = function(){
+        var n=document.getElementById('phone_number_no');
+        var y=document.getElementById('phone_number_yes');
+        if(!validate_phone()){ 
+                    n.style.display='inline'; y.style.display='none'; 
+                    }
+                else {
+                    n.style.display='none'; y.style.display='inline';
+                    }
+    };
+    element = document.getElementById('id_event_name')
+    element.onblur = function(){
+        var n=document.getElementById('event_name_no');
+        var y=document.getElementById('event_name_yes');
+        if(!validate_event_name()){ 
+                    n.style.display='inline'; y.style.display='none'; 
+                    }
+                else {
+                    n.style.display='none'; y.style.display='inline';
+                    }
+    };
+    element = document.getElementById('id_event_location')
+    element.onblur = function(){
+        var n=document.getElementById('event_location_no');
+        var y=document.getElementById('event_location_yes');
+        if(!validate_event_location()){ 
+            n.style.display='inline'; y.style.display='none'; 
         }
-        function validate_phone(){
-            var number = document.getElementById('id_phone_number')
-            var val = number.value;
-            var patt = new RegExp('^((?:1?[\\s\\-\\.\\/]?\\(?(?:\\d{3})\\)?)?[\\s\\-\\.\\/]?\\d{3}[\\s\\-\\.\\/]?\\d{4}(?:\\s?(?:x|ext|\\.)?\\s?\\d{4})?)$');
-            return patt.test(val);
+        else {
+            n.style.display='none'; y.style.display='inline';
         }
-        function validate_event_name(){
-            var id = document.getElementById('id_event_name');
-            var val = id.value;
-            var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
-            return patt.test(val);
+    };
+    element = document.getElementById('id_crowd_estimate')
+    element.onblur = function(){
+        var n=document.getElementById('crowd_estimate_no');
+        var y=document.getElementById('crowd_estimate_yes');
+        if(!validate_crowd_estimate()){ 
+            n.style.display='inline'; y.style.display='none'; 
         }
-        function validate_event_location(){
-            var id = document.getElementById('id_event_location');
-            var val = id.value;
-            var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
-            return patt.test(val);
+        else {
+            n.style.display='none'; y.style.display='inline';
         }
-        function validate_crowd_estimate(){
-            var id = document.getElementById('id_crowd_estimate');
-            var val = id.value;
-            var patt = new RegExp('^(\\d{1,7})$');
-            return patt.test(val);
+    };
+    element = document.getElementById('id_event_date')
+    element.onblur = function() {
+        var n=document.getElementById('event_date_no');
+        var y=document.getElementById('event_date_yes');
+        if(!validate_event_date()){ 
+            n.style.display='inline'; y.style.display='none'; 
         }
-        function validate_event_date(){
-            var id = document.getElementById('id_event_date');
-            var val = id.value;
-            var newdate = new Date();
-            var value = val.split("-");
-            var inputdate = new Date(value[0],value[1]-1,value[2]);
-            if (inputdate.getTime() < newdate.getTime()){
-                return false;
-            }
-            else if (val == ""){
-                return false;
-            }
-            else{
-                return true;
-            }
+        else {
+            n.style.display='none'; y.style.display='inline';
         }
-    </script>
-    {% endblock %}
-    <link rel='stylesheet' type='text/css' href='{{ static_url }}djbuis/css/base_css.css'>
-    <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
-    <link href="//www.carthage.edu/static/vendor/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="//www.carthage.edu/themes/shared/css/forms.css" rel="stylesheet" type="text/css" />
-    <link href="//www.carthage.edu/themes/shared/css/tables.css" rel="stylesheet" type="text/css" />
-</head>
+    };
+
+    function validate_name(){
+        var id = document.getElementById('id_contact_person');
+        var val = id.value;
+        var patt = new RegExp('^((?:[a-zA-Z]+\\s?){1,2}[a-zA-Z]+)$');
+        return patt.test(val);
+    }
+    function validate_phone(){
+        var number = document.getElementById('id_phone_number')
+        var val = number.value;
+        var patt = new RegExp('^((?:1?[\\s\\-\\.\\/]?\\(?(?:\\d{3})\\)?)?[\\s\\-\\.\\/]?\\d{3}[\\s\\-\\.\\/]?\\d{4}(?:\\s?(?:x|ext|\\.)?\\s?\\d{4})?)$');
+        return patt.test(val);
+    }
+    function validate_event_name(){
+        var id = document.getElementById('id_event_name');
+        var val = id.value;
+        var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
+        return patt.test(val);
+    }
+    function validate_event_location(){
+        var id = document.getElementById('id_event_location');
+        var val = id.value;
+        var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
+        return patt.test(val);
+    }
+    function validate_crowd_estimate(){
+        var id = document.getElementById('id_crowd_estimate');
+        var val = id.value;
+        var patt = new RegExp('^(\\d{1,7})$');
+        return patt.test(val);
+    }
+    function validate_event_date(){
+        var id = document.getElementById('id_event_date');
+        var val = id.value;
+        var newdate = new Date();
+        var value = val.split("-");
+        var inputdate = new Date(value[0],value[1]-1,value[2]);
+        if (inputdate.getTime() < newdate.getTime()){
+            return false;
+        }
+        else if (val == ""){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
+{% endblock %}
+{% block left_nav  %}
+<h4>Business Office</h4>
+{% get_lw_content as nav blurbs 1829 %}
+{{nav.body}}
+{% endblock %}
 {% block content %}
-<body>
+<div class="forms-container">
     <form action='' method='post' class="form">{% csrf_token %}
         <fieldset class="blockLabels">
             <legend>Parking Information</legend>
@@ -150,86 +228,5 @@
             </ol>
         </<fieldset>
     </form>
-</body>
-<script>
-    document.getElementById('contact_no').style.display='none';
-    document.getElementById('contact_yes').style.display='none';
-    document.getElementById('phone_number_no').style.display='none';
-    document.getElementById('phone_number_yes').style.display='none';
-    document.getElementById('event_name_no').style.display='none';
-    document.getElementById('event_name_yes').style.display='none';
-    document.getElementById('event_location_no').style.display='none';
-    document.getElementById('event_location_yes').style.display='none';
-    document.getElementById('crowd_estimate_no').style.display='none';
-    document.getElementById('crowd_estimate_yes').style.display='none';
-    document.getElementById('event_date_no').style.display='none';
-    document.getElementById('event_date_yes').style.display='none';
-    var element = document.getElementById('id_contact_person');
-    element.onblur = function(){
-        var n=document.getElementById('contact_no');
-        var y=document.getElementById('contact_yes');
-        if(!validate_name()){ 
-                    n.style.display='inline'; y.style.display='none'; 
-                    }
-                else {
-                    n.style.display='none'; y.style.display='inline';
-                    }
-    };
-    element = document.getElementById('id_phone_number')
-    element.onblur = function(){
-        var n=document.getElementById('phone_number_no');
-        var y=document.getElementById('phone_number_yes');
-        if(!validate_phone()){ 
-                    n.style.display='inline'; y.style.display='none'; 
-                    }
-                else {
-                    n.style.display='none'; y.style.display='inline';
-                    }
-    };
-    element = document.getElementById('id_event_name')
-    element.onblur = function(){
-        var n=document.getElementById('event_name_no');
-        var y=document.getElementById('event_name_yes');
-        if(!validate_event_name()){ 
-                    n.style.display='inline'; y.style.display='none'; 
-                    }
-                else {
-                    n.style.display='none'; y.style.display='inline';
-                    }
-    };
-    element = document.getElementById('id_event_location')
-    element.onblur = function(){
-        var n=document.getElementById('event_location_no');
-        var y=document.getElementById('event_location_yes');
-        if(!validate_event_location()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_crowd_estimate')
-    element.onblur = function(){
-        var n=document.getElementById('crowd_estimate_no');
-        var y=document.getElementById('crowd_estimate_yes');
-        if(!validate_crowd_estimate()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_event_date')
-    element.onblur = function() {                               
-        var n=document.getElementById('event_date_no');
-        var y=document.getElementById('event_date_yes');
-        if(!validate_event_date()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };    
-</script>
-</html>
+</div>
 {% endblock %}

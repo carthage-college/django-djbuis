@@ -16,6 +16,7 @@ class ExcavateModel(models.Model):
     
     excavate_bore = models.CharField(choices="EXCBORE", max_length=10)    
     applicant_name = models.CharField(blank=False,max_length=64) #'max_length' is the maximum number of characters allowed in this field
+    phone = models.CharField(max_length=15)
     company = models.CharField(blank=False,max_length=64) #'blank=False' means the field is required
     reason_for_excavation_or_boring = models.CharField(blank=False,max_length=200)
     location_of_excavation_including_termination_points = models.CharField(blank=False,max_length=200)

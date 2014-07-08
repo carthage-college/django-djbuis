@@ -52,6 +52,7 @@ class ExcavateForm(forms.ModelForm):
                 Please check Django admin page for this new submission ->
         
                 Applicant name: %s\n
+                Phone number: %s\n
                 Company: %s\n
                 Type of work: %s\n
                 Bore: %s\n
@@ -60,6 +61,7 @@ class ExcavateForm(forms.ModelForm):
                 Start date: %s\n
                 End date: %s\n
                 ''' % (self.cleaned_data['applicant_name'],
+                       self.cleaned_data['phone'],
                        self.cleaned_data['company'],
                        self.cleaned_data['excavate_bore'],
                        self.cleaned_data['reason_for_excavation_or_boring'],

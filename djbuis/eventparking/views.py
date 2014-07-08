@@ -6,12 +6,16 @@ from django.http import HttpResponse, HttpResponseRedirect
 #Include the form itself
 from forms import ParkingForm
 
-# Create your views here.    
+# Create your views here.
 def index(request):
     if request.POST: #If we do a POST
-        form = ParkingForm(request.POST) #Scrape the data from the form and save it in a variable
+        #Scrape the data from the form and save it in a variable
+        form = ParkingForm(request.POST)
         if form.is_valid(): #If the form is valid
-            send_mail("New event parking application is ready to view",form.as_string(),"Django_Admin", ['zwenta@carthage.edu'])
+            send_mail(
+                "New event parking application is ready to view",
+                form.as_string(),"Django_Admin", ['zwenta@carthage.edu']
+            )
             form.save() #Save the form data to the datbase table
             form = ParkingForm()
             submitted = True
@@ -19,8 +23,6 @@ def index(request):
                             'form': form,
                             'submitted': submitted
             })
-                            
-        
     else:
         form = ParkingForm()
     return render(request, 'eventparking/design.html', {

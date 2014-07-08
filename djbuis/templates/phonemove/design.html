@@ -1,93 +1,82 @@
 {% extends "djkorra/base.html" %}
-<!doctype html>
-<head>
-  <meta charset="utf-8" />
-  {% block content_head %}
-    <h1 id="page-title">CLIS Telephone MAC Order Form</h1>
-  {% endblock %}
-  {% block extra_style %}
-  <style>
-        .errorlist, .errors {
-            color: red;
+{% block content_head %}
+  <h1 id="page-title">Telephone Move/Add/Change Form</h1>
+{% endblock %}
+{% block extra_style %}
+<style>
+    .errorlist, .errors {
+        color: red;
+    }
+    input[type=checkbox]
+    {
+      -webkit-appearance:checkbox;
+    }
+    input[type=radio]
+    {
+      -webkit-appearance:radio;
+    }
+</style>
+{% endblock %}
+{% block javascript %}
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<script type='text/javascript'>
+    function validateName(){
+        var id = document.getElementById('id_name');
+        var val = id.value;
+        var patt = new RegExp('^((?:[a-zA-Z]+\\s?){1,2}[a-zA-Z]+)$');
+        return patt.test(val);        
+    }        
+    function validateDepartment(){
+        var id = document.getElementById('id_department');
+        var val = id.value;
+        var patt = new RegExp('^([a-zA-Z\\s?]+[a-zA-Z]+)$');
+        return patt.test(val);
+    }
+    function validateUserNumber(){
+        var number = document.getElementById('id_user_number')
+        var val = number.value;
+        var patt = new RegExp('^((?:1?[\\s-\\.\\/]?\\(?(?:\\d{3})\\)?)?[\\s-\\.\\/]?\\d{3}[\\s-\\.\\/]?\\d{4}(?:\\s?(?:x|ext|\\.)?\\s?\\d{4})?|NEW)$');
+        return patt.test(val);
+    }
+    function validateFromLocation(){
+        var id = document.getElementById('id_from_location');
+        var val = id.value;
+        var patt = new RegExp('^((?:[\\w]+[\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-]+)+[\\w\\.\\!\\?\\)]+)$');
+        return patt.test(val);
+    }
+    function validateToLocation(){
+       var id = document.getElementById('id_to_location');
+       var val = id.value;
+       var patt = new RegExp('^((?:[\\w]+[\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-]+)+[\\w\\.\\!\\?\\)]+)$');
+       return patt.test(val);
+    }
+    function validateCallerId(){
+        var id = document.getElementById('id_caller_id');
+        var val = id.value;
+        var patt = new RegExp('^((?:[a-zA-Z]+\\s?)+[a-zA-Z]+)$');
+        return patt.test(val);
+    }
+    function validateDateOfChange(){
+        var id = document.getElementById('id_date_of_change');
+        var val = id.value;
+        var newdate = new Date();
+        var value = val.split("-");
+        var inputdate = new Date(value[0],value[1]-1,value[2]);
+        if (inputdate.getTime() < newdate.getTime()){
+            return false;
         }
-        input[type=checkbox]
-        {
-          -webkit-appearance:checkbox;
+        else if (val == ""){
+            return false;
         }
-        input[type=radio]
-        {
-          -webkit-appearance:radio;
+        else{
+            return true;
         }
-    </style>
-    <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
-    <link href="//www.carthage.edu/static/vendor/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="//www.carthage.edu/themes/shared/css/forms.css" rel="stylesheet" type="text/css" />
-    <link href="//www.carthage.edu/themes/shared/css/tables.css" rel="stylesheet" type="text/css" />
-  {% endblock %}
-  {% block javascript %}
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  
-    <script type='text/javascript'>
-        function validateName(){
-            var id = document.getElementById('id_name');
-            var val = id.value;
-            var patt = new RegExp('^((?:[a-zA-Z]+\\s?){1,2}[a-zA-Z]+)$');
-            return patt.test(val);        
-        }        
-        function validateDepartment(){
-            var id = document.getElementById('id_department');
-            var val = id.value;
-            var patt = new RegExp('^([a-zA-Z\\s?]+[a-zA-Z]+)$');
-            return patt.test(val);
-        }
-        function validateUserNumber(){
-            var number = document.getElementById('id_user_number')
-            var val = number.value;
-            var patt = new RegExp('^((?:1?[\\s-\\.\\/]?\\(?(?:\\d{3})\\)?)?[\\s-\\.\\/]?\\d{3}[\\s-\\.\\/]?\\d{4}(?:\\s?(?:x|ext|\\.)?\\s?\\d{4})?|NEW)$');
-            return patt.test(val);
-        }
-        function validateFromLocation(){
-            var id = document.getElementById('id_from_location');
-            var val = id.value;
-            var patt = new RegExp('^((?:[\\w]+[\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-]+)+[\\w\\.\\!\\?\\)]+)$');
-            return patt.test(val);
-        }
-        function validateToLocation(){
-           var id = document.getElementById('id_to_location');
-           var val = id.value;
-           var patt = new RegExp('^((?:[\\w]+[\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-]+)+[\\w\\.\\!\\?\\)]+)$');
-           return patt.test(val);
-        }
-        function validateCallerId(){
-            var id = document.getElementById('id_caller_id');
-            var val = id.value;
-            var patt = new RegExp('^((?:[a-zA-Z]+\\s?)+[a-zA-Z]+)$');
-            return patt.test(val);
-        }
-        function validateDateOfChange(){
-            var id = document.getElementById('id_date_of_change');
-            var val = id.value;
-            var newdate = new Date();
-            var value = val.split("-");
-            var inputdate = new Date(value[0],value[1]-1,value[2]);
-            if (inputdate.getTime() < newdate.getTime()){
-                return false;
-            }
-            else if (val == ""){
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
-    </script>
-    {% endblock %}
-</head>
-<html lang="en">
+    }
+</script>
+{% endblock %}
 {% block content %}
-<body>
-<h1></h1>
 <h3>Please fill out the information below to request a telephone move, add, or change.  If you have any questions,
     please call Ryan Ade at ext. 2146</h3>
 	<form action="" method="post" class="form">
@@ -172,8 +161,7 @@
                 </li>
             </ol>
 </form>
-</body>
-        <script type="text/javascript">
+    <script type="text/javascript">
         document.getElementById('name_no').style.display = 'none';
         document.getElementById('name_yes').style.display = 'none';
         document.getElementById('department_no').style.display = 'none';
@@ -267,4 +255,3 @@
         };
     </script>
 {% endblock %}
-</html>

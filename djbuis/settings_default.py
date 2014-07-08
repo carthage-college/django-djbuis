@@ -27,6 +27,7 @@ DEFAULT_CHARSET = 'utf-8'
 FILE_CHARSET = 'utf-8'
 
 SERVER_URL = ""
+LIVEWHALE_API_URL = ""
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 ROOT_DIR = os.path.dirname(__file__)
 ROOT_URL = "/djbuis/"
