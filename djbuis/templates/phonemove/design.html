@@ -22,52 +22,112 @@
 {% endblock %}
 {% block javascript %}
 <script type='text/javascript'>
+    $("img.hidden").css("display", "none");
+    $('#id_name').change(function() {
+        if(!validateName()){ 
+            $('#name_no').css("display", "inline");
+            $('#name_yes').css("display", "none");
+        }
+        else {
+            $('#name_no').css("display", "none");
+            $('#name_yes').css("display", "inline");
+        }
+    });
+    $('#id_department').change(function() {
+        if(!validateDepartment()){
+            $('#department_no').css("display", "inline");
+            $('#department_yes').css("display", "none");
+        }
+        else {
+            $('#department_no').css("display", "none");
+            $('#department_yes').css("display", "inline");
+        }
+    });
+    $('#id_user_number').change(function() {
+        if(!validateUserNumber()){
+            $('#user_number_no').css("display", "inline");
+            $('#user_number_yes').css("display", "none");
+        }
+        else {
+            $('#user_number_no').css("display", "none");
+            $('#user_number_yes').css("display", "inline");
+        }
+    });
+    $('#id_from_location').change(function(){
+        if(!validateFromLocation()){
+            $('#from_location_no').css("display", "inline");
+            $('#from_location_yes').css("display", "none");
+        }
+        else {
+            $('#from_location_no').css("display", "none");
+            $('#from_location_yes').css("display", "inline");
+        }
+    });
+    $('#id_to_location').change(function(){
+        if(!validateToLocation()){
+            $('#to_location_no').css("display", "inline");
+            $('#to_location_yes').css("display", "none");
+        }
+        else{
+            $('#to_location_no').css("display", "none");
+            $('#to_location_yes').css("display", "inline");
+        }
+    });
+    $('#id_caller_id').change(function() {                               
+        if(!validateCallerId()){ 
+            $('#caller_id_no').css("display", "inline");
+            $('#caller_id_yes').css("display", "none");
+        }
+        else {
+            $('#caller_id_no').css("display", "none");
+            $('#caller_id_yes').css("display", "inline");
+        }
+    });
+    $('#id_date_of_change').change(function() {                               
+        var n=document.getElementById('date_of_change_no');
+        var y=document.getElementById('date_of_change_yes');
+        if(!validateDateOfChange()){ 
+            $('#date_of_change_no').css("display", "inline");
+            $('#date_of_change_yes').css("display", "none");
+        }
+        else {
+            $('#date_of_change_no').css("display", "none");
+            $('#date_of_change_yes').css("display", "inline");
+        }
+    });
     function validateName(){
-        var id = document.getElementById('id_name');
-        var val = id.value;
         var patt = new RegExp('^((?:[a-zA-Z]+\\s?){1,2}[a-zA-Z]+)$');
-        return patt.test(val);        
+        return patt.test($("#id_name").val());        
     }        
     function validateDepartment(){
-        var id = document.getElementById('id_department');
-        var val = id.value;
         var patt = new RegExp('^([a-zA-Z\\s?]+[a-zA-Z]+)$');
-        return patt.test(val);
+        return patt.test($("#id_department").val());
     }
     function validateUserNumber(){
-        var number = document.getElementById('id_user_number')
-        var val = number.value;
         var patt = new RegExp('^((?:1?[\\s-\\.\\/]?\\(?(?:\\d{3})\\)?)?[\\s-\\.\\/]?\\d{3}[\\s-\\.\\/]?\\d{4}(?:\\s?(?:x|ext|\\.)?\\s?\\d{4})?|NEW)$');
-        return patt.test(val);
+        return patt.test($("#id_user_number").val());
     }
     function validateFromLocation(){
-        var id = document.getElementById('id_from_location');
-        var val = id.value;
         var patt = new RegExp('^((?:[\\w]+[\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-]+)+[\\w\\.\\!\\?\\)]+)$');
-        return patt.test(val);
+        return patt.test($("#id_from_location").val());
     }
     function validateToLocation(){
-       var id = document.getElementById('id_to_location');
-       var val = id.value;
        var patt = new RegExp('^((?:[\\w]+[\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-]+)+[\\w\\.\\!\\?\\)]+)$');
-       return patt.test(val);
+       return patt.test($("#id_to_location").val());
     }
     function validateCallerId(){
-        var id = document.getElementById('id_caller_id');
-        var val = id.value;
         var patt = new RegExp('^((?:[a-zA-Z]+\\s?)+[a-zA-Z]+)$');
-        return patt.test(val);
+        return patt.test($("#id_caller_id").val());
     }
     function validateDateOfChange(){
-        var id = document.getElementById('id_date_of_change');
-        var val = id.value;
-        var newdate = new Date();
-        var value = val.split("-");
-        var inputdate = new Date(value[0],value[1]-1,value[2]);
-        if (inputdate.getTime() < newdate.getTime()){
+        if($("#id_date_of_change").val() == "")
+        {
             return false;
         }
-        else if (val == ""){
+        var newdate = new Date();
+        var value = $("#id_date_of_change").val().split("-");
+        var inputdate = new Date(value[0],value[1]-1,value[2]);
+        if (inputdate.getTime() < newdate.getTime()){
             return false;
         }
         else{
@@ -162,97 +222,4 @@
         </ol>
     </fieldset>
 </form>
-<script type="text/javascript">
-    document.getElementById('name_no').style.display = 'none';
-    document.getElementById('name_yes').style.display = 'none';
-    document.getElementById('department_no').style.display = 'none';
-    document.getElementById('department_yes').style.display = 'none';
-    document.getElementById('user_number_no').style.display = 'none';
-    document.getElementById('user_number_yes').style.display = 'none';
-    document.getElementById('from_location_no').style.display = 'none';
-    document.getElementById('from_location_yes').style.display = 'none';
-    document.getElementById('to_location_no').style.display = 'none';
-    document.getElementById('to_location_yes').style.display = 'none';
-    document.getElementById('caller_id_no').style.display = 'none';
-    document.getElementById('caller_id_yes').style.display = 'none';
-    document.getElementById('date_of_change_no').style.display = 'none';
-    document.getElementById('date_of_change_yes').style.display = 'none';
-    var element = document.getElementById('id_name');
-    element.onblur = function() {
-        var n=document.getElementById('name_no');
-        var y=document.getElementById('name_yes');
-        if(!validateName()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_department');
-    element.onblur = function() {
-        var n=document.getElementById('department_no');
-        var y=document.getElementById('department_yes');
-        if(!validateDepartment()){
-            n.style.display='inline'; y.style.display='none';
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_user_number');
-    element.onblur = function() {
-        var n=document.getElementById('user_number_no');
-        var y=document.getElementById('user_number_yes');
-        if(!validateUserNumber()){
-            n.style.display='inline'; y.style.display='none';
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_from_location');
-    element.onblur = function(){
-        var n=document.getElementById('from_location_no');
-        var y=document.getElementById('from_location_yes');
-        if(!validateFromLocation()){
-            n.style.display='inline'; y.style.display='none';
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_to_location');
-    element.onblur = function(){
-        var n=document.getElementById('to_location_no');
-        var y=document.getElementById('to_location_yes');
-        if(!validateToLocation()){
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else{
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_caller_id')
-    element.onblur = function() {                               
-        var n=document.getElementById('caller_id_no');
-        var y=document.getElementById('caller_id_yes');
-        if(!validateCallerId()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_date_of_change')
-    element.onblur = function() {                               
-        var n=document.getElementById('date_of_change_no');
-        var y=document.getElementById('date_of_change_yes');
-        if(!validateDateOfChange()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-</script>
 {% endblock %}

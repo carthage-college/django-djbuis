@@ -8,125 +8,96 @@
 {% endblock %}
 {% block javascript %}
 <script type='text/javascript'>
-    document.getElementById('contact_person_no').style.display='none';
-    document.getElementById('contact_person_yes').style.display='none';
-    document.getElementById('phone_number_no').style.display='none';
-    document.getElementById('phone_number_yes').style.display='none';
-    document.getElementById('event_name_no').style.display='none';
-    document.getElementById('event_name_yes').style.display='none';
-    document.getElementById('event_location_no').style.display='none';
-    document.getElementById('event_location_yes').style.display='none';
-    document.getElementById('crowd_estimate_no').style.display='none';
-    document.getElementById('crowd_estimate_yes').style.display='none';
-    document.getElementById('event_date_no').style.display='none';
-    document.getElementById('event_date_yes').style.display='none';
-    var element = document.getElementById('id_contact_person');
-    element.onblur = function(){
-        var n=document.getElementById('contact_person_no');
-        var y=document.getElementById('contact_person_yes');
+    $("img.hidden").css("display", "none");
+    $("#id_contact_person").change(function(){
         if(!validate_name()){ 
-                    n.style.display='inline'; y.style.display='none'; 
-                    }
-                else {
-                    n.style.display='none'; y.style.display='inline';
-                    }
-    };
-    element = document.getElementById('id_phone_number')
-    element.onblur = function(){
-        var n=document.getElementById('phone_number_no');
-        var y=document.getElementById('phone_number_yes');
+            $('#contact_person_no').css("display", "inline");
+            $('#contact_person_yes').css("display", "none"); 
+            }
+        else {
+            $('#contact_person_no').css("display", "none");
+            $('#contact_person_yes').css("display", "inline");
+            }
+    });
+    $("#id_phone_number").change(function(){
         if(!validate_phone()){ 
-                    n.style.display='inline'; y.style.display='none'; 
-                    }
-                else {
-                    n.style.display='none'; y.style.display='inline';
-                    }
-    };
-    element = document.getElementById('id_event_name')
-    element.onblur = function(){
-        var n=document.getElementById('event_name_no');
-        var y=document.getElementById('event_name_yes');
+            $('#phone_number_no').css("display", "inline");
+            $('#phone_number_yes').css("display", "none");
+            }
+        else {
+            $('#phone_number_no').css("display", "none");
+            $('#phone_number_yes').css("display", "inline");
+            }
+    });
+    $("#id_event_name").change(function(){
         if(!validate_event_name()){ 
-                    n.style.display='inline'; y.style.display='none'; 
-                    }
-                else {
-                    n.style.display='none'; y.style.display='inline';
-                    }
-    };
-    element = document.getElementById('id_event_location')
-    element.onblur = function(){
-        var n=document.getElementById('event_location_no');
-        var y=document.getElementById('event_location_yes');
+            $('#event_name_no').css("display", "inline");
+            $('#event_name_yes').css("display", "none"); 
+            }
+        else {
+            $('#event_name_no').css("display", "none");
+            $('#event_name_yes').css("display", "inline");
+            }
+    });
+    $('#id_event_location').change(function(){
         if(!validate_event_location()){ 
-            n.style.display='inline'; y.style.display='none'; 
+            $('#event_location_no').css("display", "inline");
+            $('#event_location_yes').css("display", "none");
         }
         else {
-            n.style.display='none'; y.style.display='inline';
+            $('#event_location_no').css("display", "none");
+            $('#event_location_yes').css("display", "inline");
         }
-    };
-    element = document.getElementById('id_crowd_estimate')
-    element.onblur = function(){
-        var n=document.getElementById('crowd_estimate_no');
-        var y=document.getElementById('crowd_estimate_yes');
+    });
+    $('#id_crowd_estimate').change(function(){
         if(!validate_crowd_estimate()){ 
-            n.style.display='inline'; y.style.display='none'; 
+            $('#crowd_estimate_no').css("display", "inline");
+            $('#crowd_estimate_yes').css("display", "none");
         }
         else {
-            n.style.display='none'; y.style.display='inline';
+            $('#crowd_estimate_no').css("display", "none");
+            $('#crowd_estimate_yes').css("display", "inline");
         }
-    };
-    element = document.getElementById('id_event_date')
-    element.onblur = function() {
-        var n=document.getElementById('event_date_no');
-        var y=document.getElementById('event_date_yes');
+    });
+    $('#id_event_date').change(function() {
         if(!validate_event_date()){ 
-            n.style.display='inline'; y.style.display='none'; 
+            $('#event_date_no').css("display", "inline");
+            $('#event_date_yes').css("display", "none");
         }
         else {
-            n.style.display='none'; y.style.display='inline';
+            $('#event_date_no').css("display", "none");
+            $('#event_date_yes').css("display", "inline");
         }
-    };
-
+    });
     function validate_name(){
-        var id = document.getElementById('id_contact_person');
-        var val = id.value;
         var patt = new RegExp('^((?:[a-zA-Z]+\\s?){1,2}[a-zA-Z]+)$');
-        return patt.test(val);
+        return patt.test($("#id_contact_person").val());
     }
     function validate_phone(){
-        var number = document.getElementById('id_phone_number')
-        var val = number.value;
         var patt = new RegExp('^((?:1?[\\s\\-\\.\\/]?\\(?(?:\\d{3})\\)?)?[\\s\\-\\.\\/]?\\d{3}[\\s\\-\\.\\/]?\\d{4}(?:\\s?(?:x|ext|\\.)?\\s?\\d{4})?)$');
-        return patt.test(val);
+        return patt.test($("#id_phone_number").val());
     }
     function validate_event_name(){
-        var id = document.getElementById('id_event_name');
-        var val = id.value;
         var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
-        return patt.test(val);
+        return patt.test($("#id_event_name").val());
     }
     function validate_event_location(){
-        var id = document.getElementById('id_event_location');
-        var val = id.value;
         var patt = new RegExp('^((?:[\\w]+\\s?)+[\\w]+)$');
-        return patt.test(val);
+        return patt.test($("#id_event_location").val());
     }
     function validate_crowd_estimate(){
-        var id = document.getElementById('id_crowd_estimate');
-        var val = id.value;
         var patt = new RegExp('^(\\d{1,7})$');
-        return patt.test(val);
+        return patt.test($("#id_crowd_estimate").val());
     }
     function validate_event_date(){
-        var id = document.getElementById('id_event_date');
-        var val = id.value;
-        var newdate = new Date();
-        var value = val.split("-");
-        var inputdate = new Date(value[0],value[1]-1,value[2]);
-        if (inputdate.getTime() < newdate.getTime()){
+        if($("#id_event_date").val() == "")
+        {
             return false;
         }
-        else if (val == ""){
+        var newdate = new Date();
+        var value = $("#id_event_date").val().split("-");
+        var inputdate = new Date(value[0],value[1]-1,value[2]);
+        if (inputdate.getTime() < newdate.getTime()){
             return false;
         }
         else{

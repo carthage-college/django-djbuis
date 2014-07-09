@@ -19,46 +19,125 @@
 {% endblock %}
 {% block javascript %}
 <script type='text/javascript'>
+    $("img.hidden").css("display", "none");
+    $('#id_applicant_name').change(function() {
+        if(!validateApplicantName()){ 
+            $('#applicant_name_no').css("display", "inline");
+            $('#applicant_name_yes').css("display", "none");
+        }
+        else {
+            $('#applicant_name_no').css("display", "none");
+            $('#applicant_name_yes').css("display", "inline");
+        }
+    });
+    $('#id_phone').change(function() {
+        if(!validatePhone()){ 
+            $('#phone_no').css("display", "inline");
+            $('#phone_yes').css("display", "none");
+        }
+        else {
+            $('#phone_no').css("display", "none");
+            $('#phone_yes').css("display", "inline");
+        }
+    });
+    $('#id_company').change(function() {
+        if(!validateCompany()){
+            $('#company_no').css("display", "inline");
+            $('#company_yes').css("display", "none");
+        }
+        else {
+            $('#company_no').css("display", "none");
+            $('#company_yes').css("display", "inline");
+        }
+    });
+    $('#id_reason_for_excavation_or_boring').change(function(){
+        if(!validateReasonForExcavationOrBoring()){
+            $('#reason_for_excavation_or_boring_no').css("display", "inline");
+            $('#reason_for_excavation_or_boring_yes').css("display", "none");
+        }
+        else {
+            $('#reason_for_excavation_or_boring_no').css("display", "none");
+            $('#reason_for_excavation_or_boring_yes').css("display", "inline");
+        }
+    });
+    $('#id_location_of_excavation_including_termination_points').change(function(){
+        if(!validateLocationOfExcavationIncludingTerminationPoints()){
+            $('#location_of_excavation_including_termination_points_no').css("display", "inline");
+            $('#location_of_excavation_including_termination_points_yes').css("display", "none");
+        }
+        else{
+            $('#location_of_excavation_including_termination_points_no').css("display", "none");
+            $('#location_of_excavation_including_termination_points_yes').css("display", "inline");
+        }
+    });
+    $('#id_start_date_for_excavation').change(function() {                               
+        if(!validate_start_date_for_excavation()){ 
+            $('#start_date_for_excavation_no').css("display", "inline");
+            $('#start_date_for_excavation_yes').css("display", "none");
+            //if start date is incorrect then we can't determine if end date is correct so we hide checks and x's
+            $('#projected_end_date_for_excavation_no').css("display", "none");
+            $('#projected_end_date_for_excavation_yes').css("display", "none");
+        }
+        else {
+            $('#start_date_for_excavation_no').css("display", "none");
+            $('#start_date_for_excavation_yes').css("display", "inline");
+            //if entered date is valid check to see if end date is now valid
+            if($('#id_projected_end_date_for_excavation').val() != "")
+            {
+                if(!validate_projected_end_date_for_excavation()){ 
+                    $('#projected_end_date_for_excavation_no').css("display", "inline");
+                    $('#projected_end_date_for_excavation_yes').css("display", "none");
+                }
+                else {
+                    $('#projected_end_date_for_excavation_no').css("display", "none");
+                    $('#projected_end_date_for_excavation_yes').css("display", "inline");
+                }
+            }
+        }
+    });
+    $('#id_projected_end_date_for_excavation').change(function() {
+        //only validate end date if start date is valid because we can't know if end date is valid otherwise
+        if(validate_start_date_for_excavation())
+        {
+            if(!validate_projected_end_date_for_excavation()){ 
+                $('#projected_end_date_for_excavation_no').css("display", "inline");
+                $('#projected_end_date_for_excavation_yes').css("display", "none");
+            }
+            else {
+                $('#projected_end_date_for_excavation_no').css("display", "none");
+                $('#projected_end_date_for_excavation_yes').css("display", "inline");
+            }
+        }
+    });
     function validateApplicantName(){
-        var id = document.getElementById('id_applicant_name');
-        var val = id.value;
         var patt = new RegExp('^((?:[a-zA-Z]+\\s?){1,2}[a-zA-Z]+)$');
-        return patt.test(val);
+        return patt.test($("#id_applicant_name").val());
     }
     function validatePhone(){
-        var id = document.getElementById('id_phone');
-        var val = id.value;
         var patt = new RegExp('^((?:1?[\\s\\-\\.\\/]?\\(?(?:\\d{3})\\)?)?[\\s\\-\\.\\/]?\\d{3}[\\s\\-\\.\\/]?\\d{4}(?:\\s?(?:x|ext|\\.)?\\s?\\d{4})?)$');
-        return patt.test(val);
+        return patt.test($("#id_phone").val());
     }
     function validateCompany(){
-        var id = document.getElementById('id_company');
-        var val = id.value;
         var patt = new RegExp('.+');
-        return patt.test(val);
+        return patt.test($("#id_company").val());
     }
     function validateReasonForExcavationOrBoring(){
-        var id = document.getElementById('id_reason_for_excavation_or_boring');
-        var val = id.value;
         var patt = new RegExp('.+');
-        return patt.test(val);
+        return patt.test($("#id_reason_for_excavation_or_boring").val());
     }
     function validateLocationOfExcavationIncludingTerminationPoints(){
-        var id = document.getElementById('id_location_of_excavation_including_termination_points');
-        var val = id.value;
         var patt = new RegExp('.+');
-        return patt.test(val);
+        return patt.test($("#id_location_of_excavation_including_termination_points").val());
     }
     function validate_start_date_for_excavation(){
-        var id = document.getElementById('id_start_date_for_excavation');
-        var val = id.value;
-        var newdate = new Date();
-        var value = val.split("-");
-        var inputdate = new Date(value[0],value[1]-1,value[2]);
-        if (inputdate.getTime() < newdate.getTime()){
+        if($("#id_start_date_for_excavation").val() == "")
+        {
             return false;
         }
-        else if (val == ""){
+        var newdate = new Date();
+        var value = $("#id_start_date_for_excavation").val().split("-");
+        var inputdate = new Date(value[0],value[1]-1,value[2]);
+        if (inputdate.getTime() < newdate.getTime()){
             return false;
         }
         else{
@@ -66,15 +145,20 @@
         }
     }
     function validate_projected_end_date_for_excavation(){
-        var id = document.getElementById('id_projected_end_date_for_excavation');
-        var val = id.value;
+        if($("#id_projected_end_date_for_excavation").val() == "")
+        {
+            return false;
+        }
         var newdate = new Date();
-        var value = val.split("-");
+        var value = $("#id_projected_end_date_for_excavation").val().split("-");
+        var start_value = $("#id_start_date_for_excavation").val().split("-");
         var inputdate = new Date(value[0],value[1]-1,value[2]);
+        var start_date = new Date(start_value[0],start_value[1]-1,start_value[2])
         if (inputdate.getTime() < newdate.getTime()){
             return false;
         }
-        else if (val == ""){
+        else if(!validate_start_date_for_excavation() || inputdate.getTime() < start_date.getTime())
+        {
             return false;
         }
         else{
@@ -210,97 +294,4 @@
         </ol>
     </fieldset>
 </form>
-<script type="text/javascript">
-    document.getElementById('applicant_name_no').style.display = 'none';
-    document.getElementById('applicant_name_yes').style.display = 'none';        
-    document.getElementById('phone_no').style.display = 'none';
-    document.getElementById('phone_yes').style.display = 'none';
-    document.getElementById('company_no').style.display = 'none';
-    document.getElementById('company_yes').style.display = 'none';
-    document.getElementById('reason_for_excavation_or_boring_no').style.display = 'none';
-    document.getElementById('reason_for_excavation_or_boring_yes').style.display = 'none';
-    document.getElementById('location_of_excavation_including_termination_points_no').style.display = 'none';
-    document.getElementById('location_of_excavation_including_termination_points_yes').style.display = 'none';
-    document.getElementById('start_date_for_excavation_no').style.display = 'none';
-    document.getElementById('start_date_for_excavation_yes').style.display = 'none';
-    document.getElementById('projected_end_date_for_excavation_no').style.display = 'none';
-    document.getElementById('projected_end_date_for_excavation_yes').style.display = 'none';
-    var element = document.getElementById('id_applicant_name');
-    element.onblur = function() {
-        var n=document.getElementById('applicant_name_no');
-        var y=document.getElementById('applicant_name_yes');
-        if(!validateApplicantName()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    var element = document.getElementById('id_phone');
-    element.onblur = function() {
-        var n=document.getElementById('phone_no');
-        var y=document.getElementById('phone_yes');
-        if(!validatePhone()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_company');
-    element.onblur = function() {
-        var n=document.getElementById('company_no');
-        var y=document.getElementById('company_yes');
-        if(!validateCompany()){
-            n.style.display='inline'; y.style.display='none';
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_reason_for_excavation_or_boring');
-    element.onblur = function(){
-        var n=document.getElementById('reason_for_excavation_or_boring_no');
-        var y=document.getElementById('reason_for_excavation_or_boring_yes');
-        if(!validateReasonForExcavationOrBoring()){
-            n.style.display='inline'; y.style.display='none';
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_location_of_excavation_including_termination_points');
-    element.onblur = function(){
-        var n=document.getElementById('location_of_excavation_including_termination_points_no');
-        var y=document.getElementById('location_of_excavation_including_termination_points_yes');
-        if(!validateLocationOfExcavationIncludingTerminationPoints()){
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else{
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_start_date_for_excavation')
-    element.onblur = function() {                               
-        var n=document.getElementById('start_date_for_excavation_no');
-        var y=document.getElementById('start_date_for_excavation_yes');
-        if(!validate_start_date_for_excavation()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-    element = document.getElementById('id_projected_end_date_for_excavation')
-    element.onblur = function() {                               
-        var n=document.getElementById('projected_end_date_for_excavation_no');
-        var y=document.getElementById('projected_end_date_for_excavation_yes');
-        if(!validate_projected_end_date_for_excavation()){ 
-            n.style.display='inline'; y.style.display='none'; 
-        }
-        else {
-            n.style.display='none'; y.style.display='inline';
-        }
-    };
-</script>
 {% endblock %}
