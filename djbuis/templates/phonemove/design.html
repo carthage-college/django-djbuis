@@ -1,4 +1,7 @@
 {% extends "djkorra/base.html" %}
+{% block title %}
+    Phone Move
+{% endblock %}
 {% block content_head %}
   <h1 id="page-title">Telephone Move/Add/Change Form</h1>
 {% endblock %}
@@ -18,9 +21,6 @@
 </style>
 {% endblock %}
 {% block javascript %}
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
 <script type='text/javascript'>
     function validateName(){
         var id = document.getElementById('id_name');
@@ -79,179 +79,180 @@
 {% block content %}
 <h3>Please fill out the information below to request a telephone move, add, or change.  If you have any questions,
     please call Ryan Ade at ext. 2146</h3>
-	<form action="" method="post" class="form">
-        <fieldset class="blockLabels">
-            <legend>User Information</legend>
-            <ol>
-                <li class="ctrlHolder"><h3><label for="id_name">Name of User</label></h3>
-                    <div class="required">
-                        <input id="id_name" maxlength="100" name="name" type="text" />
-                        <img style='display:none;' id='name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                        <img style='display:none;' id='name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                    </div>
-                </li>
-                <li class="ctrlHolder"><h3><label for="id_department">Department</label></h3>
-                    <div class="required">
-                        <input id="id_department" maxlength="100" name="department" type="text" />
-                        <img style='display:none;' id='department_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                        <img style='display:none;' id='department_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                    </div>
-                </li>
-                <li class="ctrlHolder"><h3><label for="id_user_number">Current User Number. If the user is new and needs a number type "NEW"</label></h3>
-                    <div class="required">
-                        <input id="id_user_number" maxlength="100" name="number" type="text" />
-                        <img style='display:none;' id='user_number_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                        <img style='display:none;' id='user_number_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                    </div>
-                </li>
-            </ol>
-        </fieldset>
-        <fieldset class="blockLabels">
-            <legend>Request Information</legend>
-            <ol>
-                <li class="ctrlHolder"><h3><label for="id_request_0">What are you requesting?</label></h3>
-                    <ul>
-                        <li><label for="id_request_0"><input checked="checked" id="id_request_0" name="request" type="radio" value="MOVE" />Move</label></li>
-                        <li><label for="id_request_1"><input id="id_request_1" name="request" type="radio" value="ADD" /> Add</label></li>
-                        <li><label for="id_request_2"><input id="id_request_2" name="request" type="radio" value="REPL" /> Replacement</label></li>
-                        <li><label for="id_request_3"><input id="id_request_3" name="request" type="radio" value="CHNG" /> Change of Service
-                            <label></li>
-                    </ul>
-                </li>
-                <li class="ctrlHolder"><h3><label for="id_from_location">Where is the user moving from? If the user is new, type NEW. Include 
-                        Building Name and Room Number</label></h3>
-                    <div class="required">
-                        <textarea cols="40" id="id_from_location" name="from" rows="10"></textarea>                        
-                        <img style='display:none;' id='from_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                        <img style='display:none;' id='from_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                    </div>
-                </li>
-                <li class="ctrlHolder"><h3><label for="id_to_location">Where is the user moving to?</label></h3>
-                    <div class="required">
-                        <textarea cols="40" id="id_to_location" name="to" rows="10"></textarea>
-                        <img style='display:none;' id='to_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                        <img style='display:none;' id='to_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                    </div>
-                </li>
-                <li class="ctrlHolder"><h3><label for="id_caller_id">Desired Caller ID</label></h3>
-                    <div class="required">
-                        <input id="id_caller_id" maxlength="100" name="caller id" type="text" />
-                        <img style='display:none;' id='caller_id_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                        <img style='display:none;' id='caller_id_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                    </div>
-                </li>
-                <li class="ctrlHolder"><h3><label for="id_date_of_change">Date of move, add, or change</label></h3>
+<form action="" method="post" class="form">
+    <fieldset class="blockLabels">
+        <legend>User Information</legend>
+        <ol>
+            <li class="ctrlHolder"><h3><label for="id_name">Name of User</label></h3>
                 <div class="required">
-                    <input id="id_date_of_change" maxlength="100" name="date" type="date" />
-                    <img style='display:none;' id='date_of_change_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                    <img style='display:none;' id='date_of_change_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
-                </div>                
+                    <input id="id_name" maxlength="100" name="name" type="text" />
+                    <img style='display:none;' id='name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img style='display:none;' id='name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                </div>
             </li>
-            </ol>
-        </fieldset>
-        <fieldset class="blockLabels">
-            <legend>Email and Submit</legend>
-            <ol>
-                <li class="ctrlHolder"><h3><label for="id_email">Check this box if you would like the form to be emailed to you upon completion.</label></h3>
-                    <input id="id_email" name="email" type="checkbox" />
-                </li>
-                <li class="btnHolder">
-                    <label for="submit">&nbsp;&nbsp;</label>
-                    <input type="Submit" name="submit" value="Submit" class="button"/>
-                </li>
-            </ol>
+            <li class="ctrlHolder"><h3><label for="id_department">Department</label></h3>
+                <div class="required">
+                    <input id="id_department" maxlength="100" name="department" type="text" />
+                    <img style='display:none;' id='department_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img style='display:none;' id='department_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                </div>
+            </li>
+            <li class="ctrlHolder"><h3><label for="id_user_number">Current User Number. If the user is new and needs a number type "NEW"</label></h3>
+                <div class="required">
+                    <input id="id_user_number" maxlength="100" name="number" type="text" />
+                    <img style='display:none;' id='user_number_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img style='display:none;' id='user_number_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                </div>
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset class="blockLabels">
+        <legend>Request Information</legend>
+        <ol>
+            <li class="ctrlHolder"><h3><label for="id_request_0">What are you requesting?</label></h3>
+                <ul>
+                    <li><label for="id_request_0"><input checked="checked" id="id_request_0" name="request" type="radio" value="MOVE" />Move</label></li>
+                    <li><label for="id_request_1"><input id="id_request_1" name="request" type="radio" value="ADD" /> Add</label></li>
+                    <li><label for="id_request_2"><input id="id_request_2" name="request" type="radio" value="REPL" /> Replacement</label></li>
+                    <li><label for="id_request_3"><input id="id_request_3" name="request" type="radio" value="CHNG" /> Change of Service
+                        <label></li>
+                </ul>
+            </li>
+            <li class="ctrlHolder"><h3><label for="id_from_location">Where is the user moving from? If the user is new, type NEW. Include 
+                    Building Name and Room Number</label></h3>
+                <div class="required">
+                    <textarea cols="40" id="id_from_location" name="from" rows="10"></textarea>                        
+                    <img style='display:none;' id='from_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img style='display:none;' id='from_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                </div>
+            </li>
+            <li class="ctrlHolder"><h3><label for="id_to_location">Where is the user moving to?</label></h3>
+                <div class="required">
+                    <textarea cols="40" id="id_to_location" name="to" rows="10"></textarea>
+                    <img style='display:none;' id='to_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img style='display:none;' id='to_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                </div>
+            </li>
+            <li class="ctrlHolder"><h3><label for="id_caller_id">Desired Caller ID</label></h3>
+                <div class="required">
+                    <input id="id_caller_id" maxlength="100" name="caller id" type="text" />
+                    <img style='display:none;' id='caller_id_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img style='display:none;' id='caller_id_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                </div>
+            </li>
+            <li class="ctrlHolder"><h3><label for="id_date_of_change">Date of move, add, or change</label></h3>
+            <div class="required">
+                <input id="id_date_of_change" maxlength="100" name="date" type="date" />
+                <img style='display:none;' id='date_of_change_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                <img style='display:none;' id='date_of_change_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+            </div>                
+        </li>
+        </ol>
+    </fieldset>
+    <fieldset class="blockLabels">
+        <legend>Email and Submit</legend>
+        <ol>
+            <li class="ctrlHolder"><h3><label for="id_email">Check this box if you would like the form to be emailed to you upon completion.</label></h3>
+                <input id="id_email" name="email" type="checkbox" />
+            </li>
+            <li class="btnHolder">
+                <label for="submit">&nbsp;&nbsp;</label>
+                <input type="Submit" name="submit" value="Submit" class="button"/>
+            </li>
+        </ol>
+    </fieldset>
 </form>
-    <script type="text/javascript">
-        document.getElementById('name_no').style.display = 'none';
-        document.getElementById('name_yes').style.display = 'none';
-        document.getElementById('department_no').style.display = 'none';
-        document.getElementById('department_yes').style.display = 'none';
-        document.getElementById('user_number_no').style.display = 'none';
-        document.getElementById('user_number_yes').style.display = 'none';
-        document.getElementById('from_location_no').style.display = 'none';
-        document.getElementById('from_location_yes').style.display = 'none';
-        document.getElementById('to_location_no').style.display = 'none';
-        document.getElementById('to_location_yes').style.display = 'none';
-        document.getElementById('caller_id_no').style.display = 'none';
-        document.getElementById('caller_id_yes').style.display = 'none';
-        document.getElementById('date_of_change_no').style.display = 'none';
-        document.getElementById('date_of_change_yes').style.display = 'none';
-        var element = document.getElementById('id_name');
-        element.onblur = function() {
-            var n=document.getElementById('name_no');
-            var y=document.getElementById('name_yes');
-            if(!validateName()){ 
-                n.style.display='inline'; y.style.display='none'; 
-            }
-            else {
-                n.style.display='none'; y.style.display='inline';
-            }
-        };
-        element = document.getElementById('id_department');
-        element.onblur = function() {
-            var n=document.getElementById('department_no');
-            var y=document.getElementById('department_yes');
-            if(!validateDepartment()){
-                n.style.display='inline'; y.style.display='none';
-            }
-            else {
-                n.style.display='none'; y.style.display='inline';
-            }
-        };
-        element = document.getElementById('id_user_number');
-        element.onblur = function() {
-            var n=document.getElementById('user_number_no');
-            var y=document.getElementById('user_number_yes');
-            if(!validateUserNumber()){
-                n.style.display='inline'; y.style.display='none';
-            }
-            else {
-                n.style.display='none'; y.style.display='inline';
-            }
-        };
-        element = document.getElementById('id_from_location');
-        element.onblur = function(){
-            var n=document.getElementById('from_location_no');
-            var y=document.getElementById('from_location_yes');
-            if(!validateFromLocation()){
-                n.style.display='inline'; y.style.display='none';
-            }
-            else {
-                n.style.display='none'; y.style.display='inline';
-            }
-        };
-        element = document.getElementById('id_to_location');
-        element.onblur = function(){
-            var n=document.getElementById('to_location_no');
-            var y=document.getElementById('to_location_yes');
-            if(!validateToLocation()){
-                n.style.display='inline'; y.style.display='none'; 
-            }
-            else{
-                n.style.display='none'; y.style.display='inline';
-            }
-        };
-        element = document.getElementById('id_caller_id')
-        element.onblur = function() {                               
-            var n=document.getElementById('caller_id_no');
-            var y=document.getElementById('caller_id_yes');
-            if(!validateCallerId()){ 
-                n.style.display='inline'; y.style.display='none'; 
-            }
-            else {
-                n.style.display='none'; y.style.display='inline';
-            }
-        };
-        element = document.getElementById('id_date_of_change')
-        element.onblur = function() {                               
-            var n=document.getElementById('date_of_change_no');
-            var y=document.getElementById('date_of_change_yes');
-            if(!validateDateOfChange()){ 
-                n.style.display='inline'; y.style.display='none'; 
-            }
-            else {
-                n.style.display='none'; y.style.display='inline';
-            }
-        };
-    </script>
+<script type="text/javascript">
+    document.getElementById('name_no').style.display = 'none';
+    document.getElementById('name_yes').style.display = 'none';
+    document.getElementById('department_no').style.display = 'none';
+    document.getElementById('department_yes').style.display = 'none';
+    document.getElementById('user_number_no').style.display = 'none';
+    document.getElementById('user_number_yes').style.display = 'none';
+    document.getElementById('from_location_no').style.display = 'none';
+    document.getElementById('from_location_yes').style.display = 'none';
+    document.getElementById('to_location_no').style.display = 'none';
+    document.getElementById('to_location_yes').style.display = 'none';
+    document.getElementById('caller_id_no').style.display = 'none';
+    document.getElementById('caller_id_yes').style.display = 'none';
+    document.getElementById('date_of_change_no').style.display = 'none';
+    document.getElementById('date_of_change_yes').style.display = 'none';
+    var element = document.getElementById('id_name');
+    element.onblur = function() {
+        var n=document.getElementById('name_no');
+        var y=document.getElementById('name_yes');
+        if(!validateName()){ 
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+    element = document.getElementById('id_department');
+    element.onblur = function() {
+        var n=document.getElementById('department_no');
+        var y=document.getElementById('department_yes');
+        if(!validateDepartment()){
+            n.style.display='inline'; y.style.display='none';
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+    element = document.getElementById('id_user_number');
+    element.onblur = function() {
+        var n=document.getElementById('user_number_no');
+        var y=document.getElementById('user_number_yes');
+        if(!validateUserNumber()){
+            n.style.display='inline'; y.style.display='none';
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+    element = document.getElementById('id_from_location');
+    element.onblur = function(){
+        var n=document.getElementById('from_location_no');
+        var y=document.getElementById('from_location_yes');
+        if(!validateFromLocation()){
+            n.style.display='inline'; y.style.display='none';
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+    element = document.getElementById('id_to_location');
+    element.onblur = function(){
+        var n=document.getElementById('to_location_no');
+        var y=document.getElementById('to_location_yes');
+        if(!validateToLocation()){
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else{
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+    element = document.getElementById('id_caller_id')
+    element.onblur = function() {                               
+        var n=document.getElementById('caller_id_no');
+        var y=document.getElementById('caller_id_yes');
+        if(!validateCallerId()){ 
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+    element = document.getElementById('id_date_of_change')
+    element.onblur = function() {                               
+        var n=document.getElementById('date_of_change_no');
+        var y=document.getElementById('date_of_change_yes');
+        if(!validateDateOfChange()){ 
+            n.style.display='inline'; y.style.display='none'; 
+        }
+        else {
+            n.style.display='none'; y.style.display='inline';
+        }
+    };
+</script>
 {% endblock %}

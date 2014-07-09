@@ -1,186 +1,177 @@
 {% extends "djkorra/base.html" %}
-<!doctype html>  
-<html lang="en">
-  {% block content_head %}
+{% block title %}
+    Key Request
+{% endblock %}
+{% block content_head %}
     <h1 id="page-title">Key Request Form</h1>
-  {% endblock %}
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    {% block extra_style %}
-    <style>
-        .errorlist, .error {
-            color: red;
-        }
-        input[type=checkbox]
-        {
-          -webkit-appearance:checkbox;
-        }
-        input[type=radio]
-        {
-          -webkit-appearance:radio;
-        }
-    </style>
-    <link href="//www.carthage.edu/themes/shared/css/icons.css" type="text/css" rel="stylesheet" />
-    <link href="//www.carthage.edu/static/vendor/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="//www.carthage.edu/themes/shared/css/forms.css" rel="stylesheet" type="text/css" />
-    <link href="//www.carthage.edu/themes/shared/css/tables.css" rel="stylesheet" type="text/css" />
-    {% endblock %}
-    {% block javascript %}
-    <script type="text/javascript">
-    $(document).ready(function () {
-        // Code adapted from http://djangosnippets.org/snippets/1389/  
-        function updateElementIndex(el, prefix, ndx) {
-            var id_regex = new RegExp('(' + prefix + '-\\d+-)');
-            var replacement = prefix + '-' + ndx + '-';
-            if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex,
-            replacement));
-            if (el.id) el.id = el.id.replace(id_regex, replacement);
-            if (el.name) el.name = el.name.replace(id_regex, replacement);
-        }
-    
-        function deleteForm(btn, prefix) {
-            var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-            if (formCount > 1) {
-                // Delete the item/form
-                $(btn).parents('.keystuff').remove();
-                var forms = $('.keystuff'); // Get all the forms  
-                // Update the total number of forms (1 less than before)
-                $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
-                var i = 0;
-                // Go through the forms and set their indices, names and IDs
-                for (formCount = forms.length; i < formCount; i++) {
-                    $(forms.get(i)).children().children().each(function () {
-                        if ($(this).attr('type') == 'text') updateElementIndex(this, prefix, i);
-                    });
-                }
-            } // End if
-            else {
-                alert("You have to request at least one key!");
-            }
-            return false;
-        }
-    
-        function addForm(btn, prefix) {
-            var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-            if (formCount < 5) {
-                // Clone a form (without event handlers) from the first form
-                var row = $(".keystuff:first").clone(false).get(0);
-                // Insert it after the last form
-                $(row).removeAttr('id').hide().insertAfter(".keystuff:last").slideDown(300);
-    
-                // Remove the bits we don't want in the new row/form
-                // e.g. error messages
-                $(".errorlist", row).remove();
-                $(row).children().removeClass("error");
-    
-                // Relabel or rename all the relevant bits
-                $(row).children().children().each(function () {
-                    updateElementIndex(this, prefix, formCount);
-                    $(this).val("");
+{% endblock %}
+{% block extra_style %}
+<style>
+    .errorlist, .error {
+        color: red;
+    }
+    input[type=checkbox]
+    {
+      -webkit-appearance:checkbox;
+    }
+    input[type=radio]
+    {
+      -webkit-appearance:radio;
+    }
+</style>
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+$(document).ready(function () {
+    // Code adapted from http://djangosnippets.org/snippets/1389/  
+    function updateElementIndex(el, prefix, ndx) {
+        var id_regex = new RegExp('(' + prefix + '-\\d+-)');
+        var replacement = prefix + '-' + ndx + '-';
+        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex,
+        replacement));
+        if (el.id) el.id = el.id.replace(id_regex, replacement);
+        if (el.name) el.name = el.name.replace(id_regex, replacement);
+    }
+
+    function deleteForm(btn, prefix) {
+        var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+        if (formCount > 1) {
+            // Delete the item/form
+            $(btn).parents('.keystuff').remove();
+            var forms = $('.keystuff'); // Get all the forms  
+            // Update the total number of forms (1 less than before)
+            $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+            var i = 0;
+            // Go through the forms and set their indices, names and IDs
+            for (formCount = forms.length; i < formCount; i++) {
+                $(forms.get(i)).children().children().each(function () {
+                    if ($(this).attr('type') == 'text') updateElementIndex(this, prefix, i);
                 });
-    
-                // Add an event handler for the delete item/form link 
-                $(row).find(".delete").click(function () {
-                    return deleteForm(this, prefix);
-                });
-                // Update the total form count
-                $("#id_" + prefix + "-TOTAL_FORMS").val(formCount + 1);
-            } // End if
-            else {
-                alert("Sorry, you can only request a maximum of five keys.");
             }
-            return false;
+        } // End if
+        else {
+            alert("You have to request at least one key!");
         }
-        // Register the click event handlers
-        $("#add").click(function () {
-            return addForm(this, "key_stuff");
-        });
-    
-        $(".delete").click(function () {
-            return deleteForm(this, "key_stuff");
-        });
+        return false;
+    }
+
+    function addForm(btn, prefix) {
+        var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+        if (formCount < 5) {
+            // Clone a form (without event handlers) from the first form
+            var row = $(".keystuff:first").clone(false).get(0);
+            // Insert it after the last form
+            $(row).removeAttr('id').hide().insertAfter(".keystuff:last").slideDown(300);
+
+            // Remove the bits we don't want in the new row/form
+            // e.g. error messages
+            $(".errorlist", row).remove();
+            $(row).children().removeClass("error");
+
+            // Relabel or rename all the relevant bits
+            $(row).children().children().each(function () {
+                updateElementIndex(this, prefix, formCount);
+                $(this).val("");
+            });
+
+            // Add an event handler for the delete item/form link 
+            $(row).find(".delete").click(function () {
+                return deleteForm(this, prefix);
+            });
+            // Update the total form count
+            $("#id_" + prefix + "-TOTAL_FORMS").val(formCount + 1);
+        } // End if
+        else {
+            alert("Sorry, you can only request a maximum of five keys.");
+        }
+        return false;
+    }
+    // Register the click event handlers
+    $("#add").click(function () {
+        return addForm(this, "key_stuff");
     });
-    </script>
-    {% endblock %}
-</head>
-{% block content %}
-<body>
-    <form action='' method='post' class = 'form'> {% csrf_token %}
-        <fieldset class="blockLabels">
-            <legend>Key Info</legend>
-            <ol>
-                {{ key_formset.management_form }}
-                {% for form in key_formset.forms %}
-                    <div class = keystuff>
-                        <li class="ctrlHolder"><h3>{{form}}</h3></li>
-                        <p style=""><a class="delete" href="#">Delete</a></p>
-                        <hr>
-                    </div>
-                <p><a id="add" href="#">Request another key</a></p>
-                {% endfor %}
-            </ol>
-        </fieldset>
-        <fieldset class="blockLabels">
-            <legend>Reason</legend>
-            <ol>
-                <li class="ctrlHolder"><h3><label for="id_reason_0">Reason:</label></h3>
-                    <ul>
-                        <li><label for="id_reason_0"><input checked="checked" id="id_reason_0" name="reason" type="radio" value="NEWE" />New Employee</label></li>
-                        <li><label for="id_reason_1"><input id="id_reason_1" name="reason" type="radio" value="NEWO" />New Office or Facility Assignment</label></li>
-                        <li><label for="id_reason_2"><input id="id_reason_2" name="reason" type="radio" value="LOCK" />Lock Change</label></li>
-                        <li><label for="id_reason_3"><input id="id_reason_3" name="reason" type="radio" value="WORN" />Worn Key Returned</label></li>
-                        <li><label for="id_reason_4"><input id="id_reason_4" name="reason" type="radio" value="OTH" />Other (Please Explain)</label></li>
-                    </ul>
-                </li>
-                <li id="otherli" style="display:none;" class="ctrlHolder"><h3><label for="id_other">Other:</label></h3>
-                    <input id="id_other" maxlength="100" name="other" type="text" />
-                </li>     
-            </ol>
-        </fieldset>
-        <fieldset class="blockLabels">
-            <legend>Contact Info</legend>
-            <ol>
-                <li class="ctrlHolder"><h3><label for="id_name">Name</label></h3>
-                    <div class="required"><input id="id_name" maxlength="100" name="name" type="text"/></div>
-                </li> 
-                <li class="ctrlHolder"><h3><label for="id_contact_number">Phone Number</label></h3>
-                    <div class="required"><input id="id_contact_number" maxlength="100" name="number" type="text"/></div>
-                </li> 
-                <li class="ctrlHolder"><h3><label for="id_account">Account to Charge</label></h3>
-                    <div class="required"><input id="id_account" maxlength="100" name="account" type="text"/></div>
-                </li>
-                <li class="btnHolder">
-                    <label for="submit">&nbsp;&nbsp;</label>
-                    <input type="Submit" name="submit" value="Submit" class="button"/>
-                </li>
-            </ol>
-        </fieldset>
-        <!--{{form.date_completed}}
-        {{form.chair_sig}}
-        {{form.dean_sig}}-->
-    </form>
-</body>
-<script type='text/javascript'>
-     element = document.getElementsByName('reason');
-     for (var i = 0; i < element.length; i++)
-     {
-         element[i].onclick = function() {
-            var value = this.value;
-            var othervar = document.getElementById('otherli'); 
-            if (value == "OTH"){
-                othervar.style.display = 'list-item';
-                }
-            else{
-                othervar.style.display = 'none';
-                }
-         };
-     }
-     if( document.getElementsByName('reason').value == 'OTH' ){
-         document.getElementById('otherli').style.display = 'list-item';
-     }
-     else {
-         document.getElementById('otherli').style.display = 'none';
-     }
+
+    $(".delete").click(function () {
+        return deleteForm(this, "key_stuff");
+    });
+});
 </script>
-    {% endblock %}
-</html>
+{% endblock %}
+{% block content %}
+<form action='' method='post' class = 'form'> {% csrf_token %}
+    <fieldset class="blockLabels">
+        <legend>Key Info</legend>
+        <ol>
+            {{ key_formset.management_form }}
+            {% for form in key_formset.forms %}
+                <div class = keystuff>
+                    <li class="ctrlHolder"><h3>{{form}}</h3></li>
+                    <p style=""><a class="delete" href="#">Delete</a></p>
+                    <hr>
+                </div>
+            <p><a id="add" href="#">Request another key</a></p>
+            {% endfor %}
+        </ol>
+    </fieldset>
+    <fieldset class="blockLabels">
+        <legend>Reason</legend>
+        <ol>
+            <li class="ctrlHolder"><h3><label for="id_reason_0">Reason:</label></h3>
+                <ul>
+                    <li><label for="id_reason_0"><input checked="checked" id="id_reason_0" name="reason" type="radio" value="NEWE" />New Employee</label></li>
+                    <li><label for="id_reason_1"><input id="id_reason_1" name="reason" type="radio" value="NEWO" />New Office or Facility Assignment</label></li>
+                    <li><label for="id_reason_2"><input id="id_reason_2" name="reason" type="radio" value="LOCK" />Lock Change</label></li>
+                    <li><label for="id_reason_3"><input id="id_reason_3" name="reason" type="radio" value="WORN" />Worn Key Returned</label></li>
+                    <li><label for="id_reason_4"><input id="id_reason_4" name="reason" type="radio" value="OTH" />Other (Please Explain)</label></li>
+                </ul>
+            </li>
+            <li id="otherli" style="display:none;" class="ctrlHolder"><h3><label for="id_other">Other:</label></h3>
+                <input id="id_other" maxlength="100" name="other" type="text" />
+            </li>     
+        </ol>
+    </fieldset>
+    <fieldset class="blockLabels">
+        <legend>Contact Info</legend>
+        <ol>
+            <li class="ctrlHolder"><h3><label for="id_name">Name</label></h3>
+                <div class="required"><input id="id_name" maxlength="100" name="name" type="text"/></div>
+            </li> 
+            <li class="ctrlHolder"><h3><label for="id_contact_number">Phone Number</label></h3>
+                <div class="required"><input id="id_contact_number" maxlength="100" name="number" type="text"/></div>
+            </li> 
+            <li class="ctrlHolder"><h3><label for="id_account">Account to Charge</label></h3>
+                <div class="required"><input id="id_account" maxlength="100" name="account" type="text"/></div>
+            </li>
+            <li class="btnHolder">
+                <label for="submit">&nbsp;&nbsp;</label>
+                <input type="Submit" name="submit" value="Submit" class="button"/>
+            </li>
+        </ol>
+    </fieldset>
+    <!--{{form.date_completed}}
+    {{form.chair_sig}}
+    {{form.dean_sig}}-->
+</form>
+<script type='text/javascript'>
+ element = document.getElementsByName('reason');
+ for (var i = 0; i < element.length; i++)
+ {
+     element[i].onclick = function() {
+        var value = this.value;
+        var othervar = document.getElementById('otherli'); 
+        if (value == "OTH"){
+            othervar.style.display = 'list-item';
+            }
+        else{
+            othervar.style.display = 'none';
+            }
+     };
+ }
+ if( document.getElementsByName('reason').value == 'OTH' ){
+     document.getElementById('otherli').style.display = 'list-item';
+ }
+ else {
+     document.getElementById('otherli').style.display = 'none';
+ }
+</script>
+{% endblock %}
