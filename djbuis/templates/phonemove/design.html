@@ -108,11 +108,11 @@
         return patt.test($("#id_user_number").val());
     }
     function validateFromLocation(){
-        var patt = new RegExp('^((?:[\\w]+[\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-]+)+[\\w\\.\\!\\?\\)]+)$');
+        var patt = new RegExp('^((?:[\\w\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-])+[\\w\\.\\!\\?\\)]+)$');
         return patt.test($("#id_from_location").val());
     }
     function validateToLocation(){
-       var patt = new RegExp('^((?:[\\w]+[\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-]+)+[\\w\\.\\!\\?\\)]+)$');
+       var patt = new RegExp('^((?:[\\w\\s\\.\\!\\$\\(\\)\\/\\,\\:\\;\\?\\\'\\-])+[\\w\\.\\!\\?\\)]+)$');
        return patt.test($("#id_to_location").val());
     }
     function validateCallerId(){
@@ -139,7 +139,7 @@
 {% block content %}
 <h3>Please fill out the information below to request a telephone move, add, or change.  If you have any questions,
     please call Ryan Ade at ext. 2146</h3>
-<form action="" method="post" class="form">
+<form action="" method="post" class="form"> {% csrf_token %}
     <fieldset class="blockLabels">
         <legend>User Information</legend>
         <ol>
@@ -213,7 +213,7 @@
         <legend>Email and Submit</legend>
         <ol>
             <li class="ctrlHolder"><h3><label for="id_email">Check this box if you would like the form to be emailed to you upon completion.</label></h3>
-                <input id="id_email" name="email" type="checkbox" />
+                <input id="id_email" name="email" type="checkbox" value="false" />
             </li>
             <li class="btnHolder">
                 <label for="submit">&nbsp;&nbsp;</label>

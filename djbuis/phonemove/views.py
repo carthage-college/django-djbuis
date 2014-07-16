@@ -7,15 +7,17 @@ from django.forms.formsets import formset_factory
 from django.core.mail import send_mail
 
 def create(request):
-	if request.POST:
-		form = ModelForm(request.POST)
-		if form.is_valid():
-			send_mail('Phone Change Form', form.to_mail, 'this', ['uberelitepwnzor@gmail.com'], fail_silently=False)
-			form_instance = form.save()
-			return HttpResponseRedirect('http://ddp.nintendo.com')
-	else:
-		form = ModelForm()
-	return render(request, 'phonemove/design.html', {'form': form})
+    if request.POST:
+        form = ModelForm(request.POST)
+        if 'email' in request.POST:
+            send_mail('Subject here', "Body", 'confirmation.carthage.edu',
+                ['zorpixfang@gmail.com'], fail_silently=False)
+        if form.is_valid():
+            form_instance = form.save()
+            return HttpResponseRedirect('phonemove/design.html')
+    else:
+        form = ModelForm()
+    return render(request, 'phonemove/design.html', {'form': form})
 
 def submitted(request):
-	return render(request, 'phonemove/design.html')
+    return render(request, 'phonemove/design.html')

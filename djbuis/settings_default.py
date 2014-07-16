@@ -14,7 +14,7 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 
-SECRET_KEY = ''
+SECRET_KEY = 'ko53qfwb5(c23#ql62ru^n*3rr_@k%+x1-)v*d&6+bpsvh7b2!'
 ALLOWED_HOSTS = []
 
 LANGUAGE_CODE = 'en-us'
@@ -26,14 +26,15 @@ USE_TZ = False
 DEFAULT_CHARSET = 'utf-8'
 FILE_CHARSET = 'utf-8'
 
-SERVER_URL = ""
-LIVEWHALE_API_URL = ""
+SERVER_URL = "www.carthage.edu"
+API_URL = "%s/%s" % (SERVER_URL, "api")
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 ROOT_DIR = os.path.dirname(__file__)
-ROOT_URL = "/djbuis/"
+ROOT_URL = "/jsawyer/djbuis/"
 ROOT_URLCONF = 'djbuis.urls'
 WSGI_APPLICATION = 'djbuis.wsgi.application'
-MEDIA_ROOT = ''
+MEDIA_ROOT = '/home/jsawyer/sandbox/uploads/'
+MEDIA_URL = '/uploads/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 STATIC_ROOT = ''
 STATIC_URL = "/static/"
@@ -50,8 +51,8 @@ DATABASES = {
         'PORT': '3306',
         'NAME': 'djbuis',
         'ENGINE': 'django.db.backends.mysql',
-        'USER': '',
-        'PASSWORD': ''
+        'USER': 'brahman',
+        'PASSWORD': 'atm@n!@ke5ided3ri5i0n'
     },
 }
 
@@ -63,9 +64,15 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
-    'djbuis',
+    'djtools',
+    'djbuis.eventparking',
+    'djbuis.excavatebore',
+    'djbuis.phonemove',
 )
+
+LIVEWHALE_API_URL = "https://www.carthage.edu"
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -82,7 +89,9 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 TEMPLATE_DIRS = (
-    "/data2/django_projects/djbuis/templates/",
+    "/home/jsawyer/sandbox/djbuis/templates/",
+    "/data2/django_templates/djkorra/",
+    "/data2/django_templates/djcher/",
     "/data2/django_templates/",
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
