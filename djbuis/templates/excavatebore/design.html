@@ -50,62 +50,62 @@
             $('#company_yes').css("display", "inline");
         }
     });
-    $('#id_reason_for_excavation_or_boring').change(function(){
-        if(!validateReasonForExcavationOrBoring()){
-            $('#reason_for_excavation_or_boring_no').css("display", "inline");
-            $('#reason_for_excavation_or_boring_yes').css("display", "none");
+    $('#id_reason').change(function(){
+        if(!validateReason()){
+            $('#reason_no').css("display", "inline");
+            $('#reason_yes').css("display", "none");
         }
         else {
-            $('#reason_for_excavation_or_boring_no').css("display", "none");
-            $('#reason_for_excavation_or_boring_yes').css("display", "inline");
+            $('#reason_no').css("display", "none");
+            $('#reason_yes').css("display", "inline");
         }
     });
-    $('#id_location_of_excavation_including_termination_points').change(function(){
-        if(!validateLocationOfExcavationIncludingTerminationPoints()){
-            $('#location_of_excavation_including_termination_points_no').css("display", "inline");
-            $('#location_of_excavation_including_termination_points_yes').css("display", "none");
+    $('#id_location').change(function(){
+        if(!validateLocation()){
+            $('#location_no').css("display", "inline");
+            $('#location_yes').css("display", "none");
         }
         else{
-            $('#location_of_excavation_including_termination_points_no').css("display", "none");
-            $('#location_of_excavation_including_termination_points_yes').css("display", "inline");
+            $('#location_no').css("display", "none");
+            $('#location_yes').css("display", "inline");
         }
     });
-    $('#id_start_date_for_excavation').change(function() {                               
-        if(!validate_start_date_for_excavation()){ 
-            $('#start_date_for_excavation_no').css("display", "inline");
-            $('#start_date_for_excavation_yes').css("display", "none");
+    $('#id_start_date').change(function() {                               
+        if(!validate_start_date()){ 
+            $('#start_date_no').css("display", "inline");
+            $('#start_date_yes').css("display", "none");
             //if start date is incorrect then we can't determine if end date is correct so we hide checks and x's
-            $('#projected_end_date_for_excavation_no').css("display", "none");
-            $('#projected_end_date_for_excavation_yes').css("display", "none");
+            $('#end_date_no').css("display", "none");
+            $('#end_date_yes').css("display", "none");
         }
         else {
-            $('#start_date_for_excavation_no').css("display", "none");
-            $('#start_date_for_excavation_yes').css("display", "inline");
+            $('#start_date_no').css("display", "none");
+            $('#start_date_yes').css("display", "inline");
             //if entered date is valid check to see if end date is now valid
-            if($('#id_projected_end_date_for_excavation').val() != "")
+            if($('#id_end_date').val() != "")
             {
-                if(!validate_projected_end_date_for_excavation()){ 
-                    $('#projected_end_date_for_excavation_no').css("display", "inline");
-                    $('#projected_end_date_for_excavation_yes').css("display", "none");
+                if(!validate_end_date()){ 
+                    $('#end_date_no').css("display", "inline");
+                    $('#end_date_yes').css("display", "none");
                 }
                 else {
-                    $('#projected_end_date_for_excavation_no').css("display", "none");
-                    $('#projected_end_date_for_excavation_yes').css("display", "inline");
+                    $('#end_date_no').css("display", "none");
+                    $('#end_date_yes').css("display", "inline");
                 }
             }
         }
     });
-    $('#id_projected_end_date_for_excavation').change(function() {
+    $('#id_end_date').change(function() {
         //only validate end date if start date is valid because we can't know if end date is valid otherwise
-        if(validate_start_date_for_excavation())
+        if(validate_start_date())
         {
-            if(!validate_projected_end_date_for_excavation()){ 
-                $('#projected_end_date_for_excavation_no').css("display", "inline");
-                $('#projected_end_date_for_excavation_yes').css("display", "none");
+            if(!validate_end_date()){ 
+                $('#end_date_no').css("display", "inline");
+                $('#end_date_yes').css("display", "none");
             }
             else {
-                $('#projected_end_date_for_excavation_no').css("display", "none");
-                $('#projected_end_date_for_excavation_yes').css("display", "inline");
+                $('#end_date_no').css("display", "none");
+                $('#end_date_yes').css("display", "inline");
             }
         }
     });
@@ -121,21 +121,21 @@
         var patt = new RegExp('.+');
         return patt.test($("#id_company").val());
     }
-    function validateReasonForExcavationOrBoring(){
+    function validateReason(){
         var patt = new RegExp('.+');
-        return patt.test($("#id_reason_for_excavation_or_boring").val());
+        return patt.test($("#id_reason").val());
     }
-    function validateLocationOfExcavationIncludingTerminationPoints(){
+    function validateLocation(){
         var patt = new RegExp('.+');
-        return patt.test($("#id_location_of_excavation_including_termination_points").val());
+        return patt.test($("#id_location").val());
     }
-    function validate_start_date_for_excavation(){
-        if($("#id_start_date_for_excavation").val() == "")
+    function validate_start_date(){
+        if($("#id_start_date").val() == "")
         {
             return false;
         }
         var newdate = new Date();
-        var value = $("#id_start_date_for_excavation").val().split("-");
+        var value = $("#id_start_date").val().split("-");
         var inputdate = new Date(value[0],value[1]-1,value[2]);
         if (inputdate.getTime() < newdate.getTime()){
             return false;
@@ -144,20 +144,20 @@
             return true;
         }
     }
-    function validate_projected_end_date_for_excavation(){
-        if($("#id_projected_end_date_for_excavation").val() == "")
+    function validate_end_date(){
+        if($("#id_end_date").val() == "")
         {
             return false;
         }
         var newdate = new Date();
-        var value = $("#id_projected_end_date_for_excavation").val().split("-");
-        var start_value = $("#id_start_date_for_excavation").val().split("-");
+        var value = $("#id_end_date").val().split("-");
+        var start_value = $("#id_start_date").val().split("-");
         var inputdate = new Date(value[0],value[1]-1,value[2]);
         var start_date = new Date(start_value[0],start_value[1]-1,start_value[2])
         if (inputdate.getTime() < newdate.getTime()){
             return false;
         }
-        else if(!validate_start_date_for_excavation() || inputdate.getTime() < start_date.getTime())
+        else if(!validate_start_date() || inputdate.getTime() < start_date.getTime())
         {
             return false;
         }
@@ -172,11 +172,12 @@
     <fieldset class="blockLabels">
         <legend>Type of Work</legend>
         <ol>
-            <li class="ctrlHolder"><h3><label for="excavate_bore_0"></label></h3>
+            <li class="ctrlHolder"><h3><label for="id_excavate_bore_0"></label></h3>
                 <ul>
-                    <li><label for="excavate_bore_0"><input checked="checked" id="excavate_bore_0" name="excavatebore" type="radio" value="EXC" /> Excavate</label></li>
-                    <li><label for="excavate_bore_1"><input id="excavate_bore_1" name="excavatebore" type="radio" value="BORE" /> Bore</label></li>
+                    <li><label for="id_excavate_bore_0"><input checked="checked" id="excavate_bore_0" name="excavatebore" type="radio" value="EXC" /> Excavate</label></li>
+                    <li><label for="id_excavate_bore_1"><input id="excavate_bore_1" name="excavatebore" type="radio" value="BORE" /> Bore</label></li>
                 </ul>
+                {{form.excavate_bore.errors}}
             </li>
         </ol>
     </fieldset>
@@ -185,21 +186,24 @@
         <ol>
             <li class="ctrlHolder"><h3><label for="id_applicant_name">{{ form.applicant_name.label }}</label></h3>
                 <div class="required">
-                    <input id="id_applicant_name" maxlength="100" name="name" type="text" />
+                    {{form.applicant_name}}
+                    {{form.applicant_name.errors}}
                     <img class='hidden' id='applicant_name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                     <img class='hidden' id='applicant_name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                 </div>
             </li>
             <li class="ctrlHolder"><h3><label for="id_phone">{{ form.phone.label }}</label></h3>
                 <div class="required">
-                    <input id="id_phone" maxlength="100" name="phone" type="text" />
+                    {{form.phone}}
+                    {{form.phone.errors}}
                     <img class='hidden' id='phone_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                     <img class='hidden' id='phone_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                 </div>
             </li>
             <li class="ctrlHolder"><h3><label for="id_company">{{ form.company.label }}</label></h3>
                 <div class="required">
-                    <input id="id_company" maxlength="100" name="company" type="text" />
+                    {{form.company}}
+                    {{form.company.errors}}
                     <img class='hidden' id='company_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                     <img class='hidden' id='company_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                 </div>
@@ -209,32 +213,36 @@
     <fieldset class="blockLabels">
         <legend>Project Info</legend>
         <ol>
-            <li class="ctrlHolder"><h3><label for="id_reason_for_excavation_or_boring">Reason for excavating or boring</label></h3>
+            <li class="ctrlHolder"><h3><label for="id_reason">Reason for excavating or boring</label></h3>
                 <div class="required">
-                    <input id="id_reason_for_excavation_or_boring" maxlength="100" name="reason" type="text" />
-                    <img class='hidden' id='reason_for_excavation_or_boring_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                    <img class='hidden' id='reason_for_excavation_or_boring_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    {{form.reason}}
+                    {{form.reason.errors}}
+                    <img class='hidden' id='reason_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img class='hidden' id='reason_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                 </div>
             </li>
-            <li class="ctrlHolder"><h3><label for="id_location_of_excavation_including_termination_points">Location of work including termination points</label></h3>
+            <li class="ctrlHolder"><h3><label for="id_location">Location of work including termination points</label></h3>
                 <div class="required">
-                    <input id="id_location_of_excavation_including_termination_points" maxlength="100" name="location" type="text" />
-                    <img class='hidden' id='location_of_excavation_including_termination_points_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                    <img class='hidden' id='location_of_excavation_including_termination_points_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    {{form.location}}
+                    {{form.location.errors}}
+                    <img class='hidden' id='location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img class='hidden' id='location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                 </div>
             </li>
-            <li class="ctrlHolder"><h3><label for="id_start_date_for_excavation">Start date of work</label></h3>
+            <li class="ctrlHolder"><h3><label for="id_start_date">Start date of work</label></h3>
                 <div class="required">
-                    <input id="id_start_date_for_excavation" maxlength="100" name="start" type="date" />
-                    <img class='hidden' id='start_date_for_excavation_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                    <img class='hidden' id='start_date_for_excavation_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    {{form.start_date}}
+                    {{form.start_date.errors}}
+                    <img class='hidden' id='start_date_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img class='hidden' id='start_date_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                 </div>
             </li>
-            <li class="ctrlHolder"><h3><label for="id_projected_end_date_for_excavation">Projected end date</label></h3>
+            <li class="ctrlHolder"><h3><label for="id_end_date">Projected end date</label></h3>
                 <div class="required">
-                    <input id="id_projected_end_date_for_excavation" maxlength="100" name="end" type="date" />
-                    <img class='hidden' id='projected_end_date_for_excavation_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
-                    <img class='hidden' id='projected_end_date_for_excavation_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
+                    {{form.end_date}}
+                    {{form.end_date.errors}}
+                    <img class='hidden' id='end_date_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
+                    <img class='hidden' id='end_date_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                 </div>
             </li>
         </ol>

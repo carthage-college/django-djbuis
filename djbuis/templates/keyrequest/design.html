@@ -117,6 +117,7 @@
                     <p style=""><a class="delete" href="#">Delete</a></p>
                     <hr>
                 </div>
+                {{form.errors}}
             <p><a id="add" href="#">Request another key</a></p>
             {% endfor %}
         </ol>
@@ -132,6 +133,7 @@
                     <li><label for="id_reason_3"><input id="id_reason_3" name="reason" type="radio" value="WORN" />Worn Key Returned</label></li>
                     <li><label for="id_reason_4"><input id="id_reason_4" name="reason" type="radio" value="OTH" />Other (Please Explain)</label></li>
                 </ul>
+                {{form.reason.errors}}
             </li>
             <li id="otherli" style="display:none;" class="ctrlHolder"><h3><label for="id_other">Other:</label></h3>
                 <input id="id_other" maxlength="100" name="other" type="text" />
@@ -142,13 +144,22 @@
         <legend>Contact Info</legend>
         <ol>
             <li class="ctrlHolder"><h3><label for="id_name">Name</label></h3>
-                <div class="required"><input id="id_name" maxlength="100" name="name" type="text"/></div>
+                <div class="required">
+                    {{form.name}}
+                    {{form.name.errors}}
+                </div>
             </li> 
             <li class="ctrlHolder"><h3><label for="id_contact_number">Phone Number</label></h3>
-                <div class="required"><input id="id_contact_number" maxlength="100" name="number" type="text"/></div>
+                <div class="required">
+                    {{form.contact_number}}
+                    {{form.contact_number.errors}}
+                </div>
             </li> 
             <li class="ctrlHolder"><h3><label for="id_account">Account to Charge</label></h3>
-                <div class="required"><input id="id_account" maxlength="100" name="account" type="text"/></div>
+                <div class="required">
+                    {{form.account}}
+                    {{form.account.errors}}
+                </div>
             </li>
             <li class="btnHolder">
                 <label for="submit">&nbsp;&nbsp;</label>

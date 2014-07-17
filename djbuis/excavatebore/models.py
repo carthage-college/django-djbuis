@@ -14,14 +14,14 @@ class ExcavateModel(models.Model):
         ("BORE", 'Bore'),
         )
     
-    excavate_bore = models.CharField(choices="EXCBORE", max_length=10)    
+    excavate_bore = models.CharField(choices=EXCBORE, max_length=15)    
     applicant_name = models.CharField(blank=False,max_length=64) #'max_length' is the maximum number of characters allowed in this field
     phone = models.CharField(max_length=15)
     company = models.CharField(blank=False,max_length=64) #'blank=False' means the field is required
-    reason_for_excavation_or_boring = models.CharField(blank=False,max_length=200)
-    location_of_excavation_including_termination_points = models.CharField(blank=False,max_length=200)
-    start_date_for_excavation = models.DateField(blank=False) #You can also put in error messages
-    projected_end_date_for_excavation = models.DateField()
+    reason = models.CharField(blank=False,max_length=200)
+    location = models.CharField(blank=False,max_length=200)
+    start_date = models.DateField(blank=False)
+    end_date = models.DateField()
     reviewed_by = models.CharField(null=True,max_length=64) #'null=True' means the field can be null in the database
     meeting_held_with_applicant = models.BooleanField(default=True, validators=[validate_boolean_must_be_true]) #I added the validation function to this field
     date_of_approval = models.DateField(null=True)
@@ -39,12 +39,5 @@ class ExcavateModel(models.Model):
         verbose_name = 'Excavate - Bore application' #I want to call it 'Excavate / Bore' in the django admin page
         verbose_name_plural = 'Excavate - Bore applications' #Plural version
         #db_table = 'excavate_app_excavatemodel'
-    
-#I make a proxy here because I want to (eventually) put this form, along with others, under a common header
-class ExcavateProxy(ExcavateModel):
-    class Meta:
-        proxy = True
-        app_label = 'Registrar' #The common header
-        verbose_name = 'a' #What the form will show up as under the common header
         
 

@@ -140,35 +140,40 @@
             <ol>
                 <li class="ctrlHolder"><h3><label for="id_event_name">Event Name</label></h3>
                     <div class="required">
-                        <input id="id_event_name" maxlength="100" name="name" type="text" />
+                        {{form.event_name}}
+                        {{form.event_name.errors}}
                         <img style='display:none;' id='event_name_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img style='display:none;' id='event_name_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                     </div>
                 </li>
                 <li class="ctrlHolder"><h3><label for="id_event_location">Event Location</label></h3>
                     <div class="required">
-                        <input id="id_event_location" maxlength="100" name="location" type="text" />
+                        {{form.event_location}}
+                        {{form.event_location.errors}}
                         <img style='display:none;' id='event_location_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img style='display:none;' id='event_location_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                     </div>                    
                 </li>
                 <li class="ctrlHolder"><h3><label for="id_event_date">Event Date</label></h3>
                     <div class="required">
-                        <input id="id_event_date" maxlength="100" name="date" type="date" />
+                        {{form.event_date}}
+                        {{form.event_date.errors}}
                         <img style='display:none;' id='event_date_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img style='display:none;' id='event_date_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                     </div>                
                 </li>
                 <li class="ctrlHolder"><h3><label for="id_event_time">Event Time</label></h3>
                     <div class="required">
-                        <input id="id_event_time" maxlength="100" name="time" type="time" />
+                        {{form.event_time}}
+                        {{form.event_time.errors}}
                         <img style='display:none;' id='event_time_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img style='display:none;' id='event_time_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                     </div>                
                 </li>
                 <li class="ctrlHolder"><h3><label for="id_crowd_estimate">Crowd Estimate</label></h3>
                     <div class="required">
-                        <input id="id_crowd_estimate" maxlength="100" name="crowd" type="text" />
+                        {{form.crowd_estimate}}
+                        {{form.crowd_estimate.errors}}
                         <img style='display:none;' id='crowd_estimate_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img style='display:none;' id='crowd_estimate_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                     </div>                
@@ -180,14 +185,16 @@
             <ol>
                 <li class="ctrlHolder"><h3><label for="id_contact_person">Person to contact</label></h3>
                     <div class="required">
-                        <input id="id_contact_person" maxlength="100" name="contact_me" type="text" />
+                        {{form.contact_person}}
+                        {{form.contact_person.errors}}
                         <img style='display:none;' id='contact_person_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img style='display:none;' id='contact_person_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                     </div>                
                 </li>
                 <li class="ctrlHolder"><h3><label for="id_phone_number">Phone number</label></h3>
                     <div class="required">
-                        <input id="id_phone_number" maxlength="100" name="phone" type="text" />
+                        {{form.phone_number}}
+                        {{form.phone_number.errors}}
                         <img style='display:none;' id='phone_number_yes' src='http://imageshack.us/a/img716/1391/htj.png'></img>
                         <img style='display:none;' id='phone_number_no' src='http://imageshack.us/a/img855/1123/ytjo.png'></img>
                     </div>                

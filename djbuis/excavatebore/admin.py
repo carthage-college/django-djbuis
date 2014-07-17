@@ -5,7 +5,7 @@
 #'admin' - necessary to change view settings when viewing an 'excavatebore' object
 #'messages' - necessary to change success/fail messages when performing an action to an 'excavatebore' object
 from django.contrib import admin, messages
-from djbuis.excavatebore.models import ExcavateModel, ExcavateProxy
+from djbuis.excavatebore.models import ExcavateModel
 
 #This is an 'action' a user can perform to a 'excavatebore' object
 def push_to_production(modeladmin, request, queryset):
@@ -100,7 +100,7 @@ class ExcavateAdmin(admin.ModelAdmin):
         }),
         ('Project information', {
             'classes': ('collapse',),
-            'fields': ('reason_for_excavation_or_boring','location_of_excavation_including_termination_points','start_date_for_excavation','projected_end_date_for_excavation')
+            'fields': ('reason','location','start_date','end_date')
         }),
         ('Administrator action', {
             'fields': ('reviewed_by','meeting_held_with_applicant','date_of_approval','server')
