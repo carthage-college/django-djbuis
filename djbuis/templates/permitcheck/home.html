@@ -1,0 +1,90 @@
+<head> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- setting up the screen view so it will take up the whole screen -->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" /> <!-- Implementing Jquery visual style -->
+	<link rel="stylesheet" href="/Theme/themes/Carthage.css"/> <!-- Implementing the theme -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<script src="yup.js"></script><!-- including Javascript file -->
+	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script> <!-- Jquery Script -->
+	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script> <!-- Jquery Mobile Script -->
+        <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+        <script>
+	    $(document).ready(function(){
+		$("#id_lsearch").autocomplete({source: function(request, callback){
+		    $.ajax({type: "post",
+			   url: "{% url 'lsearch' %}",
+			   data: {license: request.term},
+			   success: function(data){
+				var results = data.split(',');
+				callback($.map(results, function(item) {
+				    return { 
+				    label: item,
+				    value: item
+				    };}));
+			    },
+			    
+			    });
+			
+		    }});
+		
+		    		$("#id_psearch").autocomplete({source: function(request, callback){
+		    $.ajax({type: "post",
+			   url: "{% url 'psearch' %}",
+			   data: {permit: request.term},
+			   success: function(data){
+				var results = data.split(',');
+				callback($.map(results, function(item) {
+				    return { 
+				    label: item,
+				    value: item
+				    };}));
+			    },
+			    
+			    });
+			
+		    }});
+				
+		    
+		    		$("#id_isearch").autocomplete({source: function(request, callback){
+		    $.ajax({type: "post",
+			   url: "{% url 'isearch' %}",
+			   data: {id: request.term},
+			   success: function(data){
+				var results = data.split(',');
+				callback($.map(results, function(item) {
+				    return { 
+				    label: item,
+				    value: item
+				    };}));
+			    },
+			    
+			    });
+			
+		    }});
+	    
+		});
+            
+        </script>
+        
+</head>
+<body>  
+<div data-role="page" id='first'> <!-- Creating a new page and giving it a name -->
+	<div data-role="header">
+		<h1>Carthage Parking</h1>  <!-- header that will be displayed as both a header and the page title -->
+	</div><!-- /header -->
+	<!-- this sidebar can (and should) be copied and pasted on every page, adding additional buttons as needed -->
+    <form method="POST" action=''>
+        {% csrf_token %}
+        Search by License Plate
+        {{form.lsearch}}
+        <br>Search by Parking Permit
+        {{form.psearch}}
+        <br>Search by Student ID
+        {{form.isearch}}
+        <input type="submit" value="Submit">
+    </form>
+    <div class="sidebar">
+        <p>Need help or want to report a bug?</p><!-- This line is the only thing that must be changed individually -->
+        <a href='#help' class="sidebarBtn" data-role="button">Help & Info</a>  <!-- help button -->
+        <a href='#bug' class="sidebarBtn" data-rel="dialog" onclick="clearText()" data-close-btn="left" data-role="button">Report bug</a> <!-- bug button -->
+    </div>
+</body>

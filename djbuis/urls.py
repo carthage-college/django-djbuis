@@ -10,5 +10,6 @@ urlpatterns = patterns('',
     url(r'^excavatebore/', include('djbuis.excavatebore.urls')),
     url(r'^eventparking/', include('djbuis.eventparking.urls')),
     #url(r'^maintenance/', include('djbuis.maintenance.urls')),
+    url(r'^permitcheck/', include('djbuis.permitcheck.urls')),
     url(r'^phonemove/', include('djbuis.phonemove.urls')),
 )
